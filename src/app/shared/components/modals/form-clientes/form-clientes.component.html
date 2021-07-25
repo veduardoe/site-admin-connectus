@@ -1,0 +1,70 @@
+<h2 mat-dialog-title>Datos del Cliente</h2>
+<mat-dialog-content class="dialog-content">
+
+    <form [formGroup]="mainForm">
+
+        <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+            <div fxFlex="49%">
+                <mat-form-field class="full" appearance="outline">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput formControlName="nombres" required>
+                    <mat-error *ngIf="mf.nombres.errors">
+                        <span *ngIf="mf.nombres.errors.required">Campo Obligatorio</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div fxFlex="49%">
+                <mat-form-field class="full" appearance="outline">
+                    <mat-label>Apellido</mat-label>
+                    <input matInput formControlName="apellidos" required>
+                    <mat-error *ngIf="mf.apellidos.errors">
+                        <span *ngIf="mf.apellidos.errors.required">Campo Obligatorio</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div fxFlex="49%">
+                <mat-form-field class="full" appearance="outline">
+                    <mat-label>Tipo de Identificación</mat-label>
+                    <mat-select formControlName="tipoIdentificacion" required>
+                        <mat-option *ngFor="let tpi of tiposIdentificaciones" [value]="tpi">{{ tpi }}</mat-option>    
+                    </mat-select>
+                    <mat-error *ngIf="mf.tipoIdentificacion.errors">
+                        <span *ngIf="mf.tipoIdentificacion.errors.required">Campo Obligatorio</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div fxFlex="49%">
+                <mat-form-field class="full" appearance="outline">
+                    <mat-label>Identificación</mat-label>
+                    <input matInput formControlName="identificacion" required>
+                    <mat-error *ngIf="mf.apellidos.errors">
+                        <span *ngIf="mf.apellidos.errors.required">Campo Obligatorio</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div fxFlex="49%">
+                <mat-form-field class="full" appearance="outline">
+                    <mat-label>Correo</mat-label>
+                    <input matInput formControlName="correo" required>
+                    <mat-error *ngIf="mf.correo.errors">
+                        <span *ngIf="mf.correo.errors.required">Campo Obligatorio</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div fxFlex="49%">
+                <mat-form-field class="full" appearance="outline">
+                    <mat-label>Teléfono</mat-label>
+                    <input matInput formControlName="telefono" required>
+                    <mat-error *ngIf="mf.telefono.errors">
+                        <span *ngIf="mf.telefono.errors.required">Campo Obligatorio</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-flat-button class="primary-gray" [mat-dialog-close]="true">Cancelar</button>
+    <button mat-flat-button color="primary" (click)="save()">Guardar</button>
+</mat-dialog-actions>

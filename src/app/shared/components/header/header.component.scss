@@ -1,0 +1,95 @@
+@import "src/assets/theming/global.scss";
+ 
+.header{
+    
+    background: #fff;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+    position: sticky;
+    top: 0px;
+    z-index: 2;
+    transition: all 0.5s;
+
+    .logo{
+
+        display: block;
+        height: 40px;
+        margin: 0px auto;
+
+        img{
+            height: 100%;
+            margin: 0px 30px;
+        }
+    }
+
+    &.blue-header{
+
+        background: $primary !important;
+        box-shadow:none !important;
+
+        .icons-actions{
+            color:#fff !important;
+            border-left: 1px solid rgba(255,255,255,.1) !important;
+            &.mn{
+                border-right: 1px solid rgba(255,255,255,.1) !important;
+            }
+        }
+    }
+
+    .set-padding{
+        padding: 15px 0px 9px 0px;
+        text-align: center;
+        border-right: 1px solid rgba(0,0,0,.1);
+        cursor: pointer;
+    }
+
+    .mobile-close-session{
+        display: none;
+    }
+
+    .icons-actions{
+        color: $primary;
+        border-left: 1px solid rgba(0,0,0,.1);
+        padding: 16px 10px;
+        border-radius: 0px;
+        i{
+            font-size: 21px;
+        }
+
+        &.mn{
+            border-left: none !important;
+            border-right: 1px solid rgba(0,0,0,.1);
+        }
+    }
+}
+
+.icon-header{
+    color: $primary;
+    margin-right: 5px;
+}
+
+.right-icons{
+    text-align: right;
+}
+
+@media(max-width:640px){
+    
+    .all-icons-actions{
+        display: none !important;
+    }
+
+    .icons-actions{
+        padding: 10px 6px !important;
+        &.help{
+            display: none;
+        }
+    }
+    .notif{
+        display: none !important;
+    }
+}
+
+@media(max-width:940px){
+    .linear-menu{
+        display: none !important;    
+    }
+}

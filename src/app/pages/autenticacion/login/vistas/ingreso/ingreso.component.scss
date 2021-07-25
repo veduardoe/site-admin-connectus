@@ -1,0 +1,43 @@
+@import "src/assets/theming/global.scss";
+
+.form-content{
+
+    background: #fff;
+    height: 640px;
+    .form-login{
+        
+        padding:25px;
+
+        h3{
+            font-weight: 700;
+            font-size: 24px;
+            text-align: center;
+            margin: 20px 0px 20px 0px !important;
+        }
+
+        .smtxt-blue{
+            font-size: 14px;
+            max-width: 80%;
+            margin:0px auto;
+            display: block;
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+            color:$primary;
+            letter-spacing: 4px;
+        }
+
+        .smtxt{
+            font-size: 14px;
+            max-width: 80%;
+            margin:0px auto;
+            display: block;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .actions-login{
+            text-align: right;
+        }
+    }
+}

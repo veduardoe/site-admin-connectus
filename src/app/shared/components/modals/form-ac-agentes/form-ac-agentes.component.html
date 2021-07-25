@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>Selección de Agentes</h2>
+<mat-dialog-content class="dialog-content">
+    <mat-form-field class="full" appearance="outline">
+        <mat-label>LISTADO DE AGENTES</mat-label>
+        <input type="text" placeholder="Escriba para agentes existentes" matInput [formControl]="inputControl" [matAutocomplete]="auto">
+        <mat-icon matPrefix class="iconprefix"><i class="fas fa-user-tie"></i></mat-icon>
+        <mat-autocomplete [displayWith]="displayFn" #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let agente of filteredAgentes | async" [value]="agente">
+                {{agente.nombres | uppercase }} {{agente.apellido_paterno | uppercase}}
+                {{agente.apellido_materno | uppercase}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-flat-button color="warn" [mat-dialog-close]="true">CANCELAR</button>
+</mat-dialog-actions>

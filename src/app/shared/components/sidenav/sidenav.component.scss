@@ -1,0 +1,220 @@
+@import "src/assets/theming/global.scss";
+
+.section-menu{
+
+    .info-menu{
+        display: block;
+        font-size: 9px;
+        line-height: 13px;
+        font-weight: 700 !important;
+        margin-top: 3px;
+        width: 190px;
+    }
+
+    .item{
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        display: block;
+        text-transform: uppercase;
+        font-size: 12px;
+        padding: 15px 10px 15px 55px;
+        position: relative;
+        text-decoration: none;
+        color: #fff;
+        letter-spacing: 0.5px;
+        font-weight: 700;
+        transition: all 0.2s;
+        i{
+            margin-right: 7px;
+            color: #fff;
+            position: absolute;
+            font-size: 20px;
+            left: 18px;
+            top: 50%;
+            font-weight: 300;
+            margin-top: -10px;
+
+            &.winfo{
+                top:18px !important;
+                margin-top: 0px !important;
+            }
+        }
+
+        
+
+        &:hover, &.active{
+            background: $sprimary;
+            color:$accent;
+            border-left: 5px solid $accent;
+            span.info-menu{
+                color:#fff
+            }
+            i{
+                color:$accent;
+            }
+        }
+    }
+
+    .group{
+        padding: 15px;
+        display: block;
+        color: $accent;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    .group-menu{
+        .group-section{
+            .group-items:nth-child(2){
+                a{
+    //                border-top:1px solid #ddd;
+                }
+             }
+        }
+    }
+
+    .profile-info{
+        background: $sprimary;
+        background-size: cover;
+        padding: $item-full-padding;
+        overflow: hidden;
+        position: relative;
+        
+        .profile-detail{
+           // margin:4px 0px
+        }
+        
+        .pic{
+            width: $sprimary;
+            display: block;
+            margin: 0px auto;
+
+            img{
+                width: 100%;
+            }
+        }
+
+        .name{
+            display: block;
+            color: #fff;
+            text-align: left;
+            font-weight: 300;
+            font-size: 14px;
+            padding-left: 15px;
+        }
+        
+        .subinfo{
+            display: block;
+            text-align: left;
+            font-size: 10px;
+            color: $accent;
+            font-weight: 300;
+            margin-top: -2px;
+            text-transform: uppercase;
+            padding-left: 15px;
+        }
+
+        .logo{
+            display: block;
+            height: 50px;
+            margin: 0px auto;
+
+            img{
+                width: 100%;
+            }
+        }
+    }
+}
+
+.cmenu-sidenav{
+    overflow-y: auto;
+}
+
+
+.section-lineal-menu{
+
+    display: inline-flex;
+    align-items: stretch;
+
+    .btn-lineal{
+
+        position: relative;
+        padding: 14px 30px 13px 50px !important;
+        color: #fff;
+        text-transform: uppercase;
+        font-weight: bold;
+        cursor: pointer;
+        border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
+
+        &:last-child{
+            border-right: 1px solid rgba(255, 255, 255, 0.1) !important
+        }
+
+        &:hover, &.active{
+            background: $sprimary;
+            color:$accent;
+        }
+
+        i:first-child{
+            position: absolute;
+            left: 23px;
+            font-size: 16px;
+            top: 50%;
+            margin-top: -8px;
+        }
+
+        i.arr{
+            position: absolute;
+            right: 15px;
+            font-size: 16px;
+            top: 25px;
+        }
+
+        .txt{
+            display: block;
+            font-size: 12px;
+            max-width: 80px; 
+            margin: 4px 0px;       
+        }
+
+    }
+}
+
+.btn-lineal-menu{
+    
+    color:rgba(0,0,0,.54);
+    text-decoration: none;
+    display: block;
+    padding:15px 25px 15px 45px;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: bold;
+    position: relative;
+    border-bottom:1px solid #ddd;
+
+    &:last-child{
+        border-bottom:none !important;
+    }
+
+    &:hover{
+        background: #eee;
+    }
+
+    .info-menu{
+        display:none;
+    }
+
+    i{
+        position: absolute;
+        font-size: 20px;
+        left: 10px;
+    }
+
+
+}
+
+.center-text{
+    margin:11px 0px !important;
+}

@@ -1,0 +1,108 @@
+@import "src/assets/theming/global.scss";
+
+.header-custom-menu{
+
+    border-radius: 0px;
+
+    button{
+        padding: 15px 15px 12px 15px;
+        border-radius: 0px;
+        border-right: 1px solid #CFD8DC;
+        border-bottom: 3px solid #CFD8DC;
+        border-top: 3px solid #CFD8DC;
+        width: 160px;
+        transition: all 0.5s;
+        text-transform: uppercase;
+        text-align: left;
+
+        &.active, &:hover{
+            background: $sprimary;
+            color:#fff;
+            font-weight: 700 !important;
+        }
+
+        &.active{
+            border-bottom: 3px solid $accent;
+
+            i{
+                color:$accent;
+            }
+        }
+
+        i{
+            font-size: 28px;
+            margin-right: 15px;
+            position: relative;
+            top: 0px;
+        }
+    }
+
+    button:first-child{
+        border-left:1px solid #ddd;
+    }
+
+}
+
+
+.appSectionSubmenu{
+    padding: 30px;
+    background: #CFD8DC !important;
+}
+
+.text-it{
+
+    position: relative;
+    top: -7px;
+    font-weight: bold;
+
+    .sm-text-it{
+        position: absolute;
+        font-size: 10px;
+        display: block;
+        top: 8px;
+        left: 0px;
+        font-weight: 400;
+    }
+}
+
+@media(max-width:900px){
+    button {
+        text-align: center !important;
+        padding: 15px !important;
+
+        .text-it{
+            display: none;
+        }
+        i{
+            margin-right: 0px !important;
+        }
+    }
+}
+
+.np{
+    padding: 0px !important;
+}
+
+.btn-sup-menu{
+
+    padding: 20px 30px 20px 20px;
+    background: #fff;
+    margin-right: 15px;
+    border:1px solid #eee;
+    text-transform: uppercase;
+
+    &.active{
+        border-bottom: 5px solid $primary;
+        border-top: 5px solid $accent;
+
+    }
+
+    i{
+        font-size: 18px;
+        margin-right: 15px;
+    }
+
+    .txt{
+        font-weight: bold;
+    }
+}

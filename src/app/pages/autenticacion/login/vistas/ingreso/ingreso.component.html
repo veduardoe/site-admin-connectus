@@ -1,0 +1,45 @@
+<div class="form-content">
+    <div class="form-login">
+        <h3>INGRESO</h3>
+        <span class="smtxt-blue">PORTAL {{ tipoUsuario | uppercase }}</span>
+        <span class="smtxt">Bienvenido a la plataforma, ingrese sus credenciales para acceder.</span>
+        <div class="input-login">
+            <div [hidden]="enable2FACode">
+                <mat-form-field appearance="outline" class="full">
+                    <mat-label>Usuario</mat-label>
+                    <input matInput type="text" maxlength="15" [formControl]="usuario">
+                    <mat-icon matPrefix class="iconprefix"><i class="fal fa-user-unlock"></i></mat-icon>
+                    <mat-error *ngIf="usuario.invalid">Usuario requerido</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="full">
+                    <mat-label>Clave</mat-label>
+                    <input matInput type="password" maxlength="15" [formControl]="clave">
+                    <mat-icon matPrefix class="iconprefix"><i class="fal fa-key"></i></mat-icon>
+                    <mat-error *ngIf="clave.invalid">Clave requerido</mat-error>
+                </mat-form-field>
+            </div>
+            <div [hidden]="!enable2FACode">   
+                <mat-form-field appearance="outline" class="full" >
+                    <mat-label>Código 2FA</mat-label>
+                    <input matInput type="password" maxlength="15" [formControl]="codigo2FA">
+                    <mat-icon matPrefix class="iconprefix"><i class="fal fa-barcode-read"></i></mat-icon>
+                    <mat-error *ngIf="clave.invalid">Clave requerido</mat-error>
+                </mat-form-field>
+                <span class="alert warning" >
+                    Estimado usuario, te hemos enviado un correo con el código 2FA para 
+                    ingresar a la plataforma. Si presentas problemas, contáctanos.</span>
+        
+            </div>
+
+
+            <button mat-flat-button color="primary" class="btnCustom boldy full" (click)="login()">ACCEDER</button>
+            <div *ngIf="!enable2FACode">
+                <button mat-stroked-button color="primary" class="btnCustom full boldy2" (click)="irA(1)">INGRESAR POR PRIMERA
+                    VEZ</button>
+                <button mat-stroked-button color="primary" class="btnCustom full boldy2" (click)="irA(2)"
+                    [ngStyle]="{marginTop: tipoUsuario?.toLowerCase() !== 'admin' ? '0px' : ''}">¿OLVIDASTE TU CONTRASEÑA?</button>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+.pic-agente{
+
+    cursor:pointer;
+
+    img{
+        height: 120px;
+        width: 120px;
+        margin: 0 auto;
+        margin-top: -15px;
+        display: block;
+        padding: 10px;
+        background: #eee;
+        border-radius: 105px;
+        border: 5px solid #aaa;
+    }
+}
+
+.form-pago{
+    ::ng-deep .mat-date-range-input-mirror{
+        width: 90px;
+    }
+}

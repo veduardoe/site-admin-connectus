@@ -1,0 +1,74 @@
+@import "src/assets/theming/global.scss";
+
+.login-section{
+
+    max-width: 800px;
+    width: 90%;
+    margin:0px auto;
+    position: absolute;
+    top:50%;
+    margin-top:-320px;
+    left:50%;
+    margin-left:-400px;
+
+    .lsection{
+        position: relative;
+        background: #fff;
+    }
+
+    .sec-main-logo{
+
+        background: $primary;
+        height:640px;
+        position: relative;
+
+        img{
+            width: 280px;
+            position: absolute;
+            top: 50%;
+            margin-top: -31px;
+            left: 50%;
+            margin-left: -140px;
+        }
+    }
+}
+
+.content-view{
+    position:relative;
+    .login-loader{
+        width: 100%;
+        height: 100%;
+        background: rgba(255,255,255,0.9);
+        position: absolute;
+        z-index: 2;
+        mat-spinner{
+            position: absolute;
+            top:50%;
+            left:50%;
+            margin-top: -20px;
+            margin-left:-20px;
+        }
+    }
+}
+
+@media(max-width:960px){
+
+    .login-section{
+        position: initial !important;
+        margin: 0px !important;
+        max-width: initial !important;
+        width: 100% !important;
+        height:100%;
+    }
+
+    .sec-main-logo{
+        height:90px !important;
+
+        img{
+            position: initial !important;
+            margin: 22px auto !important;
+            width: 200px !important;
+            display: block;
+        }
+    }
+}

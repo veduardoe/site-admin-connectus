@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>Selección de Propiedades</h2>
+<mat-dialog-content class="dialog-content">
+    <mat-form-field class="full" appearance="outline">
+        <mat-label>LISTADO PROPIEDADES EXISTENTES</mat-label>
+        <input type="text" placeholder="Escriba para buscar propiedades existentes" matInput
+            [formControl]="inputControl" [matAutocomplete]="auto">
+            <mat-icon matPrefix class="iconprefix"><i class="fal fa-house"></i></mat-icon>
+
+        <mat-autocomplete [displayWith]="displayFn" #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let prop of filteredPropiedades | async" [value]="prop">
+                <span class="ess" [ngClass]="{ 'success' : prop.estado === 'ACTIVO', 
+                'danger' : prop.estado === 'INACTIVO',
+                'gray' : prop.estado === 'NO DISPONIBLE',
+                'purple' : prop.estado === 'VENDIDA' }">{{prop.estado }}</span> 
+                {{prop.codigoReferencia }} - UF{{prop.precio }}
+                {{prop.titulo}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-flat-button color="warn" [mat-dialog-close]="true">CANCELAR</button>
+</mat-dialog-actions>

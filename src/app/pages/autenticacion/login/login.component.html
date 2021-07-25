@@ -1,0 +1,25 @@
+<div class="login-section mat-elevation-z2">
+    <div class="lsection">
+        <div fxLayout="row wrap" fxLayoutAlign="center center">
+            <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" class="sec-main-logo">
+                <img src="assets/images/logo.svg" alt="">
+            </div>
+            <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" class="content-view">
+                <div class="login-loader" *ngIf="activeLoading">
+                    <mat-spinner [diameter]="40"></mat-spinner>
+                </div>
+                <mat-tab-group class="noTabHeader" [selectedIndex]="curIndex" dynamicHeight>
+                    <mat-tab label="login">
+                        <app-ingreso [tipoUsuario]="tipoUsuario" (moverVista)="curIndex = $event"></app-ingreso>
+                    </mat-tab>
+                    <mat-tab>
+                        <app-nuevo-ingreso [tipoUsuario]="tipoUsuario"  (moverVista)="curIndex = $event"></app-nuevo-ingreso>
+                    </mat-tab>
+                    <mat-tab>
+                        <app-recuperar-clave [tipoUsuario]="tipoUsuario"  (moverVista)="curIndex = $event"></app-recuperar-clave>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,100 @@
+<div class="form-content">
+    <div class="form-login">
+        <h3>INGRESO POR PRIMERA VEZ</h3>
+        <span class="smtxt-blue">{{ tipoUsuario | uppercase }}</span>
+
+        <span class="alert warning" *ngIf="!nuevoIngreso.solicitar">
+            Estimado usuario, te guiaremos para crear una cuenta por primera vez.
+            Favor completa los datos que se solicitan y haz clic en "Buscar".</span>
+
+        <span class="alert success" *ngIf="nuevoIngreso.solicitar?.response && !nuevoIngreso.validar?.valid">
+            Estimado
+            usuario, su solicitud de ingreso ha sido procesado,
+            para continuar ingrese el código de 6 dígitos que ha sido enviado a su correo
+            <b>{{nuevoIngreso.solicitar?.email }}</b>
+        </span>
+
+        <span class="alert danger"
+            *ngIf="nuevoIngreso.solicitar?.hasOwnProperty('response') && !nuevoIngreso.solicitar?.response">
+            {{ nuevoIngreso.solicitar.message }}
+        </span>
+
+        <span class="alert success" *ngIf="nuevoIngreso.validar?.valid && !nuevoIngreso.procesar?.response">
+            Código ingresado es válido. Ahora cree un usuario y una contraseña con que ingresará a la plataforma
+        </span>
+
+        <span class="alert danger"
+            *ngIf="nuevoIngreso.validar?.hasOwnProperty('valid') && !nuevoIngreso.validar?.valid">
+            Código ingresado no es válido. Verifique e intente nuevamente.
+        </span>
+
+        <span class="alert danger" *ngIf="nuevoIngreso.procesar && !nuevoIngreso.procesar?.response">
+            {{ nuevoIngreso.procesar.message }}
+        </span>
+
+        <div *ngIf="!nuevoIngreso.procesar || !nuevoIngreso.procesar?.response">
+            <div class="input-login" *ngIf="!nuevoIngreso.solicitar || !nuevoIngreso.solicitar?.response">
+
+                <mat-form-field appearance="outline" class="full">
+                    <mat-label>RUT</mat-label>
+                    <input matInput type="text" maxlength="15" [formControl]="rut"
+                        placeholder="RUT sin puntos">
+                    <mat-icon matPrefix class="iconprefix"><i class="fal fa-id-card"></i></mat-icon>
+                    <mat-error *ngIf="rut.invalid">RUT es requerido</mat-error>
+                </mat-form-field>
+                <button mat-flat-button color="primary" class="btnCustom boldy full"
+                    (click)="solicitarIngreso()">BUSCAR</button>
+            </div>
+
+            <div class="input-login" *ngIf="nuevoIngreso.solicitar?.response && !nuevoIngreso.validar?.valid">
+                <mat-form-field appearance="outline" class="full">
+                    <mat-label>Código de Validación</mat-label>
+                    <input matInput type="text" [formControl]="codigoValidacion" maxlength="6" placeholder="*****">
+                    <mat-icon matPrefix class="iconprefix"><i class="fal fa-barcode-read"></i></mat-icon>
+                    <mat-error *ngIf="codigoValidacion.invalid">Código de Validación es requerido</mat-error>
+                </mat-form-field>
+                <button mat-flat-button color="primary" class="btnCustom boldy full"
+                    (click)="validarIngreso()">CONTINUAR</button>
+            </div>
+
+            <div *ngIf="nuevoIngreso.validar?.valid">
+                <mat-form-field appearance="outline" class="full">
+                    <mat-label>Usuario</mat-label>
+                    <input matInput type="text" maxlength="15" [formControl]="usuario" placeholder="Nombre de usuario">
+                    <mat-icon matPrefix class="iconprefix"><i class="fal fa-user-unlock"></i></mat-icon>
+                    <mat-error *ngIf="usuario.hasError('required')">Usuario es requerido</mat-error>
+                    <mat-error *ngIf="usuario.hasError('minlength') || usuario.hasError('maxlength')">El usuario debe
+                        tener entre 8 y 15 caracteres.</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="full">
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput type="password" maxlength="15" [formControl]="clave"
+                        placeholder="Escriba una contraseña">
+                    <mat-icon matPrefix class="iconprefix"><i class="fal fa-key"></i></mat-icon>
+                    <mat-error *ngIf="clave.hasError('required')">Contraseña es requerida</mat-error>
+                    <mat-error *ngIf="clave.hasError('minlength') || clave.hasError('maxlength')">El usuario debe tener
+                        entre 8 y 15 caracteres.</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="full">
+                    <mat-label>Confirmar contraseña</mat-label>
+                    <input matInput type="password" maxlength="15" [formControl]="confirmarClave"
+                        placeholder="Confirma la contraseña">
+                    <mat-icon matPrefix class="iconprefix"><i class="fal fa-key"></i></mat-icon>
+                    <mat-error *ngIf="confirmarClave.hasError('required')">Confirmación de contraseña es requerido
+                    </mat-error>
+                    <mat-error *ngIf="confirmarClave.hasError('minlength') || confirmarClave.hasError('maxlength')">La
+                        clave debe tener entre 8 y 15 caracteres.</mat-error>
+                    <mat-error *ngIf="confirmarClave.hasError('compare')">Las contraseñas no coinciden.</mat-error>
+                </mat-form-field>
+                <button mat-flat-button color="primary" class="btnCustom boldy full" (click)="procesarIngreso()">CREAR
+                    CUENTA</button>
+            </div>
+        </div>
+        <div *ngIf="nuevoIngreso.procesar && nuevoIngreso.procesar?.response">
+            <h3 class="text-success">CUENTA CREADA SATISFACTORIAMENTE</h3>
+        </div>
+        <button mat-stroked-button color="primary" class="btnCustom full boldy2" (click)="irLogin()">VOLVER AL
+            LOGIN</button>
+
+    </div>
+</div>

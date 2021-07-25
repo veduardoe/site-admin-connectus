@@ -1,0 +1,29 @@
+<div class="header" [ngClass]="{ 'blue-header' : !stateSidenav && readyMenu}">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxFlex="65px" *ngIf="displayMenu">
+            <button mat-button class="icons-actions mn" (click)="toggle()">
+                <i class="fal fa-bars"></i>    
+            </button>
+        </div>
+        <div fxFlex="230px" *ngIf="!stateSidenav">
+            <a href="" class="logo">
+                <img src="assets/images/logo.svg" alt="">
+            </a>
+        </div>
+        <div fxFlex class="linear-menu">
+            <app-sidenav [isSideNav]="false"></app-sidenav>
+        </div>
+        <div fxFlex="200px" class="all-icons-actions">
+            <div class="right-icons">
+
+                <button mat-button class="icons-actions" matTooltip="Perfil de Usuario" (click)="openProfile()">
+                    <i class="fal fa-user-circle"></i>                
+                </button>
+                <button mat-button class="icons-actions" (click)="autenticacionService.logout()">
+                    <i class="fal fa-sign-out-alt"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>

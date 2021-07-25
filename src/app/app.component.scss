@@ -1,0 +1,39 @@
+@import "src/assets/theming/global.scss";
+
+mat-sidenav { width: 280px; /*top:54px !important;*/ }
+::ng-deep .mat-drawer-backdrop{ 
+  position: fixed !important;
+  &.mat-drawer-shown{
+    background-color: rgba(255, 255, 255, 0.6) !important;
+  }
+}
+
+.container-nowidth{max-width: initial !important}
+
+.body-side-container{
+    .body-router{
+        position: relative;
+        width:100%;
+    } 
+    .subheader{
+      background: #fff !important;
+      border-bottom:1px solid #ddd;
+    }
+}
+
+.disableOverflow{
+  overflow: hidden !important;
+}
+.mat-form-field:hover > .mat-form-field-appearance-outline .mat-form-field-outline-thick { color: $primary !important; }
+
+.sidenav-custom{
+  background: $primary;
+}
+
+.loader-bar{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 200;
+  cursor: not-allowed;
+}

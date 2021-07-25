@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>Enviar documento en Linea</h2>
+<mat-dialog-content class="dialog-content">
+    <mat-form-field class="full" appearance="outline">
+        <mat-label>Nombre Completo del Destinatario</mat-label>
+        <input type="text" matInput [(ngModel)]="datos.nombre">
+        <mat-icon matPrefix class="iconprefix"><i class="fal fa-user"></i></mat-icon>
+    </mat-form-field>
+    <mat-form-field class="full" appearance="outline">
+        <mat-label>Correo Electrónico del Destinatario</mat-label>
+        <input type="text" matInput [(ngModel)]="datos.email">
+        <mat-icon matPrefix class="iconprefix"><i class="fal fa-envelope"></i></mat-icon>
+    </mat-form-field>
+
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-flat-button color="warn" [mat-dialog-close]="true">CANCELAR</button>
+    <button mat-flat-button color="primary" (click)="save()">GUARDAR</button>
+</mat-dialog-actions>

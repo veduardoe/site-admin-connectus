@@ -1,0 +1,30 @@
+<mat-sidenav-container class="it-sidenav" (backdropClick)="backDropClick()" id="sidenav-cnt">
+
+  <mat-sidenav class="sidenav-custom" #sidenav mode="{{modeSideNav}}" [fixedInViewport]="true" [fixedTopGap]="0"
+      [fixedBottomGap]="0" [opened]="stateSidenav">
+      <app-sidenav></app-sidenav>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="body-side-container" id="drw" [ngClass]="{'disableOverflow' : routeDisableOverflow }">
+
+      <div *ngIf="autenticacionService.isAuth">
+          <app-header></app-header>
+          <div class="subheader">
+            <app-subheader></app-subheader>
+
+          </div>
+      </div>
+      <div class="loader-bar" *ngIf="utils.loader">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </div>
+
+      <div class="container-body" [ngClass]="{ 'mtb' : autenticacionService.isAuth}">
+
+          <div class="body-router" [ngStyle]="{height: windowHeight + 'px'}"
+              [@fadeAnimation]="o.isActivated ? o.activatedRoute : ''">
+
+              <router-outlet #o="outlet" class="mrouter"></router-outlet>
+          </div>
+      </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

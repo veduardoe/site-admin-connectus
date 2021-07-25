@@ -1,0 +1,67 @@
+<div class="appSection">
+
+    <div fxLayout="row wrap" fxLayoutAlign="space-between">
+        <div fxFlex="70%" fxFlex.sm="100%" fxFlex.xs="100%">
+            <div class="white-container mat-elevation-z2">
+                <div fxLayout="row wrap" fxLayoutAlign="space-between" cdkDropListGroup> 
+                    <div fxFlex="49%" fxFlex.sm="100%" fxFlex.xs="100%" class="bgag">
+                        <div class="">
+                            <h4 style="margin-bottom: 20px !important; display: block !important;">Agentes Incluídos en la Autoasignación</h4>
+                            <div class="itmag" 
+                                cdkDropList 
+                                [cdkDropListData]="agentesSeleccionados"
+                                (cdkDropListDropped)="drop($event)">
+                                <span *ngIf="agentesSeleccionados.length === 0 " style="padding: 15px 0px;"> No hay agentes incluídos</span>
+                                <p *ngFor="let a of agentesSeleccionados; let i = index " cdkDrag>
+                                    {{ dirAgentes[a]?.nombres }} {{ dirAgentes[a]?.apellido_paterno }}
+                                    <span class="num" >{{ i + 1 }}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div fxFlex="49%" fxFlex.sm="100%" fxFlex.xs="100%" class="bgag">
+                        <div >
+                            <h4 style="margin-bottom: 20px !important; display: block !important;">Agentes Disponibles</h4>
+                            <div class="itmag"
+                                cdkDropList 
+                                [cdkDropListData]="agentesDisponibles"
+                                (cdkDropListDropped)="drop($event)">
+                                <span *ngIf="agentesDisponibles.length === 0 " style="padding: 15px 0px;"> No hay agentes disponibles</span>
+                                <p *ngFor="let a of agentesDisponibles; let i = index" cdkDrag>
+                                    {{ dirAgentes[a]?.nombres }} {{ dirAgentes[a]?.apellido_paterno }}
+                                    <span class="num">-</span>
+                                </p>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div fxFlex="49%">
+                        <a mat-flat-button color="primary" class="btnCustom full boldy"
+                        (click)="actualizarOrden()" style="margin-top: 25px;">GUARDAR CAMBIOS</a>
+                    </div>
+                </div>
+   
+            </div>
+        </div>
+        <div fxFlex="29%" fxFlex.sm="100%" fxFlex.xs="100%">
+            <div class="white-container mat-elevation-z2">
+                <h4 style="margin-bottom: 20px !important; display: block !important;">Tiempo del Ciclo de Asignación
+                    (Minutos)</h4>
+                <div fxLayout="row wrap" fxLayoutAlign="space-between">
+                    <div fxFlex="60%" fxFlex.sm="100%" fxFlex.xs="100%">
+                        <mat-form-field appearance="outline" class="full">
+                            <mat-label>Tiempo en Minutos</mat-label>
+                            <input [(ngModel)]="tiempoCiclo.data.tiempo" matInput currencyMask [options]="numberConfig" />
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="35%" fxFlex.sm="100%" fxFlex.xs="100%">
+                        <a mat-flat-button color="primary" class="btnCustom full boldy"
+                            (click)="actualizarTiempo()">ACTUALIZAR</a>
+                    </div>
+                </div>
+            </div>
+            <br />
+        </div>
+    </div>
+</div>

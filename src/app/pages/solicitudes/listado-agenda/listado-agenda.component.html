@@ -1,0 +1,73 @@
+
+<app-return [url]="'/agentes'" [text]="'VOLVER AL LISTADO DE AGENTES'" *ngIf="agente?.tipoUsuario === 'AGENTE'"></app-return>
+
+<mat-card class="info-ag" *ngIf="agente">
+    <div fxLayout="row">
+        <div fxFlex>
+            <img *ngIf="!agente.foto" [src]="routeFotoPerfil + 'blank_profile.png?alt=media'" class="pic-det">
+            <img *ngIf="agente.foto" [src]="routeFotoPerfil + agente.foto + '?alt=media'" class="pic-det">
+        </div>
+        <div fxFlex="100%">
+            <div class="sedet"><b>{{ agente.tipoUsuario === 'ADMIN' ? 'Administrador' : 'Agente'}}:</b> {{ agente.nombres }} {{ agente.apellido_paterno }} {{ agente.apellido_materno }} </div>
+            <div class="sedet"><b>RUT:</b> {{ agente.rut }}</div>
+            <div class="sedet"><b>Estado:</b> {{ agente.estado | removeUnderscore }} </div>
+        </div>
+    </div>
+</mat-card>
+
+<div class="appSection">
+
+    <div class="white-container mat-elevation-z2">
+        <div class="search-input">
+            <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                <div fxFlex="50%" fxFlex.xs="100%" class="alignLeft">
+                    <mat-form-field appearance="outline" >
+                        <mat-label>Selecciona una fecha</mat-label>
+                        <input matInput [matDatepicker]="picker" (focus)="picker.open()" [(ngModel)]="fechaFiltro" readonly> 
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker>
+                      
+                        </mat-datepicker>
+                      </mat-form-field>
+                      <button mat-flat-button color="primary" (click)="getSolicitudes()" class="btnCustom boldy btngen">Buscar</button>
+
+                </div>
+  
+                <div fxFlex="50%" fxFlex.xs="100%" class="alignRight">
+                    <button mat-flat-button color="primary" class="btnCustom boldy btnExcel" (click)="exportarExcel()">
+                        <i class="fal fa-file-excel"></i>                        EXPORTAR EXCEL</button>
+                    <mat-form-field appearance="outline" class="no-padding">
+                        <mat-label>Buscar</mat-label>
+                        <input matInput placeholder="Escriba..." (keyup)="setFilter($event.target.value)">
+                        <mat-icon matSuffix>search</mat-icon>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <mat-table [dataSource]="dataSource" class="responsiveActive" matSort>
+
+            <ng-container matColumnDef="referencia">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> # Solicitud </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Referencia"> <span>
+                    <a [routerLink]="'/solicitudes/detalle/' + e.idSolicitud">{{e.referencia }}</a>
+                </span> </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="lugar">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Lugar </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Lugar"> <span>{{e.lugar }}</span> </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="fecha">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha y Hora </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Fecha y Hora"> <span>{{e.fecha | date:'dd-MM-yyy'}} {{  e.hora }}</span> </mat-cell>
+            </ng-container>
+            
+            <mat-header-row *matHeaderRowDef="columns" class="bgheader"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+        </mat-table>
+        <p class="noresults" *ngIf="length === 0">No se encontraron resultados</p>
+        <mat-paginator [pageSize]="20" [pageSizeOptions]="[20,50,100]" (page)="utils.fnGoTop()"></mat-paginator>
+    </div>
+</div>

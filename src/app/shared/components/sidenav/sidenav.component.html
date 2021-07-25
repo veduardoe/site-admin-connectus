@@ -1,0 +1,46 @@
+<div class="section-menu" *ngIf="isSideNav">
+    <div class="profile-info">
+        <a href="" class="logo">
+            <img src="assets/images/logo.svg" alt="">
+        </a>
+        <div fxLayout="row" fxLayoutAlign="space-between center" class="profile-detail"></div>
+    </div>
+    <div [ngStyle]="{height: menuContainerHeight + 'px'}" class="cmenu-sidenav">
+        <div class="group-menu">
+            <div *ngFor="let gm of mobileMenuItems" class="group-section">
+                <span class="group">{{ gm.groupName }}</span>
+                <div class="group-items" *ngFor="let itm of gm.items">
+                    <a [routerLink]="itm.path" routerLinkActive="active" class="item" matRipple>
+                        <i class="{{ itm.icon }}" [ngClass]="{'winfo' : itm.info }"></i>
+                        {{ itm.name }}
+                        <span class="info-menu" *ngIf="itm.info">{{ itm.info }}</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section-lineal-menu" *ngIf="!isSideNav">
+    <ng-container *ngFor="let gm of menuItems">
+        <div matRipple class="btn-lineal" [matMenuTriggerFor]="menu" *ngIf="gm.groupName && displayLink(gm.activateTo)">
+            <i class="{{ gm.icon }}"></i>
+            <span class="txt {{ gm.class }}" >{{ gm.groupName ? gm.groupName : gm.name }}</span>
+            <i class="fal fa-angle-down arr" *ngIf="gm.items?.length > 0"></i>
+            <div [hidden]="!gm.groupName">
+                <mat-menu #menu="matMenu" >
+                    <ng-container *ngFor="let itm of gm.items">
+                        <a [routerLink]="itm.path" class="btn-lineal-menu" matRipple>
+                            <i class="{{ itm.icon }}" ></i>
+                            {{ itm.name }}
+                        </a>
+                    </ng-container>
+                  </mat-menu>
+            </div>
+        </div>
+        <div matRipple class="btn-lineal" *ngIf="!gm.groupName && displayLink(gm.activateTo)" [routerLink]="gm.path" routerLinkActive="active">
+            <i class="{{ gm.icon }}"></i>
+            <span class="txt {{ gm.class }}" >{{ gm.groupName ? gm.groupName : gm.name }}</span>
+        </div>
+    </ng-container>
+</div>

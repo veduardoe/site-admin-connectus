@@ -1,0 +1,40 @@
+<div class="indicadores">
+    <div class="container-body">
+        <div fxLayout="row wrap" fxLayoutAlign="space-between">
+            <div fxFlex="20%">
+                <b>UF:</b>  {{ indicadores?.uf?.valor | number}}
+            </div>
+            <div fxFlex="20%">
+                <b>UTM:</b> {{ indicadores?.utm?.valor | number}}
+            </div>
+            <div fxFlex="20%">
+                <b>Dolar:</b> {{ indicadores?.dolar_intercambio?.valor | number}}
+            </div>
+            <div fxFlex="20%">
+                <b>Dolar Observado:</b> {{ indicadores?.dolar?.valor | number}}
+            </div>
+            <div fxFlex="20%">
+                <b>Euro:</b> {{ indicadores?.euro?.valor | number}}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-body">
+    <div class="subheader">
+        <h2 class="title">{{ breadcrumbs?.t }}</h2>
+        <!-- <span class="subinfo" *ngIf="breadcrumbs?.sbt">{{ breadcrumbs?.sbt }}</span> -->
+    </div>
+    <div class="breadcrumbs">
+        <span>
+            <a [routerLink]="'/'">
+                <i class="fal fa-home-alt hm"></i>        
+            </a>
+            <i class="fal fa-chevron-right arr"></i>
+        </span>
+    
+        <span *ngFor="let item of breadcrumbs?.b; let i = index;">
+            <a [routerLink]="item.r">{{item.n}}</a>
+            <i class="fal fa-chevron-right arr" *ngIf="breadcrumbs?.b.length != (i + 1)"></i>
+        </span>
+    </div>
+</div>

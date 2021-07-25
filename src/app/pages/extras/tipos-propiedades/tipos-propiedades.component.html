@@ -1,0 +1,46 @@
+<div class="appSection">
+    <div class="white-container mat-elevation-z2">
+        <div class="search-input">
+            <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                <div fxFlex="24%" fxFlex.xs="24%" class="alignLeft">
+                
+                    <mat-form-field appearance="outline" class="no-padding full">
+                        <mat-label>Escriba el Tipo de Propiedad</mat-label>
+                        <input matInput placeholder="Escriba..." [(ngModel)]="txtTipoPropiedad">
+                    </mat-form-field>
+                </div>
+                <div fxFlex="24%" fxFlex.xs="24%" class="alignLeft">
+                    <button mat-flat-button color="primary" class="btnCustom boldy" (click)="agregarTipoPropiedad()"
+                        >AGREGAR</button>
+                </div>
+                <div fxFlex="50%" fxFlex.xs="50%" class="alignRight">
+                    <mat-form-field appearance="outline" class="no-padding">
+                        <mat-label>Buscar</mat-label>
+                        <input matInput placeholder="Escriba..." (keyup)="setFilter($event.target.value)">
+                        <mat-icon matSuffix>search</mat-icon>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <mat-table [dataSource]="dataSource" class="responsiveActive" matSort>
+
+            <ng-container matColumnDef="detalle">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Tipos de Propiedades </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Tipo de Propiedad"> <span>{{e.detalle}}</span> </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="acciones">
+                <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Acciones">
+                    <button mat-flat-button color="primary" class=" boldy" (click)="borrarTipoPropiedad(e._id)">
+                        <span>Remover</span>
+                    </button>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+        </mat-table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" (page)="utils.fnGoTop()"></mat-paginator>
+    </div>
+</div>

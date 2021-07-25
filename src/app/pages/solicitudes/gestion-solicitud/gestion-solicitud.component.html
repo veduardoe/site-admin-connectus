@@ -1,0 +1,274 @@
+<div class="appSection" *ngIf="solicitud">
+    <div style="text-align:right;">
+        <div class="actions" *ngIf="canEdit || tipoUsuario === 'AGENTE'">
+            <button mat-flat-button color="warn" class="btnCustom boldy" *ngIf="solicitud?._id && tipoUsuario === 'ADMIN'" (click)="anularCompletar('ANULADO')">
+                <mat-icon>close</mat-icon>
+                ANULAR SOLICITUD
+            </button>
+    
+            <button mat-flat-button class="btnCustom boldy green" (click)="anularCompletar('COMPLETADO')" *ngIf="solicitud.estado === 'ASIGNADO' && solicitud._id && tipoUsuario === 'ADMIN'">
+                <mat-icon>check</mat-icon>
+                COMPLETAR SOLICITUD 
+            </button>
+    
+            <button mat-flat-button color="accent" class="btnCustom boldy"  (click)="guardar(true)" *ngIf="solicitud.fuente !== 'DDP' && solicitud._id && tipoUsuario === 'ADMIN'">
+                <mat-icon>autorenew</mat-icon>
+                REINICIAR AUTOASIGNACIÓN
+            </button>
+    
+            <button mat-flat-button color="primary" class="btnCustom boldy" (click)="guardar()" 
+            *ngIf="tipoUsuario === 'ADMIN' || (tipoUsuario  === 'AGENTE' && solicitud.estado === 'ASIGNADO')">
+                <mat-icon>task_alt</mat-icon>
+                GUARDAR CAMBIOS 
+            </button>
+    
+            <button mat-flat-button color="warn" class="btnCustom boldy"  (click)="gestionarSolicitud('RECHAZO')"
+                *ngIf="tipoUsuario === 'AGENTE' && solicitud.estado === 'ESPERA_ACEPTACIÓN'">
+                <mat-icon>close</mat-icon>
+                RECHAZAR SOLICITUD
+            </button>
+    
+            <button mat-flat-button class="btnCustom boldy green" (click)="gestionarSolicitud('ACEPTO')" 
+            *ngIf="tipoUsuario === 'AGENTE' && solicitud.estado === 'ESPERA_ACEPTACIÓN'">
+                <mat-icon>check</mat-icon>
+                ACEPTAR SOLICITUD 
+            </button>
+    
+            
+        </div>
+    </div>
+    
+    <mat-tab-group >
+        <mat-tab label="DATOS GENERALES DE LA SOLICITUD">
+            <div *ngTemplateOutlet="infoSolicitud"></div>
+        </mat-tab>
+        <mat-tab label="COMENTARIOS Y AGENDAR VISITAS" *ngIf="solicitud._id">
+            <div *ngTemplateOutlet="comentarios"></div>
+        </mat-tab>
+    </mat-tab-group>
+</div>
+<ng-template #infoSolicitud>
+    <div fxLayout="row wrap" fxLayoutAlign="space-between start" style="margin-top: 20px; padding:20px">
+        <div fxFlex="49%" >
+            <div class="white-container mat-elevation-z2" style="margin-bottom: 30px;">
+                <h3>Datos la Solicitud</h3>
+                <div class="info" *ngIf="solicitud._id">
+                    <div >
+                        <p><b>Fuente:</b> {{ solicitud.fuente | fuenteSolicitud }}</p>
+                        <p><b>Referencia:</b> {{ solicitud.referencia }}</p>
+                        <p><b>Estado:</b> <span class="chipEstado"   [ngClass]="{ 'success' :solicitud.estado === 'COMPLETADO', 
+                            'danger' : solicitud.estado === 'ANULADO',
+                            'gray' : solicitud.estado === 'SIN_ASIGNAR',
+                            'warning' : solicitud.estado === 'ESPERA_ACEPTACIÓN',
+                            'blued' : solicitud.estado === 'ASIGNADO' }">{{ solicitud.estado | removeUnderscore }}</span></p>
+                        <p><b>Fecha Solicitud:</b> {{ solicitud.fechaRegistro | date:'dd-MM-yyyy HH:mm:ss ' }}</p>
+                        <p><b>Última Modificación:</b> {{ solicitud.fechaModificacion | date:'dd-MM-yyyy HH:mm:ss ' }}
+                        </p>
+                    </div>
+                </div>
+                <div class="info" *ngIf="!solicitud._id">
+                    <p>Datos serán visibles una vez guardada la solicitud.</p>
+                </div>
+            </div>
+            <div style="margin-bottom: 30px;">
+                <div class="white-container mat-elevation-z2">
+                    <h3>Cliente Asociado</h3>
+                    <div class="info" *ngIf="solicitud.cliente">
+                        <p><b>Cliente:</b> {{ solicitud.cliente?.nombres }} {{ solicitud.cliente?.apellidos }}</p>
+                        <p><b>Correo:</b> {{ solicitud.cliente?.correo }}</p>
+                        <p><b>Identificacion:</b> {{ solicitud.cliente?.tipoIdentificacion }} {{
+                            solicitud.cliente?.identificacion }}</p>
+                        <p><b>Telefono:</b> {{ solicitud.cliente?.telefono }}</p>
+                    </div>
+                    <div class="info" *ngIf="!solicitud.cliente">
+                        <p>No hay cliente asociado a la solicitud.</p>
+                    </div>
+                </div>
+                <span class="link-action" (click)="openCliente()" *ngIf="canEdit">ASIGNAR CLIENTE (+)</span>
+            </div>
+
+            <div style="margin-bottom: 30px;">
+                <div class="white-container mat-elevation-z2">
+                    <h3>Propiedad Asociada</h3>
+                    <div class="info" *ngIf="solicitud.propiedad">
+                        <p><b>Descripción:</b> {{ solicitud.propiedad.titulo }} en <b>UF {{ solicitud.propiedad.precio |
+                                number:'1.0-0'}}</b></p>
+                        <p><b>Referencia / Operación / Comuna:</b> {{ solicitud.propiedad.codigoReferencia }} / {{
+                            solicitud.propiedad.tipoOperacion }} / {{ solicitud.propiedad.comuna }}</p>
+                        <p><b>Enlace:</b>&nbsp;&nbsp;<a target="_blank"
+                                href="https://www.globalproperty.cl/propiedad/{{ solicitud.propiedad._id }}/{{ solicitud.propiedad.titulo }}">Haga
+                                clic aquí para ver la propiedad</a></p>
+    
+                    </div>
+                    <div class="info" *ngIf="!solicitud.propiedad">
+                        <p>No hay propiedad asociada a la solicitud.</p>
+                    </div>
+    
+                </div>
+                <span class="link-action" (click)="openPropiedad()" *ngIf="solicitud.fuente !== 'DDP' && canEdit">ASIGNAR PROPIEDAD (+)</span>
+            </div>
+
+        </div>
+        <div fxFlex="49%">
+            <div class="white-container mat-elevation-z2" style="margin-bottom: 30px;">
+                <h3>Datos Recopilados del Sitio</h3>
+                <div class="info" *ngIf="solicitud.datosRecopilados">
+                    <div *ngIf="solicitud._id && solicitud.fuente !== 'DPA'">
+                        <p><b>Cliente:</b> {{ solicitud.datosRecopilados?.nombreCliente }} {{
+                            solicitud.datosRecopilados?.apellidoCliente }}</p>
+                        <p><b>Correo:</b> {{ solicitud.datosRecopilados?.correoCliente }}</p>
+                        <p><b>Telefono:</b> {{ solicitud.datosRecopilados?.telefonoCliente | empty}}</p>
+                        <p><b>Detalle:</b> {{ solicitud.datosRecopilados?.detalles | empty}}</p>
+                    </div>
+              
+                    <p><b>Tipo Propiedad:</b> {{ solicitud.datosRecopilados?.tipoPropiedad }}</p>
+                    <mat-form-field appearance="outline" class="full" style="margin-top: 15px;" *ngIf="solicitud.fuente !== 'DDP' && canEdit && tipoUsuario === 'ADMIN'">
+                        <mat-label>TIPO DE PROPIEDAD SELECCIONADA</mat-label>
+                        <mat-select [(ngModel)]="solicitud.datosRecopilados.tipoPropiedad">
+                            <mat-option [value]="tp.detalle" *ngFor="let tp of tiposPropiedades">{{ tp.detalle | uppercase}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 30px;">
+                <div class="white-container mat-elevation-z2">
+                    <h3>Agente Asignado</h3>
+                    <div class="info" *ngIf="agenteAsignado.agente && agentesignadoEstado !== 'REASIGNADO'">
+                        <p><b>Agente</b>: {{ agenteAsignado.detalle }}</p>
+                        <p><b>Fecha Asignación</b>: {{ agenteAsignado.fechaAsign | date:'dd-MM-yyyy HH:mm:ss' }}</p>
+                        <p><b>Estado</b>: {{ agentesignadoEstado | removeUnderscore }}</p>
+
+                        <mat-form-field appearance="outline" class="full" style="margin-top: 15px;" *ngIf="solicitud.fuente !== 'DDP' && canEdit && tipoUsuario === 'ADMIN'">
+                            <mat-label>SELECCIONE UN ESTADO</mat-label>
+                            <mat-select [(ngModel)]="agentesignadoEstado" (selectionChange)="changeEstadoAgente($event)">
+                                <mat-option [value]="'ESPERA_ACEPTACIÓN'">ESPERA ACEPTACIÓN</mat-option>
+                                <mat-option [value]="'ASIGNADO'">ASIGNADO</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <div *ngIf="tipoUsuario === 'ADMIN'">
+                            <span class="note" *ngIf="solicitud.fuente === 'DDP'"style="margin-bottom:20px">
+                                No se le puede cambiar el agente a esta solicitud debido a que la propiedad
+                                asignada pertenece directamente al agente y la fuente fue "Directo desde una propiedad".
+                            </span>
+    
+                            <span class="note" *ngIf="agentesignadoEstado === 'ESPERA_ACEPTACIÓN'">
+                                El agente en estado "ESPERA ACEPTACIÓN" indica que la solicitud está asignada al agente y que
+                                este debe decidir si desea tomarla o no .
+                            </span>
+                            
+                            <span class="note" *ngIf="agentesignadoEstado === 'ASIGNADO'">
+                                El agente en estado "ASIGNADO" indica que la solicitud le ha sido asignada directamente al
+                                agente. Por ende, la solicitud queda marcada como
+                                ASIGNADA y será sacada de la lista de las solicitudes disponibles para ser tomada.
+                            </span>
+                        </div>
+
+                    </div>
+                    <div class="info" *ngIf="!agenteAsignado.agente">
+                        <p>No hay Agente asociado a la solicitud.</p>
+                    </div>
+                    <div class="info" *ngIf="agentesignadoEstado === 'REASIGNADO'">
+                        <p>Para reactivar la solicitud, debe hacer clic en el botón "REINICIAR AUTOASIGNACIÓN".</p>
+                    </div>
+                </div>
+                <span class="link-action" (click)="openAgente()" *ngIf="solicitud.fuente !== 'DDP' && canEdit && tipoUsuario === 'ADMIN' && agentesignadoEstado !== 'REASIGNADO'">ASIGNAR AGENTE (+)</span>
+
+            </div>
+
+            <div class="white-container mat-elevation-z2" *ngIf="canEdit && solicitud._id && tipoUsuario === 'ADMIN'">
+                <h3>CONFIGURACIÓN DE AUTOASIGNACIÓN</h3>
+                <div class="info">
+                    <mat-form-field appearance="outline" class="full"
+                        *ngIf="agentesignadoEstado === 'ESPERA_ACEPTACIÓN' || !agentesignadoEstado">
+                        <mat-label>SELECCIONE UNA OPCIÓN</mat-label>
+                        <mat-select [(ngModel)]="solicitud.autoasignacion">
+                            <mat-option [value]="true">ACTIVA - AUTOASIGNACIÓN EN CURSO</mat-option>
+                            <mat-option [value]="false">INACTIVO - AUTOASIGNACIÓN DETENIDO</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <span class="note" *ngIf="agentesignadoEstado !== 'ESPERA_ACEPTACIÓN' && agentesignadoEstado">
+                        La configuración de la Autoasignación no puede ser modificada dado que la solicitud ha sido
+                        asignada.
+                    </span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</ng-template>
+
+<ng-template #comentarios>
+    <div fxLayout="row wrap">
+        <div fxFlex="49%">
+            <div class="comentarios">
+                <h3>Comentarios y Observaciones</h3>
+
+                <div fxLayout="row" fxLayoutGap="20px" *ngIf="canEdit">
+                    <div fxFlex="75%">
+                        <mat-form-field appearance="outline" class="full">
+                            <mat-label>Escriba su comentario aquí</mat-label>
+                            <textarea matInput [(ngModel)]="boxComentario"></textarea>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="25%">
+                        <button mat-flat-button color="primary" class="btnCustom boldy" (click)="addComentario()" style="width:100%; padding:20px">AGREGAR</button>
+                    </div>
+                </div>
+                <p *ngIf="solicitud.comentarios.length === 0">Sin comentarios por los momentos</p>
+                <p *ngFor="let com of solicitud.comentarios">
+                    <span class="date-c">{{ com.fecha | date:'dd-MM-yyyy HH:mm:ss'}}</span>
+                    {{ com.detalle }}
+                </p>
+
+            </div>
+        </div>
+        <div fxFlex="49%">
+            <div class="comentarios">
+                <h3>Agendar Visitas</h3>
+
+                <div fxLayout="row wrap" fxLayoutAlign="space-between" *ngIf="canEdit">
+                    <div fxFlex="100%">
+                        <mat-form-field appearance="outline" class="full">
+                            <mat-label>Lugar de la Visita</mat-label>
+                            <input matInput [(ngModel)]="agendaCita.lugar">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="34%">
+                        <mat-form-field appearance="outline" class="full">
+                            <mat-label>Fecha de la Visita</mat-label>
+                            <input matInput [matDatepicker]="picker" [(ngModel)]="agendaCita.fecha" readonly (focus)="picker.open()">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="34%">
+                        <mat-form-field appearance="outline" class="full">
+                            <mat-label>Hora</mat-label>
+                            <mat-select [(ngModel)]="agendaCita.hora">
+                                <mat-option *ngFor="let hh of horas" [value]="hh">{{ hh }}</mat-option>
+                            </mat-select>
+                            <mat-icon matSuffix>schedule</mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="30%">
+                        <button mat-flat-button color="primary" class="btnCustom boldy" (click)="addVisita()" style="width:100%; padding:12px">AGENDAR</button>
+                    </div>
+                </div>
+                <p *ngIf="solicitud.visitas.length === 0">Sin agendas por los momentos</p>
+                <ng-container *ngFor="let vis of solicitud.visitas; let i = index">
+                    <p *ngIf="!vis.notificarCambio">
+                        <span>Fecha y Hora de la Cita: <b>{{ vis.fecha | date:'dd-MM-yyyy'}}</b> a las
+                            <b>{{ vis.hora }}</b>
+                            <br /> Lugar: <b>{{ vis.lugar }}</b></span>
+                        <mat-icon (click)="removerVisita(i)">close</mat-icon>
+                    </p>
+                </ng-container>
+                
+
+            </div>
+        </div>
+    </div>
+
+</ng-template>

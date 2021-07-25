@@ -1,0 +1,73 @@
+@import "src/assets/theming/global.scss";
+
+.subheader{
+    padding:20px 30px 00px 30px;
+    background: #fff;
+
+    .title{
+        font-weight: 700;
+        color: $primary;
+        font-size: 22px;
+    }
+}
+
+.breadcrumbs{
+   // border-bottom: 1px solid #ddd;
+    padding: 10px 30px 20px 30px;
+    background: #fff !important;
+
+    a{
+        text-decoration: none !important;
+        color: #000;
+        font-size: 12px;
+        position: relative;
+        top: -1px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+
+        &:hover{
+            text-decoration: underline !important;
+        }
+
+        b{
+            color:#aaa;
+        }
+
+        .mat-icon{
+            font-size: 18px;
+            position: relative;
+            top: 4px;
+        }
+    }
+
+    .hm{
+        font-size: 18px;
+        margin: 0px;
+        position: relative;
+        top: 1px;
+    }
+
+    i{ margin: 0px 8px; font-size: 16px; color:$primary !important}
+    .arr{
+        color:#bbb;
+    }
+}
+
+.subinfo{
+    font-size: 14px;
+    display: block;
+    letter-spacing: 1px;
+}
+
+.indicadores{
+    background: $accent;
+    padding: 15px;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 21px;
+
+    b{
+        display: block;
+        font-size: 12px !important;
+    }
+}

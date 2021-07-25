@@ -1,0 +1,48 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+$candy-app-primary: mat-palette($mat-blue-gray, 900, 100, 900);
+$candy-app-accent:  mat-palette($mat-yellow, A700, A100, A700);
+$candy-app-warn:    mat-palette($mat-red, 900, 100, 900);
+$candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-app-warn);
+
+@include angular-material-theme($candy-app-theme);
+
+
+/* Colors*/
+$primary :  #263238;
+$sprimary: #37474F;
+
+$accent : #FFD600;
+$warn:#B71C1C;
+
+$light-primary:#E0F2F1;
+$dark-gray: #607D8B; // 500
+$medium-gray:#90A4AE; // 300
+$light-gray: #ECEFF1; // 100
+
+$alert-green:#A5D6A7;
+$alert-border-green:#388E3C;
+$alert-yellow: #FFF59D;
+$alert-border-yellow: #FDD835;
+$alert-red: #EF9A9A;
+$alert-border-red: #D32F2F;
+/* ####### */
+
+$item-border:5px;
+$item-vertical-padding:15px 0px;
+$item-horizontal-padding:0px 15px;
+$item-full-padding:15px;
+$item-vertical-margin:15px 0px;
+$item-horizontal-margin:0px 15px;
+$item-full-margin:15px;
+
+
+::ng-deep{
+    .mat-menu-panel{
+        min-height: initial !important;
+        .mat-menu-content{
+            padding:0px !important;
+        }
+    }
+}
