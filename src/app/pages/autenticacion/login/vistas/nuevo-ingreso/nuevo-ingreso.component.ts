@@ -13,7 +13,7 @@ export class NuevoIngresoComponent implements OnInit {
   @Input() tipoUsuario;
   @Output() moverVista:EventEmitter<number> = new EventEmitter();
 
-  rut = new FormControl('',[Validators.required]);
+  email = new FormControl('',[Validators.required]);
   codigoValidacion = new FormControl('',[Validators.required]);
   usuario = new FormControl('',[Validators.required, Validators.minLength(8), Validators.maxLength(15)]);
   clave = new FormControl('',[Validators.required, Validators.minLength(8), Validators.maxLength(15)]);
@@ -37,9 +37,9 @@ export class NuevoIngresoComponent implements OnInit {
 
     let error = false;
 
-    if(this.rut.hasError('required')){
-      this.rut.markAsTouched();
-      this.rut.setErrors({ required: true});
+    if(this.email.hasError('required')){
+      this.email.markAsTouched();
+      this.email.setErrors({ required: true});
       error = true;
     }
 
@@ -48,7 +48,7 @@ export class NuevoIngresoComponent implements OnInit {
     }
 
     const data = {
-      rut: this.rut.value,
+      email: this.email.value,
       tipoUsuario : this.tipoUsuario
     }
 
@@ -166,7 +166,7 @@ export class NuevoIngresoComponent implements OnInit {
       validar: null,
       procesar: null
     };
-    this.rut.reset();
+    this.email.reset();
     this.usuario.reset();
     this.clave.reset();
     this.confirmarClave.reset();

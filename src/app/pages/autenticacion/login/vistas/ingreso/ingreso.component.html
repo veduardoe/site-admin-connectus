@@ -1,7 +1,7 @@
 <div class="form-content">
     <div class="form-login">
         <h3>INGRESO</h3>
-        <span class="smtxt-blue">PORTAL {{ tipoUsuario | uppercase }}</span>
+        <span class="smtxt-blue">PORTAL ADMIN</span>
         <span class="smtxt">Bienvenido a la plataforma, ingrese sus credenciales para acceder.</span>
         <div class="input-login">
             <div [hidden]="enable2FACode">
@@ -28,9 +28,7 @@
                 <span class="alert warning" >
                     Estimado usuario, te hemos enviado un correo con el código 2FA para 
                     ingresar a la plataforma. Si presentas problemas, contáctanos.</span>
-        
             </div>
-
 
             <button mat-flat-button color="primary" class="btnCustom boldy full" (click)="login()">ACCEDER</button>
             <div *ngIf="!enable2FACode">

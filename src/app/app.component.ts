@@ -40,7 +40,6 @@ export class AppComponent implements OnInit, OnDestroy {
       this.onResize();
       this.defineSwipeSidenav();
       this.setloginState();
-      this.setIndicadores();
     }, 100);
 
   }
@@ -55,18 +54,7 @@ export class AppComponent implements OnInit, OnDestroy {
       try {
         const decodedToken :any = { data: jwt_decode(data), access_token: data };
         sessionStorage.setItem('auth', JSON.stringify(decodedToken));
-
-        switch (decodedToken.data.tipoUsuario) {
-
-          case TIPO_USUARIOS.ADMIN:
-            this.router.navigate(['/solicitudes']);
-            break;
-
-          case TIPO_USUARIOS.AGENTE:
-            this.router.navigate(['/solicitudes']);
-            break;
-        }
-
+        this.router.navigate(['/administradores']);
       } catch (err) {
         this.utils.fnError();
       }
@@ -131,12 +119,5 @@ export class AppComponent implements OnInit, OnDestroy {
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
   }
 
-  setIndicadores(){
-    this.utils.getIndicadores().then( (res:any) => {
-      const { uf, dolar, dolar_intercambio, euro, utm } = res;
-      const indicadores = { uf, dolar, dolar_intercambio, euro, utm } ;
-      localStorage.setItem('indicadores', JSON.stringify(indicadores));
-    });
-  }
 
 }

@@ -36,11 +36,11 @@
             <div class="input-login" *ngIf="!nuevoIngreso.solicitar || !nuevoIngreso.solicitar?.response">
 
                 <mat-form-field appearance="outline" class="full">
-                    <mat-label>RUT</mat-label>
-                    <input matInput type="text" maxlength="15" [formControl]="rut"
-                        placeholder="RUT sin puntos">
+                    <mat-label>Correo Electrónico</mat-label>
+                    <input matInput type="text" maxlength="200" [formControl]="email"
+                        placeholder="Correo Electrónico">
                     <mat-icon matPrefix class="iconprefix"><i class="fal fa-id-card"></i></mat-icon>
-                    <mat-error *ngIf="rut.invalid">RUT es requerido</mat-error>
+                    <mat-error *ngIf="email.invalid">Correo Electrónico es requerido</mat-error>
                 </mat-form-field>
                 <button mat-flat-button color="primary" class="btnCustom boldy full"
                     (click)="solicitarIngreso()">BUSCAR</button>

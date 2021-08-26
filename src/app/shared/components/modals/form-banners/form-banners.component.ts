@@ -1,19 +1,22 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { BannersService } from 'src/app/shared/services/banners.service';
 import { UtilsService } from 'src/app/shared/services/common/utils.service';
 import { UsuariosService } from 'src/app/shared/services/usuarios.service';
 import { ENV } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-form-administradores',
-  templateUrl: './form-administradores.component.html',
-  styleUrls: ['./form-administradores.component.scss']
+  selector: 'app-form-banners',
+  templateUrl: './form-banners.component.html',
+  styleUrls: ['./form-banners.component.scss']
 })
-export class FormAdministradoresComponent implements OnInit {
+export class FormBannersComponent implements OnInit {
 
-  estados = ['ACTIVO', 'INACTIVO', 'BLOQUEO_TEMPORAL', 'ESPERA_INGRESO'];
-  routeFotoPerfil = ENV.FOTOS_PERFIL;
+  estados = [{ id: 'ACTIVO', value: true}, { id: 'INACTIVO', value: false}];
+  idiomas = [{ id: 'ESPAÑOL', value: 'ES'}, { id: 'INGLÉS', value: 'EN'}];
+  tiposBanners = ['BANNER_SUPERIOR', 'BANNER_LATERAL'];
+  routeImagen = ENV.FICHEROS;
   fotoPerfil;
   nomUsuario;
 
@@ -21,35 +24,27 @@ export class FormAdministradoresComponent implements OnInit {
 
   mainForm = new FormGroup({
     _id: new FormControl(null),
-    nombres: new FormControl(null, [Validators.required]),
-    apellido_paterno: new FormControl(null, [Validators.required]),
-    apellido_materno: new FormControl(null),
-    email: new FormControl(null, [Validators.required]),
-    telefono: new FormControl(null, [Validators.required]),
-    tipoUsuario: new FormControl('ADMIN', [Validators.required]),
-    estado: new FormControl('ESPERA_INGRESO', [Validators.required]),
-    a2FA:new FormControl(null),
-    foto: new FormControl(null),
-    clave: new FormControl(null),
-    confirmarClave: new FormControl(null)
-
+    tipo: new FormControl(null, [Validators.required]),
+    titulo: new FormControl(null, [Validators.required]),
+    tituloResaltado: new FormControl(null),
+    url: new FormControl(null, [Validators.required]),
+    habilitado: new FormControl(null, [Validators.required]),
+    idioma: new FormControl(null, [Validators.required]),
+    imagen: new FormControl(null, [Validators.required]),
+    posicion: new FormControl(1,  [Validators.required]),
   });
 
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public input: { data: any },
     public utils: UtilsService,
-    public usuariosService: UsuariosService
+    public bannerService: BannersService
   ) {
 
     if (this.input.data) {
       let data = this.input.data;
-      this.nomUsuario = data.usuario;
       this.mainForm.patchValue(data);
-      this.mainForm.controls.estado.enable();
-    } else {
-      this.mainForm.controls.estado.disable();
-    }
+    } 
 
   }
 
@@ -66,26 +61,10 @@ export class FormAdministradoresComponent implements OnInit {
       return;
     }
 
-    if (!this.utils.validateEmail(data.email)) {
-      this.utils.fnMainDialog('Error', 'El correo ingresado es incorrecto. Revíselo e intente nuevamente', 'message');
-      return;
-    }
-
-    if(data.clave ){
-      if(data.clave !== data.confirmarClave){
-        this.utils.fnMainDialog('Error', 'Las contraseñas no coinciden. Verifique e intente nuevamente.', 'message');
-        return;
-      }
-
-      if(data.clave.length < 8 || data.clave.length > 15){
-        this.utils.fnMainDialog('Error', 'La contraseña debe tener entre 8 y 15. Verifique e intente nuevamente.', 'message');
-        return;
-      }
-    }
     
     this.utils.setLoading(true);
 
-    const prom = (data._id) ? this.usuariosService.put(data._id, data) : this.usuariosService.post(data);
+    const prom = (data._id) ? this.bannerService.put(data._id, data) : this.bannerService.post(data);
     prom.then(res => {
       if (res['response']) {
         this.dialogEvent.emit(true)
@@ -149,8 +128,8 @@ export class FormAdministradoresComponent implements OnInit {
         if (mimeTypeImagenes) {
 
           this.fotoPerfil = fichero;
-          this.mainForm.patchValue({ foto: fichero });
-
+          this.mainForm.patchValue({ imagen: fichero });
+          console.log(fichero)
         } else {
 
           this.utils.fnMessage("Tipo de archivo no permitido");
@@ -167,7 +146,7 @@ export class FormAdministradoresComponent implements OnInit {
   removerImagen() {
     this.utils.fnMainDialog('Confirmación', '¿Está seguro de remover la foto de perfil?', 'confirm').subscribe(res => {
       if (res) {
-        this.mainForm.patchValue({ foto: null });
+        this.mainForm.patchValue({ imagen: null });
       }
     })
   }

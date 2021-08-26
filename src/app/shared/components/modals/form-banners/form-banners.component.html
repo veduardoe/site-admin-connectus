@@ -1,0 +1,104 @@
+<h2 mat-dialog-title>Configuración del Banner</h2>
+<mat-dialog-content class="dialog-content">
+
+    <form [formGroup]="mainForm">
+
+        <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+            <div fxFlex="100%">
+                <div class="pic-agente"  >
+                    <input type="file" id="fotoperfil" (change)="fileChange($event.target.files)"
+                        accept=".jpg, .png, .jpeg, .gif" hidden multiple>
+                    <span *ngIf="!mainForm.value.imagen" class="btnsub" (click)="openInputFile(null)">SUBIR FOTO BANNER</span>
+                    <img *ngIf="mainForm.value.imagen && !mainForm.value.imagen.includes('data')"
+                        [src]="routeImagen + mainForm.value.imagen + '?alt=media'" (click)="removerImagen()">
+                    <img *ngIf="mainForm.value.imagen  && mainForm.value.imagen.includes('data')"
+                        [src]="mainForm.value.imagen" (click)="removerImagen()">
+
+                </div>
+            </div>
+            <div fxFlex="100%">
+                <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                    <div fxFlex="100%">
+                        <mat-form-field class="full" appearance="outline">
+                            <mat-label>Título</mat-label>
+                            <input matInput formControlName="titulo" required>
+                            <mat-error *ngIf="mf.titulo.errors">
+                                <span *ngIf="mf.titulo.errors.required">Campo Obligatorio</span>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="100%">
+                        <mat-form-field class="full" appearance="outline">
+                            <mat-label>Título Resaltado</mat-label>
+                            <input matInput formControlName="tituloResaltado" required>
+                            <mat-error *ngIf="mf.tituloResaltado.errors">
+                                <span *ngIf="mf.tituloResaltado.errors.required">Campo Obligatorio</span>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="49%">
+                        <mat-form-field class="full" appearance="outline">
+                            <mat-label>URL</mat-label>
+                            <input matInput formControlName="url" required>
+                            <mat-error *ngIf="mf.url.errors">
+                                <span *ngIf="mf.url.errors.required">Campo Obligatorio</span>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="49%">
+                        <mat-form-field class="full" appearance="outline">
+                            <mat-label>Tipo de Banner</mat-label>
+                            <mat-select formControlName="tipo" required>
+                                <mat-option *ngFor="let tb of tiposBanners" [value]="tb">{{ tb | removeUnderscore }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="mf.tipo.errors">
+                                <span *ngIf="mf.tipo.errors.required">Campo Obligatorio</span>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div fxFlex="33%">
+                <mat-form-field class="full" appearance="outline">
+                    <mat-label>Idioma</mat-label>
+                    <mat-select formControlName="idioma" required>
+                        <mat-option *ngFor="let ee of idiomas" [value]="ee.value">{{ ee.id }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="mf.idioma.errors">
+                        <span *ngIf="mf.idioma.errors.required">Campo Obligatorio</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div fxFlex="33%">
+                <mat-form-field class="full" appearance="outline">
+                    <mat-label>Posición</mat-label>
+                    <mat-select formControlName="posicion" required>
+                        <mat-option *ngFor="let ii of [].constructor(99); let i = index" [value]="i">{{ i }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="mf.posicion.errors">
+                        <span *ngIf="mf.posicion.errors.required">Campo Obligatorio</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div fxFlex="33%">
+                <mat-form-field class="full" appearance="outline">
+                    <mat-label>Estado</mat-label>
+                    <mat-select formControlName="habilitado" required>
+                        <mat-option *ngFor="let ee of estados" [value]="ee.value">{{ ee.id }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="mf.habilitado.errors">
+                        <span *ngIf="mf.habilitado.errors.required">Campo Obligatorio</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+        </div>
+
+    </form>
+
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-flat-button class="primary-gray" [mat-dialog-close]="true">Cancelar</button>
+    <button mat-flat-button color="primary" (click)="save()">Guardar</button>
+</mat-dialog-actions>

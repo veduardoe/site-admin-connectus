@@ -10,7 +10,6 @@ export class SubheaderComponent implements OnInit {
 
   public obsStateBreadcrumbs;
   public breadcrumbs;
-  public indicadores;
 
   constructor(
     public utils:UtilsService
@@ -22,15 +21,6 @@ export class SubheaderComponent implements OnInit {
       this.breadcrumbs = state;
     });
 
-    this.setIndicadores();
-  }
-
-  setIndicadores(){
-    this.utils.getIndicadores().then( (res:any) => {
-      const { uf, dolar, dolar_intercambio, euro, utm } = res;
-      this.indicadores = { uf, dolar, dolar_intercambio, euro, utm };
-      localStorage.setItem('indicadores', JSON.stringify(this.indicadores));
-    });
   }
 
 }

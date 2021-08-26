@@ -22,6 +22,8 @@ import { MainMessageComponent } from './shared/components/modals/main-message/ma
 import { AutenticacionService } from './shared/services/autenticacion/autenticacion.service';
 import { SharedModule } from './shared/share.module';
 import { InterceptorService } from './app.interceptor';
+import { PerfilService } from './shared/services/common/perfil.service';
+import { UsuariosService } from './shared/services/usuarios.service';
 
 registerLocaleData(locale, ENV.locale);
 
@@ -48,6 +50,8 @@ registerLocaleData(locale, ENV.locale);
   providers: [
     UtilsService,
     AutenticacionService,
+    PerfilService,
+    UsuariosService,
     { provide: MAT_DATE_LOCALE, useValue: ENV.locale },
     { provide: LOCALE_ID, useValue: ENV.locale },
     { provide: MAT_DATE_FORMATS, useValue: CONFIG.DATE_FORMATS },

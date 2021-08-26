@@ -50,8 +50,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     const data = this.autenticacionService.getAuthInfo();
     if(data.tipoUsuario === 'ADMIN'){
       this.perfilService.openFormPerfilAdmin(data.id, true);
-    }else{
-      this.perfilService.openFormAgente(data.id, true);
     }
   }
 }

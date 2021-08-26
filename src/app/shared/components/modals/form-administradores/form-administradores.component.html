@@ -10,7 +10,7 @@
                 <div class="pic-agente">
                     <input type="file" id="fotoperfil" (change)="fileChange($event.target.files)"
                         accept=".jpg, .png, .jpeg, .gif" hidden multiple>
-                    <img *ngIf="!mainForm.value.foto" [src]="routeFotoPerfil + 'add-profile.png?alt=media'"
+                    <img *ngIf="!mainForm.value.foto" [src]="routeFotoPerfil + 'add-profile.jpg?alt=media'"
                         (click)="openInputFile()">
                     <img *ngIf="mainForm.value.foto && !mainForm.value.foto.includes('data')"
                         [src]="routeFotoPerfil + mainForm.value.foto + '?alt=media'" (click)="removerImagen()">
@@ -56,18 +56,6 @@
                     </div>
                 </div>
 
-            </div>
-
-
-            <div fxFlex="49%">
-                <mat-form-field class="full" appearance="outline">
-                    <mat-label>RUT</mat-label>
-                    <input matInput formControlName="rut" required placeholder="Ej: 12345678-9">
-                    <mat-error *ngIf="mf.rut.errors">
-                        <span *ngIf="mf.rut.errors.required">Campo Obligatorio</span>
-                    </mat-error>
-                    <mat-hint>Rut sin puntos y con guión</mat-hint>
-                </mat-form-field>
             </div>
 
             <div fxFlex="49%">

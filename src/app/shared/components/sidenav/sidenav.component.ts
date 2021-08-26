@@ -31,39 +31,12 @@ export class SidenavComponent implements OnInit {
         groupName: 'Opciones del Sistema',
         icon: 'fal fa-cog',
         items: [
-          { name: 'Agentes', path: '/agentes', activateTo: ['ADMIN'], icon: 'fal fa-cog', class: 'winfo' },
-          { name: 'Propiedades', path: '/propiedades', activateTo: ['ADMIN', 'AGENTE'], icon: 'fal fa-cog' },
-          { name: 'Solicitudes', path: '/solicitudes', activateTo: ['ADMIN', 'AGENTE'], icon: 'fal fa-cog' },
-          { name: 'Mantenedores', path: '/mantenedores', activateTo: ['ADMIN'], icon: 'fal fa-cog' },
-          { name: 'Pagos y Comisiones', path: '/pagos-comisiones', activateTo: ['ADMIN', 'AGENTE'], icon: 'fal fa-cog' },
-          { name: 'Tipos de Propiedades', path: '/extras/tipos-propiedades', activateTo: ['ADMIN'], icon: 'fal fa-cog' },
-          { name: 'Amenidades', path: '/extras/amenidades', activateTo: ['ADMIN'], icon: 'fal fa-cog' },
-          { name: 'Administradores', path: '/administradores', activateTo: ['ADMIN'], icon: 'fal fa-cog' },
-          { name: 'Planes', path: '/planes', activateTo: ['ADMIN'], icon: 'fal fa-cog' },
-          { name: 'Clientes', path: '/clientes', activateTo: ['ADMIN','AGENTE'], icon: 'fal fa-cog' },
-          { name: 'Config. Asignación', path: '/extras/configuracion', activateTo: ['ADMIN'], icon: 'fal fa-cog' },
-          { name: 'Ganancias y Captaciones', path: '/ganancias', activateTo: [ 'AGENTE', 'ADMIN'], icon: 'fal fa-envelope-open-dollar',class: '' },
-        ]
+          { name: 'Admins', path: '/administradores', activateTo: ['ADMIN'], icon: 'fal fa-cog' },        ]
       }];
 
     this.menuItems = [
-      { name: 'Agentes', path: '/agentes', activateTo: ['ADMIN'], icon: 'fas fa-user-tie', class: 'center-text' },
-      { name: 'Propiedades', path: '/propiedades', activateTo: ['ADMIN', 'AGENTE'], icon: 'fal fa-home-lg', class: 'center-text' },
-      { name: 'Solicitudes', path: '/solicitudes', activateTo: ['ADMIN', 'AGENTE'], icon: 'fal fa-clipboard-list-check', class: 'center-text'  },
-      { name: 'Ganancias y Captaciones', path: '/ganancias', activateTo: [ 'AGENTE'], icon: 'fal fa-envelope-open-dollar',class: '' },
-      { name: 'Clientes', path: '/clientes', activateTo: ['ADMIN', 'AGENTE'], icon: 'fal fa-cog', class: 'center-text'  },
-      {
-        groupName: 'Más opciones',
-        icon: 'fal fa-cog',
-        activateTo: ['ADMIN'],
-        items: [
-          { name: 'Tipos de Propiedades', path: '/extras/tipos-propiedades', activateTo: ['ADMIN'], icon: 'fal fa-cog' },
-          { name: 'Amenidades', path: '/extras/amenidades', activateTo: ['ADMIN'], icon: 'fal fa-cog' },
-          { name: 'Config. Asignación', path: '/extras/configuracion', activateTo: ['ADMIN'], icon: 'fal fa-cog' },
-          { name: 'Administradores', path: '/administradores', activateTo: ['ADMIN'], icon: 'fal fa-cog' },
-          { name: 'Planes', path: '/planes', activateTo: ['ADMIN'], icon: 'fal fa-cog' },
-        ]
-      }
+      { name: 'Admins', path: '/administradores', activateTo: ['ADMIN'], icon: 'fal fa-cog', class: 'center-text'  },
+      { name: 'Banners', path: '/banners', activateTo: ['ADMIN'], icon: 'fal fa-cog', class: 'center-text'  },
 
     ]
   }

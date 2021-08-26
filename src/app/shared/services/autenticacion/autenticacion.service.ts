@@ -109,6 +109,5 @@ export class AutenticacionService implements CanActivate {
 
         }
 
-
     }
 }

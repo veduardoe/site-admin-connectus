@@ -4,7 +4,7 @@ import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { PerfilService } from "src/app/shared/services/common/perfil.service";
 import { UtilsService } from "src/app/shared/services/common/utils.service";
-import { UsuariosService } from "src/app/shared/services/usuarios/usuarios.service";
+import { UsuariosService } from "src/app/shared/services/usuarios.service";
 import { ENV } from "src/environments/environment";
 
 @Component({
@@ -54,7 +54,7 @@ export class ListadoAdministradoresComponent implements OnInit {
   }
 
   setTable(data) {
-    this.columns = ['foto', 'nombres', "apellido_paterno", "rut", "email", "telefono", "fechaRegistro", "estado", "acciones"];
+    this.columns = ['foto', 'nombres', "apellido_paterno", "email", "telefono", "fechaRegistro", "estado", "acciones"];
     this.length = data.length;
     this.dataSource = new MatTableDataSource(data);
     this.dataSource.sort = this.sort;
@@ -69,39 +69,6 @@ export class ListadoAdministradoresComponent implements OnInit {
   async openForm(id = null){
     await this.perfilService.openFormPerfilAdmin(id);
     this.getAdministradores();
-  }
-
-  exportarExcel(){
-
-    const data = [
-      [
-        'Nombres',
-        'Apellido',
-        'Rut',
-        'Email',
-        'Telefono',
-        'Estado',
-        'Fecha Registro',
-      ],[]
-    ];
-
-    this.administradores.forEach((val, key) => {
-      data.push([
-        val.nombres,
-        val.apellido_paterno,
-        val.rut,
-        val.email,
-        val.telefono,
-        val.estado, 
-        val.fechaRegistro
-      ]);
-    });
-
-    if(this.administradores.length === 0){
-      this.utils.fnMessage("No hay datos para ser exportados.");
-      return;
-    }
-    this.utils.exportAsExcelFile(data, 'Agentes');
   }
 
 }

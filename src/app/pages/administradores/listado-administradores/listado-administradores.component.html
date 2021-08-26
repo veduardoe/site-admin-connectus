@@ -6,9 +6,7 @@
                     <button mat-flat-button color="primary" class="btnCustom boldy" (click)="openForm()">AGREGAR ADMINISTRADOR</button>
                 </div>
                 <div fxFlex="50%" fxFlex.xs="100%" class="alignRight">
-                    <button mat-flat-button color="primary" class="btnCustom boldy btnExcel" (click)="exportarExcel()">
-                        <i class="fal fa-file-excel"></i> 
-                        EXPORTAR EXCEL</button>
+        
                     <mat-form-field appearance="outline" class="no-padding">
                         <mat-label>Buscar</mat-label>
                         <input matInput placeholder="Escriba..." (keyup)="setFilter($event.target.value)">
@@ -22,7 +20,7 @@
             <ng-container matColumnDef="foto">
                 <mat-header-cell *matHeaderCellDef mat-sort-header> Foto </mat-header-cell>
                 <mat-cell *matCellDef="let e" data-label="Foto"> <span>
-                    <img *ngIf="!e.foto" [src]="routeFotoPerfil + 'blank_profile.png?alt=media'" class="pic-table">
+                    <img *ngIf="!e.foto" [src]="routeFotoPerfil + 'add-profile.jpg?alt=media'" class="pic-table">
                     <img *ngIf="e.foto" [src]="routeFotoPerfil + e.foto + '?alt=media'" class="pic-table">
 
                 </span> </mat-cell>
@@ -35,11 +33,6 @@
             <ng-container matColumnDef="apellido_paterno">
                 <mat-header-cell *matHeaderCellDef mat-sort-header> Apellido </mat-header-cell>
                 <mat-cell *matCellDef="let e" data-label="Apellido"> <span>{{e.apellido_paterno}}</span> </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="rut">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Rut </mat-header-cell>
-                <mat-cell *matCellDef="let e" data-label="RUT"> <span>{{e.rut}}</span> </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="email">
