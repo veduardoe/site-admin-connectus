@@ -39,8 +39,8 @@ export class ListadoBannersComponent implements OnInit {
   ngOnInit(): void {
 
     this.utils.fnBreadcrumbsState().setBreadcrumbsState({
-      t: 'Listado de Banners',
-      b: [{ n: 'Listado de Banners', r: '/banners' }]
+      t: 'Banners',
+      b: [{ n: 'Banners', r: '/banners' }]
     });
 
     this.getBanners();
@@ -64,7 +64,7 @@ export class ListadoBannersComponent implements OnInit {
       this.setTable(res.data);
       this.utils.setLoading(false);
     }).catch(err => {
-      this.utils.fnMainDialog('Error', "Se produjo un error al procesar la solicitud. Intente de nuevo más tarde.", "message");
+      this.utils.fnError();
       this.setTable([]);
       this.utils.setLoading(false);
     });
@@ -101,7 +101,7 @@ export class ListadoBannersComponent implements OnInit {
           data = reqData.data[0];
           data.from = from;
         } catch (err) {
-          this.utils.fnMainDialog("Error", "No se encontró el Banner seleccionado.", "message");
+          this.utils.fnMainDialog("Error", "Selected banner has not been found.", "message");
           return false;
         }
       }
@@ -125,11 +125,11 @@ export class ListadoBannersComponent implements OnInit {
   }
 
   borrar(id){
-    this.utils.fnMainDialog('Confirmación', '¿Está seguro de eliminar el banner?', 'confirm').subscribe( async res => {
+    this.utils.fnMainDialog('Confirm', 'are you sure to delete this banner?', 'confirm').subscribe( async res => {
       if(res){
         await this.bannerService.delete(id);
         this.getBanners();
-        this.utils.fnMainDialog("Notificación", "Banner eliminado correctamente.", "message");
+        this.utils.fnMainDialog("Notificación", "Banner deleted successfully.", "message");
       }
     });
 

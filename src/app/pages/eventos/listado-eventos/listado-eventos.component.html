@@ -1,0 +1,79 @@
+<div class="appSection">
+    <div class="white-container mat-elevation-z2">
+        <div class="search-input">
+            <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                <div fxFlex="50%" fxFlex.xs="100%" class="alignLeft">
+                    <button mat-flat-button color="primary" class="btnCustom boldy" (click)="openForm()">CREATE EVENT
+                        </button>
+                </div>
+                <div fxFlex="50%" fxFlex.xs="100%" class="alignRight">
+
+                    <mat-form-field appearance="outline" class="no-padding">
+                        <mat-label>Find</mat-label>
+                        <input matInput placeholder="Write..." (keyup)="setFilter($event.target.value)">
+                        <mat-icon matSuffix>search</mat-icon>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <mat-table [dataSource]="dataSource" class="responsiveActive" matSort>
+
+            <ng-container matColumnDef="foto">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Picture </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Foto"> 
+                    <span>
+                        <img *ngIf="!e.foto" [src]="routeFichero + 'add-profile.jpg?alt=media'" class="pic-table">
+                        <img *ngIf="e.foto" [src]="routeFichero + e.foto + '?alt=media'" class="pic-table">
+                    </span>
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="titulo">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Título"> <span>{{e.titulo}}</span> </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="lugar">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Place </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Lugar"> <span>{{e.lugar}}</span> </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="fechaHora">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Date and Time </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Fecha y Hora"> <span>{{e.fechaHoraStr | date:'dd-MM-yyyy
+                    HH:mm:ss'}}</span> </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="resaltado">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Highlight </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Resaltado"> <span>{{e.resaltado ? 'SI' : 'NO'}}</span> </mat-cell>
+            </ng-container>
+
+
+            <ng-container matColumnDef="acciones">
+                <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Acciones">
+                    <span>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="openForm(e._id)">
+                                <mat-icon>create</mat-icon>
+                                <span>View and Edit</span>
+                            </button>
+                            <button mat-menu-item (click)="borrarEvento(e._id)">
+                                <mat-icon>close</mat-icon>
+                                <span>Delete</span>
+                            </button>
+                        </mat-menu>
+                        <button mat-icon-button [matMenuTriggerFor]="menu" matTooltipPosition="right">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                    </span>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="columns" class="bgheader"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+        </mat-table>
+        <p class="noresults" *ngIf="length === 0">No se encontraron resultados</p>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" (page)="utils.fnGoTop()"></mat-paginator>
+    </div>
+</div>

@@ -10,6 +10,10 @@ const routes: Routes = [
         loadChildren: () => import('./pages/administradores/administradores.module').then(m => m.AdministradoresModule)
     },
     {
+        path: 'events',
+        loadChildren: () => import('./pages/eventos/eventos.module').then(m => m.EventosModule)
+    },
+    {
         path: 'banners',
         loadChildren: () => import('./pages/banners/banners.module').then(m => m.BannersModule)
     },

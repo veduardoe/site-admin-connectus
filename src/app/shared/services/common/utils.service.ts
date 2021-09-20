@@ -120,7 +120,7 @@ export class UtilsService {
   }
 
   fnError() {
-    this.fnMainDialog('Error', "Se ha producido un error. Intente nuevamente más tarde.", "message");
+    this.fnMainDialog('Error', "There was an error. Try again later.", "message");
   }
 
   fnSuccessSave() {

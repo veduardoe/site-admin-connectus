@@ -1,0 +1,119 @@
+<h2 mat-dialog-title> Datos del Evento</h2>
+<mat-dialog-content class="dialog-content">
+
+    <form [formGroup]="mainForm">
+
+        <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+            <div fxFlex="30%">
+                <div class="pic-agente">
+                    <input type="file" id="fotoevento" (change)="fileChange($event.target.files)"
+                        accept=".jpg, .png, .jpeg, .gif" hidden multiple>
+                    <img *ngIf="!mainForm.value.foto" [src]="routeFichero + 'icon-empty.png?alt=media'"
+                        (click)="openInputFile()">
+                    <img *ngIf="mainForm.value.foto && !mainForm.value.foto.includes('data')"
+                        [src]="routeFichero + mainForm.value.foto + '?alt=media'" (click)="removerImagen()">
+                    <img *ngIf="mainForm.value.foto  && mainForm.value.foto.includes('data')"
+                        [src]="mainForm.value.foto" (click)="removerImagen()">
+
+                </div>
+            </div>
+            <div fxFlex="70%">
+                <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                    <div fxFlex="100%">
+                        <mat-form-field class="full" appearance="outline">
+                            <mat-label>Title</mat-label>
+                            <input matInput formControlName="titulo" required>
+                            <mat-error *ngIf="mf.titulo.errors">
+                                <span *ngIf="mf.titulo.errors.required">Required</span>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="100%">
+                        <mat-form-field class="full" appearance="outline">
+                            <mat-label>Pre Detail</mat-label>
+                            <input matInput formControlName="preDetalle" required>
+                            <mat-error *ngIf="mf.preDetalle.errors">
+                                <span *ngIf="mf.preDetalle.errors.required">Required</span>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                </div>
+
+            </div>
+            <div fxFlex="49%">
+                <mat-form-field class="full" appearance="outline">
+                    <mat-label>Place</mat-label>
+                    <input matInput formControlName="lugar">
+                    <mat-error *ngIf="mf.lugar.errors">
+                        <span *ngIf="mf.lugar.errors.required">Required</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div fxFlex="49%" >
+                <mat-form-field class="full" appearance="outline">
+                    <mat-label>Category</mat-label>
+                    <mat-select formControlName="idCategoria" required>
+                        <mat-option *ngFor="let cat of categorias" [value]="cat._id">{{ cat.detalleEN }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="mf.idCategoria.errors">
+                        <span *ngIf="mf.idCategoria.errors.required">Required</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div fxFlex="49%">
+                <mat-form-field appearance="outline" class="full">
+                    <mat-label>DateTime</mat-label>
+                    <input matInput formControlName="fecha" [matDatepicker]="pickerFecha" [min]="today"
+                        (focus)="pickerFecha.open()">
+                        <i class="fal fa-calendar-day input-icon" matSuffix></i>
+                    <mat-datepicker #pickerFecha></mat-datepicker>
+                    <mat-error *ngIf="mf.fecha.errors">
+                        <span *ngIf="mf.fecha.errors.required">Required</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div fxFlex="49%">
+                <ngx-timepicker-field [format]="24" [defaultTime]="hora" (timeChanged)="setHora($event)"></ngx-timepicker-field>
+
+            </div>
+   
+            <div fxFlex="49%" >
+                <mat-form-field class="full" appearance="outline">
+                    <mat-label>Highlighted</mat-label>
+                    <mat-select formControlName="resaltado" required>
+                        <mat-option [value]="true">Yes</mat-option>
+                        <mat-option [value]="false">No</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="mf.resaltado.errors">
+                        <span *ngIf="mf.resaltado.errors.required">Required</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div fxFlex="49%" >
+                <mat-form-field class="full" appearance="outline">
+                    <mat-label>Language</mat-label>
+                    <mat-select formControlName="idioma" required>
+                        <mat-option [value]="'ES'">Español</mat-option>
+                        <mat-option [value]="'EN'">English</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="mf.idioma.errors">
+                        <span *ngIf="mf.idioma.errors.required">Required</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div fxFlex="100%">
+                <div [froalaEditor] [(froalaModel)]="detalleHTML"></div> 
+           </div>
+
+        </div>
+
+    </form>
+
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-flat-button class="primary-gray" [mat-dialog-close]="true">Cancel</button>
+    <button mat-flat-button color="primary" (click)="save()">Save</button>
+</mat-dialog-actions>

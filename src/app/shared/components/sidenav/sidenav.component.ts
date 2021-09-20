@@ -31,12 +31,15 @@ export class SidenavComponent implements OnInit {
         groupName: 'Opciones del Sistema',
         icon: 'fal fa-cog',
         items: [
-          { name: 'Admins', path: '/administradores', activateTo: ['ADMIN'], icon: 'fal fa-cog' },        ]
+          { name: 'Admins', path: '/administradores', activateTo: ['ADMIN'], icon: 'fal fa-cog' },  
+          { name: 'Eventos', path: '/eventos', activateTo: ['ADMIN'], icon: 'fal fa-calendar' },      
+        ]
       }];
 
     this.menuItems = [
       { name: 'Admins', path: '/administradores', activateTo: ['ADMIN'], icon: 'fal fa-cog', class: 'center-text'  },
       { name: 'Banners', path: '/banners', activateTo: ['ADMIN'], icon: 'fal fa-cog', class: 'center-text'  },
+      { name: 'Events', path: '/events', activateTo: ['ADMIN'], icon: 'fal fa-calendar', class: 'center-text' },      
 
     ]
   }

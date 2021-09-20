@@ -4,28 +4,28 @@
             <div fxLayout="row" fxLayoutAlign="space-between center">
                 <div fxFlex="700px" fxFlex.xs="100%" class="alignLeft">
                     <mat-form-field appearance="outline" style="margin-right: 20px;">
-                        <mat-label>Tipo de Banner</mat-label>
+                        <mat-label>Banner Position</mat-label>
                         <mat-select [(ngModel)]="banner" (selectionChange)="getBanners()">
-                            <mat-option [value]="'BANNER_SUPERIOR'">BANNER SUPERIOR</mat-option>
-                            <mat-option [value]="'BANNER_LATERAL'">BANNER LATERAL</mat-option>
+                            <mat-option [value]="'BANNER_SUPERIOR'">UPPER BANNER</mat-option>
+                            <mat-option [value]="'BANNER_LATERAL'">SIDE BANNER</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field appearance="outline"  >
-                        <mat-label>Idioma</mat-label>
+                        <mat-label>Language</mat-label>
                         <mat-select [(ngModel)]="idioma" (selectionChange)="getBanners()">
                             <mat-option [value]="'ES'">ESPAÑOL</mat-option>
-                            <mat-option [value]="'EN'">INGLÉS</mat-option>
+                            <mat-option [value]="'EN'">ENGLISH</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
 
                 <div fxFlex="450px" fxFlex.xs="100%" class="alignRight">
                     <mat-form-field appearance="outline" class="no-padding ">
-                        <mat-label>Buscar</mat-label>
-                        <input matInput placeholder="Escriba..." (keyup)="setFilter($event.target.value)">
+                        <mat-label>Find</mat-label>
+                        <input matInput placeholder="Write..." (keyup)="setFilter($event.target.value)">
                         <mat-icon matSuffix>search</mat-icon>
                     </mat-form-field>
-                    <button mat-flat-button color="primary" class="btnCustom boldy btnadd" (click)="openForm()">AGREGAR BANNER</button>
+                    <button mat-flat-button color="primary" class="btnCustom boldy btnadd" (click)="openForm()">CREATE BANNER</button>
 
                 </div>
      
@@ -34,7 +34,7 @@
         <mat-table [dataSource]="dataSource" class="responsiveActive" matSort>
             
             <ng-container matColumnDef="imagen">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Imagen </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Picture </mat-header-cell>
                 <mat-cell *matCellDef="let e" data-label="Foto"> <span>
                     <img *ngIf="!e.imagen" [src]="routeImagen + 'add-profile.jpg?alt=media'" class="pic-table">
                     <img *ngIf="e.imagen" [src]="routeImagen + e.imagen + '?alt=media'" class="pic-table">
@@ -42,12 +42,12 @@
                 </span> </mat-cell>
             </ng-container>
             <ng-container matColumnDef="titulo">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Título </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>
                 <mat-cell *matCellDef="let e" data-label="Nombres"> <span>{{e.titulo}}</span> </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="tituloResaltado">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Título Resaltado </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Highlighted Title </mat-header-cell>
                 <mat-cell *matCellDef="let e" data-label="Apellido"> <span>{{e.tituloResaltado}}</span> </mat-cell>
             </ng-container>
 
@@ -57,26 +57,26 @@
             </ng-container>
 
             <ng-container matColumnDef="tipo">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Tipo de Banner </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Banner Position </mat-header-cell>
                 <mat-cell *matCellDef="let e" data-label="Teléfono"> <span>{{e.tipo | removeUnderscore}}</span> </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="idioma">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Idioma </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Language </mat-header-cell>
                 <mat-cell *matCellDef="let e" data-label="Fecha Registro"> <span>{{e.idioma }}</span> </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="posicion">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Posición </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Position </mat-header-cell>
                 <mat-cell *matCellDef="let e" data-label="Posición"> <span>{{e.posicion }}</span> </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="habilitado">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Estado </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header> State </mat-header-cell>
                 <mat-cell *matCellDef="let e" data-label="Estado" 
                 [ngClass]="{'success' : e.habilitado, 'danger' : !e.habilitado }">
           
-                   <span class="cell-estado"> {{ e.habilitado ? 'ACTIVO' : 'INACTIVO' }}</span>
+                   <span class="cell-estado"> {{ e.habilitado ? 'ACTIVE' : 'INACTIVE' }}</span>
                 </mat-cell>
             </ng-container>
      
