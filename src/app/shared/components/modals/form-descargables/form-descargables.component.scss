@@ -1,0 +1,32 @@
+.pic-agente{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor:pointer;
+    height: 120px;
+    width: 99%;
+    margin: 0 auto;
+    background: #eee;
+    border: 2px solid #aaa;
+    margin-bottom: 20px;
+    
+    img{
+        height: 100%;
+    }
+}
+
+.btnsub{
+    display: block;
+    border: 1px solid #aaa;
+    padding: 15px;
+    background: #aaa;
+    text-decoration: none !important;
+    font-weight: bold;
+    color: #000 !important;
+}
+
+.rmv{
+    background:crimson;
+    color: #fff !important;
+    margin-right: 10px;
+}

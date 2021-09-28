@@ -15,8 +15,8 @@ export class InterceptorService implements HttpInterceptor {
         private utils: UtilsService,
         private autenticacionService: AutenticacionService,
         private dialog: MatDialog
-    ){}
-   
+    ) { }
+
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
         const auth: string = sessionStorage.getItem('auth');

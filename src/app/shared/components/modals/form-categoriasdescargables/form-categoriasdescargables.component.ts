@@ -1,50 +1,45 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { BannersService } from 'src/app/shared/services/banners.service';
 import { UtilsService } from 'src/app/shared/services/common/utils.service';
-import { UsuariosService } from 'src/app/shared/services/usuarios.service';
+import { ContenidosDescargablesService } from 'src/app/shared/services/descargables.service';
 import { ENV } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-form-banners',
-  templateUrl: './form-banners.component.html',
-  styleUrls: ['./form-banners.component.scss']
+  selector: 'app-form-categoriasdescargables',
+  templateUrl: './form-categoriasdescargables.component.html',
+  styleUrls: ['./form-categoriasdescargables.component.scss']
 })
-export class FormBannersComponent implements OnInit {
+export class FormCategoriasDescargablesComponent implements OnInit {
 
-  estados = [{ id: 'ACTIVO', value: true}, { id: 'INACTIVO', value: false}];
-  idiomas = [{ id: 'ESPAÑOL', value: 'ES'}, { id: 'INGLÉS', value: 'EN'}];
-  tiposBanners = ['BANNER_SUPERIOR', 'BANNER_LATERAL'];
-  routeImagen = ENV.FICHEROS;
-  fotoPerfil;
-  nomUsuario;
+  estados = [{ id: 'ACTIVE', value: true }, { id: 'INACTIVE', value: false }];
+  idiomas = [{ id: 'ESPAÑOL', value: 'ES' }, { id: 'ENGLISH', value: 'EN' }];
+  routeStorage = ENV.STORAGE;
+  pathFicheros = '/contenidosdescargables%2F'
 
   @Output() dialogEvent: EventEmitter<any> = new EventEmitter();
 
   mainForm = new FormGroup({
     _id: new FormControl(null),
-    tipo: new FormControl(null, [Validators.required]),
     titulo: new FormControl(null, [Validators.required]),
-    tituloResaltado: new FormControl(null),
-    url: new FormControl(null, [Validators.required]),
-    habilitado: new FormControl(null, [Validators.required]),
+    descripcion: new FormControl(null, [Validators.required]),
+    fotoPresentacion: new FormControl(null, [Validators.required]),
+    fotoPortada: new FormControl(null, [Validators.required]),
+    habilitar: new FormControl(null, [Validators.required]),
     idioma: new FormControl(null, [Validators.required]),
-    imagen: new FormControl(null, [Validators.required]),
-    posicion: new FormControl(1,  [Validators.required]),
+    posicion: new FormControl(1, [Validators.required]),
   });
-
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public input: { data: any },
     public utils: UtilsService,
-    public bannerService: BannersService
+    public conDesService: ContenidosDescargablesService
   ) {
 
     if (this.input.data) {
       let data = this.input.data;
       this.mainForm.patchValue(data);
-    } 
+    }
 
   }
 
@@ -57,15 +52,19 @@ export class FormBannersComponent implements OnInit {
 
     this.triggedValidation(true);
 
+    if(!data.fotoPortada || !data.fotoPresentacion){
+      this.utils.fnMainDialog("Error", "You must select all the pictures.", "message");
+    }
+
     if (!this.mainForm.valid) {
       return;
     }
 
-    
     this.utils.setLoading(true);
 
-    const prom = (data._id) ? this.bannerService.put(data._id, data) : this.bannerService.post(data);
+    const prom = (data._id) ? this.conDesService.putCategory(data._id, data) : this.conDesService.postCategory(data);
     prom.then(res => {
+
       if (res['response']) {
         this.dialogEvent.emit(true)
       } else {
@@ -92,30 +91,30 @@ export class FormBannersComponent implements OnInit {
   triggedValidation(touched) {
     const obj = this.mainForm.value;
     Object.keys(obj).forEach(key => {
-      touched ? this.mainForm.get(key).markAsTouched() : this.mainForm.get(key).markAsUntouched()
+      touched ? this.mainForm.get(key).markAsTouched() : this.mainForm.get(key).markAsUntouched();
     });
   }
 
   openInputFile(id) {
-    document.getElementById("fotoperfil").click();
+    document.getElementById(id).click();
   }
 
-  fileChange(files: File[]) {
+  fileChange(files: File[], id) {
 
     Object.keys(files).forEach(a => {
-      this.prepareFile(files[a]);
+      this.prepareFile(files[a], id);
     });
-    let val: any = document.getElementById("fotoperfil");
+    let val: any = document.getElementById(id);
     val.value = null;
 
   }
 
-  prepareFile(file: any) {
+  prepareFile(file: any, id) {
 
     let reader = new FileReader();
     let size = Math.round((file['size'] / 1000) * 100) / 100;
 
-    if (size < 10000) {
+    if (size < 15000) {
 
       reader.readAsDataURL(file);
       reader.onload = () => {
@@ -127,9 +126,14 @@ export class FormBannersComponent implements OnInit {
 
         if (mimeTypeImagenes) {
 
-          this.fotoPerfil = fichero;
-          this.mainForm.patchValue({ imagen: fichero });
-          console.log(fichero)
+          if (id === 'fotoPresentacion') {
+            this.mainForm.patchValue({ fotoPresentacion: fichero });
+          }
+  
+          if (id === 'fotoPortada') {
+            this.mainForm.patchValue({ fotoPortada: fichero });
+          }
+
         } else {
 
           this.utils.fnMessage("File type not allowed");
@@ -137,16 +141,23 @@ export class FormBannersComponent implements OnInit {
         }
 
       };
+
     } else {
       this.utils.fnMessage("Max filesize 10MB.");
     }
 
   }
 
-  removerImagen() {
+  removerImagen(id) {
     this.utils.fnMainDialog('Confirm', 'are you sure to remove this picture?', 'confirm').subscribe(res => {
       if (res) {
-        this.mainForm.patchValue({ imagen: null });
+        if (id === 'fotoPresentacion') {
+          this.mainForm.patchValue({ fotoPresentacion: null });
+        }
+
+        if (id === 'fotoPortada') {
+          this.mainForm.patchValue({ fotoPortada: null });
+        }
       }
     })
   }

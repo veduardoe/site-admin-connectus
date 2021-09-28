@@ -1,0 +1,92 @@
+<h2 mat-dialog-title>Category Content</h2>
+<mat-dialog-content class="dialog-content">
+
+    <form [formGroup]="mainForm">
+
+        <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+            <div fxFlex="49%">
+                <div class="pic-agente"  >
+                    <input type="file" id="fotoPresentacion" (change)="fileChange($event.target.files, 'fotoPresentacion')" 
+                    accept=".jpg, .png, .jpeg, .gif" hidden>
+                    <span *ngIf="!mainForm.value.fotoPresentacion" class="btnsub" (click)="openInputFile('fotoPresentacion')">DETAIL CATEGORY</span>
+                    <img *ngIf="mainForm.value.fotoPresentacion && !mainForm.value.fotoPresentacion.includes('data')"
+                        [src]="routeStorage + pathFicheros + mainForm.value.fotoPresentacion + '?alt=media'" (click)="removerImagen('fotoPresentacion')">
+                    <img *ngIf="mainForm.value.fotoPresentacion  && mainForm.value.fotoPresentacion.includes('data')"
+                        [src]="mainForm.value.fotoPresentacion" (click)="removerImagen('fotoPresentacion')">
+                </div>
+            </div>
+            <div fxFlex="49%">
+                <div class="pic-agente">
+                    <input type="file" id="fotoPortada" (change)="fileChange($event.target.files, 'fotoPortada')" 
+                    accept=".jpg, .png, .jpeg, .gif" hidden>
+                    <span *ngIf="!mainForm.value.fotoPortada" class="btnsub" (click)="openInputFile('fotoPortada')">COVER</span>
+                    <img *ngIf="mainForm.value.fotoPortada && !mainForm.value.fotoPortada.includes('data')"
+                        [src]="routeStorage + pathFicheros + mainForm.value.fotoPortada + '?alt=media'" (click)="removerImagen('fotoPortada')">
+                    <img *ngIf="mainForm.value.fotoPortada  && mainForm.value.fotoPortada.includes('data')"
+                        [src]="mainForm.value.fotoPortada" (click)="removerImagen('fotoPortada')">
+                </div>
+            </div>
+            <div fxFlex="100%">
+                <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                    <div fxFlex="100%">
+                        <mat-form-field class="full" appearance="outline">
+                            <mat-label>Title</mat-label>
+                            <input matInput formControlName="titulo" required>
+                            <mat-error *ngIf="mf.titulo.errors">
+                                <span *ngIf="mf.titulo.errors.required">Required</span>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="100%">
+                        <mat-form-field class="full" appearance="outline">
+                            <mat-label>Description</mat-label>
+                            <input matInput formControlName="descripcion" required>
+                            <mat-error *ngIf="mf.descripcion.errors">
+                                <span *ngIf="mf.descripcion.errors.required">Required</span>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div fxFlex="33%">
+                <mat-form-field class="full" appearance="outline">
+                    <mat-label>Language</mat-label>
+                    <mat-select formControlName="idioma" required>
+                        <mat-option *ngFor="let ee of idiomas" [value]="ee.value">{{ ee.id }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="mf.idioma.errors">
+                        <span *ngIf="mf.idioma.errors.required">Required</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div fxFlex="33%">
+                <mat-form-field class="full" appearance="outline">
+                    <mat-label>Position</mat-label>
+                    <mat-select formControlName="posicion" required>
+                        <mat-option *ngFor="let ii of [].constructor(99); let i = index" [value]="i">{{ i }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="mf.posicion.errors">
+                        <span *ngIf="mf.posicion.errors.required">Required</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div fxFlex="33%">
+                <mat-form-field class="full" appearance="outline">
+                    <mat-label>State</mat-label>
+                    <mat-select formControlName="habilitar" required>
+                        <mat-option *ngFor="let ee of estados" [value]="ee.value">{{ ee.id }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="mf.habilitar.errors">
+                        <span *ngIf="mf.habilitar.errors.required">Required</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-flat-button class="primary-gray" [mat-dialog-close]="true">Cancel
+    </button>
+    <button mat-flat-button color="primary" (click)="save()">Save</button>
+</mat-dialog-actions>

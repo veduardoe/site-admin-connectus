@@ -28,18 +28,24 @@ export class SidenavComponent implements OnInit {
 
   setMenu() {
     this.mobileMenuItems = [{
-        groupName: 'Opciones del Sistema',
-        icon: 'fal fa-cog',
-        items: [
-          { name: 'Admins', path: '/administradores', activateTo: ['ADMIN'], icon: 'fal fa-cog' },  
-          { name: 'Eventos', path: '/eventos', activateTo: ['ADMIN'], icon: 'fal fa-calendar' },      
-        ]
-      }];
+      groupName: 'Opciones del Sistema',
+      icon: 'fal fa-cog',
+      items: [
+        { name: 'Admins', path: '/administradores', activateTo: ['ADMIN'], icon: 'fal fa-cog' },
+        { name: 'Eventos', path: '/eventos', activateTo: ['ADMIN'], icon: 'fal fa-calendar' },
+        { name: 'Categories', path: '/categories', activateTo: ['ADMIN'], icon: 'fal fa-calendar', class: 'center-text' },
+        { name: 'Files', path: '/downloadable-category', activateTo: ['ADMIN'], icon: 'fal fa-calendar', class: 'center-text' },
+        { name: 'Articles', path: '/articles', activateTo: ['ADMIN'], icon: 'fal fa-calendar', class: 'center-text' },
+      ]
+    }];
 
     this.menuItems = [
-      { name: 'Admins', path: '/administradores', activateTo: ['ADMIN'], icon: 'fal fa-cog', class: 'center-text'  },
-      { name: 'Banners', path: '/banners', activateTo: ['ADMIN'], icon: 'fal fa-cog', class: 'center-text'  },
-      { name: 'Events', path: '/events', activateTo: ['ADMIN'], icon: 'fal fa-calendar', class: 'center-text' },      
+      { name: 'Admins', path: '/administradores', activateTo: ['ADMIN'], icon: 'fal fa-cog', class: 'center-text' },
+      { name: 'Banners', path: '/banners', activateTo: ['ADMIN'], icon: 'fal fa-cog', class: 'center-text' },
+      { name: 'Events', path: '/events', activateTo: ['ADMIN'], icon: 'fal fa-calendar', class: 'center-text' },
+      { name: 'Categories', path: '/categories', activateTo: ['ADMIN'], icon: 'fal fa-calendar', class: 'center-text' },
+      { name: 'Files', path: '/downloadable-category', activateTo: ['ADMIN'], icon: 'fal fa-calendar', class: 'center-text' },
+      { name: 'Articles', path: '/articles', activateTo: ['ADMIN'], icon: 'fal fa-calendar', class: 'center-text' },
 
     ]
   }
@@ -49,8 +55,8 @@ export class SidenavComponent implements OnInit {
     this.menuContainerHeight = window.innerHeight - 138;
   }
 
-  displayLink(userActivate:any[]){
-    const match = userActivate.find( item => item === this.tipoUsuario);
+  displayLink(userActivate: any[]) {
+    const match = userActivate.find(item => item === this.tipoUsuario);
     return match ? true : false;
   }
 }

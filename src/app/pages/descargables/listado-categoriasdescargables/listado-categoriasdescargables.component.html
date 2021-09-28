@@ -1,0 +1,87 @@
+<div class="appSection">
+    <div class="white-container mat-elevation-z2">
+        <div class="search-input">
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div fxFlex="700px" fxFlex.xs="100%" class="alignLeft">
+
+                    <mat-form-field appearance="outline"  >
+                        <mat-label>Language</mat-label>
+                        <mat-select [(ngModel)]="idioma" (selectionChange)="getCategoriasDescargables()">
+                            <mat-option [value]="'ES'">ESPAÑOL</mat-option>
+                            <mat-option [value]="'EN'">ENGLISH</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div fxFlex="450px" fxFlex.xs="100%" class="alignRight">
+                    <mat-form-field appearance="outline" class="no-padding ">
+                        <mat-label>Find</mat-label>
+                        <input matInput placeholder="Write..." (keyup)="setFilter($event.target.value)">
+                        <mat-icon matSuffix>search</mat-icon>
+                    </mat-form-field>
+                    <button mat-flat-button color="primary" class="btnCustom boldy btnadd" (click)="openForm()">CREATE CATEGORY</button>
+
+                </div>
+     
+            </div>
+        </div>
+        <mat-table [dataSource]="dataSource" class="responsiveActive" matSort>
+            
+            <ng-container matColumnDef="fotoPortada">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Picture </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Picture">
+                    <span><img *ngIf="e.fotoPortada" [src]="routeStorage + pathFicheros +  e.fotoPortada + '?alt=media'" class="pic-table"></span> 
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="titulo">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Title"> <span>{{e.titulo}}</span> </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="descripcion">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Detail </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Detail"> <span>{{e.descripcion}}</span> </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="idioma">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Language </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Language"> <span>{{e.idioma}}</span> </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="habilitar">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Enable </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Estado" 
+                    [ngClass]="{'success' : e.habilitar, 'danger' : !e.habilitar}">
+                    <span class="cell-estado"> {{ e.habilitar ? 'Yes' : 'No' }}</span>
+                </mat-cell>
+            </ng-container>
+     
+            <ng-container matColumnDef="acciones">
+                <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Actions">
+                    <span>                            
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="openForm(e._id)">
+                                <mat-icon>create</mat-icon>
+                                <span>View and Edit</span>
+                            </button>
+                            <button mat-menu-item [routerLink]="['/downloadable-category/files/' + e._id]">
+                                <mat-icon>home</mat-icon>
+                                <span>Files</span>
+                            </button>
+                        </mat-menu>
+                        <button mat-icon-button [matMenuTriggerFor]="menu" matTooltipPosition="right">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                    </span>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="columns" class="bgheader"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+            
+        </mat-table>
+        <p class="noresults" *ngIf="length === 0">Results not found.</p>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" (page)="utils.fnGoTop()"></mat-paginator>
+    </div>
+</div>

@@ -13,4 +13,12 @@ export class CategoriasService {
         return this.http.get(`${ENV.BACKEND}/common/listado-categorias`).toPromise();
     }
 
+    post(data){
+        return this.http.post(`${ENV.BACKEND}/common/listado-categorias`, data).toPromise();
+    }
+
+    put(id, data){
+        return this.http.put(`${ENV.BACKEND}/common/listado-categorias/` + id, data).toPromise();
+    }
+
 }

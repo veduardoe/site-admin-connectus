@@ -14,6 +14,10 @@ const routes: Routes = [
         loadChildren: () => import('./pages/eventos/eventos.module').then(m => m.EventosModule)
     },
     {
+        path: 'downloadable-category',
+        loadChildren: () => import('./pages/descargables/descargables.module').then(m => m.DescargablesModule)
+    },
+    {
         path: 'banners',
         loadChildren: () => import('./pages/banners/banners.module').then(m => m.BannersModule)
     },

@@ -96,7 +96,7 @@ export class UtilsService {
   }
 
   fnMainDialog(title: string, message: string, type: string, maxWidth = '480px') {
-
+    
     let dialogConfirm = this.dialog.open(MainMessageComponent, {
       width: '90%',
       maxWidth: maxWidth,

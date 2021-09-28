@@ -20,6 +20,8 @@ import 'froala-editor/js/plugins/link.min.js'
 import 'froala-editor/js/plugins/lists.min.js'
 import { FormEventosComponent } from './components/modals/form-eventos/form-eventos.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { FormCategoriasDescargablesComponent } from './components/modals/form-categoriasdescargables/form-categoriasdescargables.component';
+import { FormDescargablesComponent } from './components/modals/form-descargables/form-descargables.component';
 
 @NgModule({
     imports: [
@@ -43,6 +45,8 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
         FormEventosComponent,
         RemoveUnderscorePipe,
         ReturnComponent,
+        FormCategoriasDescargablesComponent,
+        FormDescargablesComponent
     ],
     providers: [],
     exports: [
