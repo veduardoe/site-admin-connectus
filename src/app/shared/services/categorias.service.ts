@@ -9,8 +9,9 @@ export class CategoriasService {
         private http: HttpClient,
     ) { }
 
-    find() {
-        return this.http.get(`${ENV.BACKEND}/common/listado-categorias`).toPromise();
+    find(data) {
+        let str = Object.entries(data).map(([key, val]) => `${key}=${val}`).join('&');
+        return this.http.get(`${ENV.BACKEND}/common/listado-categorias?${str}`).toPromise();
     }
 
     post(data){

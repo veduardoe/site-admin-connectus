@@ -1,3 +1,5 @@
+@import "src/assets/theming/global.scss";
+
 .pic-agente{
 
     cursor:pointer;
@@ -14,3 +16,32 @@
         border: 5px solid #aaa;
     }
 }
+
+
+::ng-deep{
+    .angular-editor-toolbar{
+        background:$primary !important;
+        padding: 10px !important;
+        border-radius: 7px !important;
+        text-align: center;
+        button{
+            color:#fff !important;
+            background:transparent !important;
+            border: 1px $primary solid !important;
+            &:hover, &.active{
+                background:#fff !important;
+                color:$primary !important;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .angular-editor-textarea{
+        font-size: 14px !important;
+        font-weight: 400 !important;
+        padding: 20px !important;
+        margin-top: 20px !important;
+        border-radius: 7px !important;
+    }
+ }
+ 

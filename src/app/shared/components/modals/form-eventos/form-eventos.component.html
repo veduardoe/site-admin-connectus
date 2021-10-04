@@ -66,7 +66,7 @@
             <div fxFlex="49%">
                 <mat-form-field appearance="outline" class="full">
                     <mat-label>DateTime</mat-label>
-                    <input matInput formControlName="fecha" [matDatepicker]="pickerFecha" [min]="today"
+                    <input matInput formControlName="fecha" [matDatepicker]="pickerFecha"
                         (focus)="pickerFecha.open()">
                         <i class="fal fa-calendar-day input-icon" matSuffix></i>
                     <mat-datepicker #pickerFecha></mat-datepicker>
@@ -105,7 +105,7 @@
                 </mat-form-field>
             </div>
             <div fxFlex="100%">
-                <div [froalaEditor] [(froalaModel)]="detalleHTML"></div> 
+                <angular-editor formControlName="detalle" [config]="editorConfig"></angular-editor>
            </div>
 
         </div>

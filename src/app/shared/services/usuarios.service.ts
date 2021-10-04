@@ -18,6 +18,15 @@ export class UsuariosService {
         return this.http.get(`${ENV.BACKEND}/usuarios/obtener-mis-datos`).toPromise();
     }
 
+    findUsuariosRS(data) {
+        let str = Object.entries(data).map(([key, val]) => `${key}=${val}`).join('&');
+        return this.http.get(`${ENV.BACKEND}/usuarios-rs/obtener-datos-usuarios?${str}`).toPromise();
+    }
+
+    setStatusUser(idUsuario, status) {
+        return this.http.put(ENV.BACKEND + '/usuarios-rs/status/' + idUsuario, { status }).toPromise();
+    }
+
     post(data){
         return this.http.post(`${ENV.BACKEND}/usuarios/crear-usuario`, data).toPromise();
     }

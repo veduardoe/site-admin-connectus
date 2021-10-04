@@ -1,0 +1,129 @@
+<div class="appSection">
+    <div class="white-container mat-elevation-z2">
+        <div class="search-input">
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div fxFlex="80%" fxFlex.xs="100%" class="alignLeft">
+
+                    <mat-form-field appearance="outline"  style="margin-right: 20px;" class="no-padding">
+                        <mat-label>Post Type</mat-label>
+                        <mat-select [(ngModel)]="tipoPost" (selectionChange)="getPosts()">
+                            <mat-option [value]="'NA'">ALL</mat-option>
+                            <mat-option [value]="'ARTICLE'">ARTICLE</mat-option>
+                            <mat-option [value]="'POST'">POST</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="no-padding" style="margin-right: 20px;">
+                        <mat-label>Category</mat-label>
+                        <mat-select [(ngModel)]="categoria" (selectionChange)="getPosts()">
+                            <mat-option [value]="'NA'">ALL</mat-option>
+                            <mat-option *ngFor="let cat of categorias" [value]="cat._id">{{ cat.detalleEN | uppercase }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="no-padding">
+                        <mat-label>Condition</mat-label>
+                        <mat-select [(ngModel)]="estado" (selectionChange)="getPosts()">
+                            <mat-option [value]="'NA'">ALL</mat-option>
+                            <mat-option [value]="'ACTIVO'">ACTIVE</mat-option>
+                            <mat-option [value]="'BLOQUEADO'">LOCKED</mat-option>
+                            <mat-option [value]="'BORRADO'">DELETED</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                </div>
+
+                <div fxFlex="20%" fxFlex.xs="100%" class="alignRight">
+                    <mat-form-field appearance="outline" class="no-padding full">
+                        <mat-label>Find</mat-label>
+                        <input matInput placeholder="Write..." (keyup)="setFilter($event.target.value)">
+                        <mat-icon matSuffix>search</mat-icon>
+                    </mat-form-field>
+
+                </div>
+     
+            </div>
+        </div>
+        <p class="alert warning" *ngIf="usuarioClickedInfo">
+            <span *ngIf="fromQuery">
+                <span class="rmm" [routerLink]="'/social-network/sn-users'"> RETURN TO USERS</span> &nbsp;&nbsp;&nbsp; |
+                &nbsp;&nbsp;&nbsp;            </span>
+
+                You are viewing the results by <b>{{ usuarioClickedInfo }}</b>, 
+                <span class="rmm" (click)="removePostsFromUsuario()">CLICK HERE TO REMOVE</span>
+        </p>
+        <mat-table [dataSource]="dataSource" class="responsiveActive" matSort>
+            
+            <ng-container matColumnDef="usuario">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> User </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Picture">
+                    <div class="infouser">
+                        <span *ngIf="e.foto"><img [src]="routeStorage + pathPerfil +  e.foto + '?alt=media'" class="pic-table user"></span> 
+                        <span *ngIf="!e.foto"><img [src]="routeStorage + pathPerfil + 'add-profile.jpg?alt=media'" class="pic-table user"></span> 
+                        <span class="username"> {{ e.usuario }} <i *ngIf="!idUsuario" class="fal fa-external-link" (click)="getPostFromUsuario(e)"></i></span>
+                    </div>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="detalle">
+                <mat-header-cell *matHeaderCellDef> Post / Article Detail </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Title"> 
+                    <span class="smtx">{{ e.detalle | excerpt:40 }}</span> 
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="nlikes">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Likes / Comments </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Likes"> <span class="smtx">{{ e.nlikes }} Likes / {{ e.ncomments }} Comments</span> </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="picfiles">
+                <mat-header-cell *matHeaderCellDef> Pics / Files </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Comments"> <span class="smtx">{{ e.counterPics }} Pics / {{ e.counterFiles }} Files</span> </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="tipoPost">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Post Type </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Post Type"> <span class="smtx">{{e.tipoPost}}</span> </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="fechaRegistro">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Date Post </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Date Post"> <span class="smtx">{{e.fechaRegistro | date:'MM/dd/yyyy, hh:mm:ss a'}}</span> </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="estado">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Enable" 
+                    [ngClass]="{'success' : e.estado === 'ACTIVO', 'warning' : e.estado === 'BLOQUEADO', 'danger' : e.estado === 'BORRADO'}">
+                    <span class="cell-estado" *ngIf="e.estado === 'ACTIVO'"> ACTIVE</span>
+                    <span class="cell-estado" *ngIf="e.estado === 'BLOQUEADO'"> TEMPORALY LOCKED</span>
+                    <span class="cell-estado" *ngIf="e.estado === 'BORRADO'"> DELETED</span>
+                </mat-cell>
+            </ng-container>
+     
+            <ng-container matColumnDef="acciones">
+                <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Actions">
+                    <span>                            
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="openForm(e.idPost)">
+                                <mat-icon>remove_red_eye</mat-icon>
+                                <span>View</span>
+                            </button>
+                        </mat-menu>
+                        <button mat-icon-button [matMenuTriggerFor]="menu" matTooltipPosition="right">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                    </span>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="columns" class="bgheader"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+            
+        </mat-table>
+        <p class="noresults" *ngIf="length === 0">Results not found.</p>
+        <mat-paginator [pageSizeOptions]="[15, 30, 50, 100, 500, 1000]" (page)="utils.fnGoTop()"></mat-paginator>
+    </div>
+</div>

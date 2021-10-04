@@ -9,8 +9,9 @@ export class ArticulosService {
         private http: HttpClient,
     ) { }
 
-    find() {
-        return this.http.get(`${ENV.BACKEND}/articulospublicos`).toPromise();
+    find(data) {
+        let str = Object.entries(data).map(([key, val]) => `${key}=${val}`).join('&');
+        return this.http.get(`${ENV.BACKEND}/articulospublicos?${str}`).toPromise();
     }
 
     post(data){

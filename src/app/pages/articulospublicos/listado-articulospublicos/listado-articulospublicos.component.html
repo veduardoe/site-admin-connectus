@@ -2,45 +2,65 @@
     <div class="white-container mat-elevation-z2">
         <div class="search-input">
             <div fxLayout="row" fxLayoutAlign="space-between center">
-                <div fxFlex="50%" fxFlex.xs="100%" class="alignLeft">
+                <div fxFlex="60%" fxFlex.xs="100%" class="alignLeft">
 
-                    <mat-form-field appearance="outline"  >
+                    <mat-form-field appearance="outline"   style="margin-right: 20px;">
                         <mat-label>Language</mat-label>
-                        <mat-select [(ngModel)]="idioma" (selectionChange)="getCategoriasDescargables()">
+                        <mat-select [(ngModel)]="idioma" (selectionChange)="getArticulos()">
+                            <mat-option [value]="'NA'">ALL</mat-option>
                             <mat-option [value]="'ES'">ESPAÑOL</mat-option>
                             <mat-option [value]="'EN'">ENGLISH</mat-option>
                         </mat-select>
                     </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="no-padding" style="margin-right: 20px;">
+                        <mat-label>Category</mat-label>
+                        <mat-select [(ngModel)]="categoria" (selectionChange)="getArticulos()">
+                            <mat-option [value]="'NA'">ALL</mat-option>
+                            <mat-option *ngFor="let cat of categorias" [value]="cat._id">{{ cat.detalleEN }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="no-padding">
+                        <mat-label>Enable</mat-label>
+                        <mat-select [(ngModel)]="habilitado" (selectionChange)="getArticulos()">
+                            <mat-option [value]="'NA'">ALL</mat-option>
+                            <mat-option [value]="true">YES</mat-option>
+                            <mat-option [value]="false">NO</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
                 </div>
 
-                <div fxFlex="50%" fxFlex.xs="100%" class="alignRight">
-                    <mat-form-field appearance="outline" class="no-padding ">
+                <div fxFlex="40" fxFlex.xs="100%" class="alignRight">
+                    <mat-form-field appearance="outline" class="no-padding">
                         <mat-label>Find</mat-label>
                         <input matInput placeholder="Write..." (keyup)="setFilter($event.target.value)">
                         <mat-icon matSuffix>search</mat-icon>
                     </mat-form-field>
-                    <button mat-flat-button color="primary" class="btnCustom boldy btnadd" (click)="openForm()">CREATE CATEGORY</button>
+                    <button mat-flat-button color="primary" class="btnCustom boldy btnadd" (click)="openForm()">CREATE ARTICLE</button>
 
                 </div>
      
             </div>
         </div>
+
         <mat-table [dataSource]="dataSource" class="responsiveActive" matSort>
             
-            <ng-container matColumnDef="fotoPortada">
+            <ng-container matColumnDef="imagenSlider">
                 <mat-header-cell *matHeaderCellDef mat-sort-header> Picture </mat-header-cell>
                 <mat-cell *matCellDef="let e" data-label="Picture">
-                    <span><img *ngIf="e.fotoPortada" [src]="routeStorage + pathFicheros +  e.fotoPortada + '?alt=media'" class="pic-table"></span> 
+                    <span><img *ngIf="e.imagenSlider" [src]="routeStorage + pathFicheros +  e.imagenSlider + '?alt=media'" class="pic-table"></span> 
                 </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="titulo">
+            <ng-container matColumnDef="tituloSlider">
                 <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>
-                <mat-cell *matCellDef="let e" data-label="Title"> <span>{{e.titulo}}</span> </mat-cell>
+                <mat-cell *matCellDef="let e" data-label="Title"> <span>{{e.tituloSlider}}</span> </mat-cell>
             </ng-container>
 
-            <ng-container matColumnDef="descripcion">
+            <ng-container matColumnDef="descripcionSlider">
                 <mat-header-cell *matHeaderCellDef mat-sort-header> Detail </mat-header-cell>
-                <mat-cell *matCellDef="let e" data-label="Detail"> <span>{{e.descripcion}}</span> </mat-cell>
+                <mat-cell *matCellDef="let e" data-label="Detail"> <span>{{e.descripcionSlider}}</span> </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="idioma">
@@ -64,10 +84,6 @@
                             <button mat-menu-item (click)="openForm(e._id)">
                                 <mat-icon>create</mat-icon>
                                 <span>View and Edit</span>
-                            </button>
-                            <button mat-menu-item [routerLink]="['/downloadable-category/files/' + e._id]">
-                                <mat-icon>home</mat-icon>
-                                <span>Files</span>
                             </button>
                         </mat-menu>
                         <button mat-icon-button [matMenuTriggerFor]="menu" matTooltipPosition="right">

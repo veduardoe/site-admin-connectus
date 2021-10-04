@@ -112,7 +112,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.utils.fnSidenavState().setSidenavState(false);
     }
 
-    this.windowHeight = !this.autenticacionService.isAuth ? window.innerHeight : window.innerHeight - 292;
+    this.windowHeight = !this.autenticacionService.isAuth ? window.innerHeight : window.innerHeight - 200;
   }
 
   prepareRoute(outlet: RouterOutlet) {

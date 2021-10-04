@@ -3,30 +3,36 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
+import { FormArticulosPublicosComponent } from "src/app/shared/components/modals/form-articulospublicos/form-articulospublicos.component";
 import { FormCategoriasDescargablesComponent } from "src/app/shared/components/modals/form-categoriasdescargables/form-categoriasdescargables.component";
+import { ArticulosService } from "src/app/shared/services/articulos.service";
+import { CategoriasService } from "src/app/shared/services/categorias.service";
 import { UtilsService } from "src/app/shared/services/common/utils.service";
-import { ContenidosDescargablesService } from "src/app/shared/services/descargables.service";
 import { ENV } from "src/environments/environment";
 
 @Component({
-  selector: 'app-listado-categoriasdescargables',
-  templateUrl: './listado-categoriasdescargables.component.html',
-  styleUrls: ['./listado-categoriasdescargables.component.scss']
+  selector: 'app-listado-articulospublicos',
+  templateUrl: './listado-articulospublicos.component.html',
+  styleUrls: ['./listado-articulospublicos.component.scss']
 })
-export class ListadoCategoriasDescargablesComponent implements OnInit {
+export class ListadoArticulosPublicosComponent implements OnInit {
 
   columns: string[] = [];
   dataSource: MatTableDataSource<any>;
   length = 0;
   routeStorage = ENV.STORAGE;
-  pathFicheros = '/contenidosdescargables%2F'
-  categoriasDescargables = [];
-  idioma = 'EN';
+  pathFicheros = '/articulospublicos%2F'
+  articulosPublicos = [];
+  idioma = 'NA';
+  categorias = [];
+  categoria = 'NA';
+  habilitado = 'NA';
 
   constructor(
     public utils: UtilsService,
-    public descargablesService: ContenidosDescargablesService,
-    public dialog: MatDialog
+    public articulosService: ArticulosService,
+    public dialog: MatDialog,
+    public categoriasService: CategoriasService
   ) { }
 
   @ViewChild(MatSort) sort: MatSort;
@@ -35,17 +41,39 @@ export class ListadoCategoriasDescargablesComponent implements OnInit {
   ngOnInit(): void {
 
     this.utils.fnBreadcrumbsState().setBreadcrumbsState({
-      t: 'Downloadables Categories',
-      b: [{ n: 'Downloadables Categories', r: '/downloadable-category' }]
+      t: 'Public Articles',
+      b: [{ n: 'Public Articles', r: '/public-articles' }]
     });
-    this.getCategoriasDescargables();
+    this.getArticulos();
+    this.getCategorias();
 
   }
 
-  async getCategoriasDescargables() {
+  getCategorias(){
+    this.categoriasService.find({}).then((res:any) => {
+      this.categorias = res.data;
+    });
+  }
+
+  async getArticulos() {
+
     this.utils.setLoading(true);
-    this.descargablesService.findCategory({ idioma : this.idioma }).then((res: any) => {
-      this.categoriasDescargables = res.data;
+    let filter:any = {};
+
+    if(this.idioma && this.idioma !== 'NA'){
+      filter.idioma = this.idioma;
+    }
+
+    if(this.categoria && this.categoria !== 'NA'){
+      filter.idCategoria = this.categoria;
+    }
+
+    if(this.habilitado !== 'NA'){
+      filter.habilitar = this.habilitado;
+    }
+
+    this.articulosService.find(filter).then((res: any) => {
+      this.articulosPublicos = res.data;
       this.setTable(res.data);
       this.utils.setLoading(false);
     }).catch(err => {
@@ -56,7 +84,7 @@ export class ListadoCategoriasDescargablesComponent implements OnInit {
   }
 
   setTable(data) {
-    this.columns = ['fotoPortada', 'titulo', "descripcion", "idioma", "habilitar", "acciones"];
+    this.columns = ['imagenSlider', 'tituloSlider', "descripcionSlider", "idioma", "habilitar", "acciones"];
     this.length = data.length;
     this.dataSource = new MatTableDataSource(data);
     this.dataSource.sort = this.sort;
@@ -77,18 +105,18 @@ export class ListadoCategoriasDescargablesComponent implements OnInit {
       if (id) {
         try {
           const find = from ? {} : { id };
-          const reqData: any = await this.descargablesService.findCategory(find);
+          const reqData: any = await this.articulosService.find(find);
           data = reqData.data[0];
           data.from = from;
         } catch (err) {
-          this.utils.fnMainDialog("Error", "Selected category has not been found.", "message");
+          this.utils.fnMainDialog("Error", "Selected article has not been found.", "message");
           return false;
         }
       }
 
-      const dForm = this.dialog.open(FormCategoriasDescargablesComponent, {
+      const dForm = this.dialog.open(FormArticulosPublicosComponent, {
         width: '90%',
-        maxWidth: '720px',
+        maxWidth: '1090px',
         data: { data },
         autoFocus: false,
         disableClose: true
@@ -97,7 +125,7 @@ export class ListadoCategoriasDescargablesComponent implements OnInit {
       dForm.componentInstance.dialogEvent.subscribe((result) => {
         this.dialog.closeAll();
         this.utils.fnSuccessSave();
-        this.getCategoriasDescargables();
+        this.getArticulos();
         resolve(true);
       });
 

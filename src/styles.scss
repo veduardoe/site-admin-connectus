@@ -68,12 +68,12 @@ button{ font-weight: 300 !important;}
 
 }
 
-.success{ background: #2E7D32; color: #fff !important; }
+.success{ background: #2E7D32 !important; color: #fff !important; }
 .gray{ background: #ddd; color:#000 !important}
 .purple{background: #7700a9; color:#fff !important }
 .blued{background: #070781; color: #fff !important;}
-.danger { background: $warn; color:#fff !important}
-.warning{ background: $accent; color:#000 !important}
+.danger { background: $warn !important; color:#fff !important}
+.warning{ background: $accent !important; color:#000 !important}
 .cell-estado{text-align: center; display: block; width: 100%; font-weight: 700; font-size: 14px !important;}
 
 .alert{

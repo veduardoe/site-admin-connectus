@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { CategoriasService } from 'src/app/shared/services/categorias.service';
 import { UtilsService } from 'src/app/shared/services/common/utils.service';
 import { EventosService } from 'src/app/shared/services/eventos.service';
@@ -21,7 +22,25 @@ export class FormEventosComponent implements OnInit {
   detalleHTML = "";
   hora = '09:00';
   categorias = [];
-
+  editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: false,
+    height: 'auto',
+    minHeight: '200px',
+    maxHeight: 'auto',
+    width: 'auto',
+    minWidth: '0',
+    translate: 'no',
+    enableToolbar: false,
+    showToolbar: true,
+    sanitize: true,
+    toolbarPosition: 'top',
+    toolbarHiddenButtons:[ 
+      ['fontName', 'outdent','indent', 'heading'],
+      ['fontSize', 'textColor', 'backgroundColor', 'insertVideo',
+      'customClasses','toggleEditorMode','removeFormat', 'insertImage']]
+  };
+  
   @Output() dialogEvent: EventEmitter<any> = new EventEmitter();
 
   mainForm = new FormGroup({
@@ -52,7 +71,6 @@ export class FormEventosComponent implements OnInit {
       const hora = data.fechaHoraStr.split("T")[1].split(":");
       this.hora = `${hora[0]}:${hora[1]}`; 
       data.hora = this.hora;
-      this.detalleHTML = data.detalle;
       this.mainForm.patchValue(data);
     }
 
@@ -63,7 +81,7 @@ export class FormEventosComponent implements OnInit {
   }
 
   getCategorias(){
-    this.categoriasService.find().then( (res:any) => {
+    this.categoriasService.find({}).then( (res:any) => {
       this.categorias = res.data;
     });
   }
@@ -74,7 +92,6 @@ export class FormEventosComponent implements OnInit {
   }
   save() {
 
-    this.mainForm.patchValue({ detalle: this.detalleHTML });
     this.triggedValidation(true);
 
     if (!this.mainForm.valid) {

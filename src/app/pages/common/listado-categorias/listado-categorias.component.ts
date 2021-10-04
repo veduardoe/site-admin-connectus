@@ -3,29 +3,30 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
+import { FormCategoriasComponent } from "src/app/shared/components/modals/form-categorias/form-categorias.component";
 import { FormCategoriasDescargablesComponent } from "src/app/shared/components/modals/form-categoriasdescargables/form-categoriasdescargables.component";
+import { CategoriasService } from "src/app/shared/services/categorias.service";
 import { UtilsService } from "src/app/shared/services/common/utils.service";
 import { ContenidosDescargablesService } from "src/app/shared/services/descargables.service";
 import { ENV } from "src/environments/environment";
 
 @Component({
-  selector: 'app-listado-categoriasdescargables',
-  templateUrl: './listado-categoriasdescargables.component.html',
-  styleUrls: ['./listado-categoriasdescargables.component.scss']
+  selector: 'app-listado-categorias',
+  templateUrl: './listado-categorias.component.html',
+  styleUrls: ['./listado-categorias.component.scss']
 })
-export class ListadoCategoriasDescargablesComponent implements OnInit {
+export class ListadoCategoriasComponent implements OnInit {
 
   columns: string[] = [];
   dataSource: MatTableDataSource<any>;
   length = 0;
   routeStorage = ENV.STORAGE;
-  pathFicheros = '/contenidosdescargables%2F'
-  categoriasDescargables = [];
-  idioma = 'EN';
+  pathFicheros = '/categorias%2F'
+  categorias = [];
 
   constructor(
     public utils: UtilsService,
-    public descargablesService: ContenidosDescargablesService,
+    public categoriasService: CategoriasService,
     public dialog: MatDialog
   ) { }
 
@@ -35,17 +36,17 @@ export class ListadoCategoriasDescargablesComponent implements OnInit {
   ngOnInit(): void {
 
     this.utils.fnBreadcrumbsState().setBreadcrumbsState({
-      t: 'Downloadables Categories',
-      b: [{ n: 'Downloadables Categories', r: '/downloadable-category' }]
+      t: 'Categories',
+      b: [{ n: 'Categories', r: '/categories' }]
     });
-    this.getCategoriasDescargables();
+    this.getCategorias();
 
   }
 
-  async getCategoriasDescargables() {
+  async getCategorias() {
     this.utils.setLoading(true);
-    this.descargablesService.findCategory({ idioma : this.idioma }).then((res: any) => {
-      this.categoriasDescargables = res.data;
+    this.categoriasService.find({}).then((res: any) => {
+      this.categorias = res.data;
       this.setTable(res.data);
       this.utils.setLoading(false);
     }).catch(err => {
@@ -56,7 +57,7 @@ export class ListadoCategoriasDescargablesComponent implements OnInit {
   }
 
   setTable(data) {
-    this.columns = ['fotoPortada', 'titulo', "descripcion", "idioma", "habilitar", "acciones"];
+    this.columns = ['imagen', 'detalle', "detalleEN", "habilitado", "acciones"];
     this.length = data.length;
     this.dataSource = new MatTableDataSource(data);
     this.dataSource.sort = this.sort;
@@ -77,7 +78,7 @@ export class ListadoCategoriasDescargablesComponent implements OnInit {
       if (id) {
         try {
           const find = from ? {} : { id };
-          const reqData: any = await this.descargablesService.findCategory(find);
+          const reqData: any = await this.categoriasService.find(find);
           data = reqData.data[0];
           data.from = from;
         } catch (err) {
@@ -86,7 +87,7 @@ export class ListadoCategoriasDescargablesComponent implements OnInit {
         }
       }
 
-      const dForm = this.dialog.open(FormCategoriasDescargablesComponent, {
+      const dForm = this.dialog.open(FormCategoriasComponent, {
         width: '90%',
         maxWidth: '720px',
         data: { data },
@@ -97,7 +98,7 @@ export class ListadoCategoriasDescargablesComponent implements OnInit {
       dForm.componentInstance.dialogEvent.subscribe((result) => {
         this.dialog.closeAll();
         this.utils.fnSuccessSave();
-        this.getCategoriasDescargables();
+        this.getCategorias();
         resolve(true);
       });
 

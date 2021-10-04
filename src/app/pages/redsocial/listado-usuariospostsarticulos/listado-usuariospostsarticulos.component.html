@@ -1,0 +1,85 @@
+<div class="appSection">
+    <div class="white-container mat-elevation-z2">
+        <div class="search-input">
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <div fxFlex="80%" fxFlex.xs="100%" class="alignLeft">
+                    <mat-form-field appearance="outline" class="no-padding">
+                        <mat-label>Condition</mat-label>
+                        <mat-select [(ngModel)]="estado" (selectionChange)="getRSUsuarios()">
+                            <mat-option [value]="'NA'">ALL</mat-option>
+                            <mat-option [value]="'ACTIVO'">ACTIVE</mat-option>
+                            <mat-option [value]="'BLOQUEADO'">LOCKED</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div fxFlex="20%" fxFlex.xs="100%" class="alignRight">
+                    <mat-form-field appearance="outline" class="no-padding full">
+                        <mat-label>Find</mat-label>
+                        <input matInput placeholder="Write..." (keyup)="setFilter($event.target.value)">
+                        <mat-icon matSuffix>search</mat-icon>
+                    </mat-form-field>
+                </div>
+     
+            </div>
+        </div>
+    
+        <mat-table [dataSource]="dataSource" class="responsiveActive" matSort>
+            
+            <ng-container matColumnDef="userdata">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> User </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Picture">
+                    <div class="infouser">
+                        <span *ngIf="e.foto"><img [src]="routeStorage + pathPerfil +  e.foto + '?alt=media'" class="pic-table user"></span> 
+                        <span *ngIf="!e.foto"><img [src]="routeStorage + pathPerfil + 'add-profile.jpg?alt=media'" class="pic-table user"></span> 
+                        <span class="username"> {{ e.userdata }} <br />
+                            <u style="font-size: 10px !important;">{{e.usuario}}</u>
+                            <i class="fal fa-external-link" (click)="getPostFromUsuario(e)"></i>
+                        </span>
+                    </div>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="email">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Likes"> <span class="smtx">{{ e.email }}</span> </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="telefono">
+                <mat-header-cell *matHeaderCellDef> Phone </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Comments"> <span class="smtx">{{ e.telefono || '--' }}</span> </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="summary">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Summary </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Post Type"> <span class="smtx">{{e.summary}}</span> </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="categorias">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Categories Interested </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Post Type"> <span class="smtx">--</span> </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="fechaRegistro">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> User since </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Date Post"> <span class="smtx">{{e.fechaRegistro | date:'MM/dd/yyyy, hh:mm:ss a'}}</span> </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="estado">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Enable" style="cursor: pointer;" (click)="changeStatus(e._id, e.estado)" 
+                    [ngClass]="{'success' : e.estado === 'ACTIVO', 'warning' : e.estado === 'BLOQUEADO'}">
+                    <span class="cell-estado" *ngIf="e.estado === 'ACTIVO'"> ACTIVE</span>
+                    <span class="cell-estado" *ngIf="e.estado === 'BLOQUEADO'">LOCKED</span>
+                </mat-cell>
+            </ng-container>
+     
+
+            <mat-header-row *matHeaderRowDef="columns" class="bgheader"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+            
+        </mat-table>
+        <p class="noresults" *ngIf="length === 0">Results not found.</p>
+        <mat-paginator [pageSizeOptions]="[15, 30, 50, 100, 500, 1000]" (page)="utils.fnGoTop()"></mat-paginator>
+    </div>
+</div>

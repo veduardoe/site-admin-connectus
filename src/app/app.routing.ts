@@ -22,6 +22,18 @@ const routes: Routes = [
         loadChildren: () => import('./pages/banners/banners.module').then(m => m.BannersModule)
     },
     {
+        path: 'common',
+        loadChildren: () => import('./pages/common/common.module').then(m => m.CommonModule)
+    },
+    {
+        path: 'public-articles',
+        loadChildren: () => import('./pages/articulospublicos/articulospublicos.module').then(m => m.ArticulosPublicosModule)
+    },
+    {
+        path: 'social-network',
+        loadChildren: () => import('./pages/redsocial/redsocial.module').then(m => m.RedsocialModule)
+    },
+    {
         path: '',
         redirectTo: 'login/admin',
         pathMatch: 'full'

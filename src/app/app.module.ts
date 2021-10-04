@@ -24,6 +24,7 @@ import { SharedModule } from './shared/share.module';
 import { InterceptorService } from './app.interceptor';
 import { PerfilService } from './shared/services/common/perfil.service';
 import { UsuariosService } from './shared/services/usuarios.service';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 registerLocaleData(locale, ENV.locale);
 
@@ -45,7 +46,8 @@ registerLocaleData(locale, ENV.locale);
     HammerModule,
     CommonModule, 
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    AngularEditorModule 
   ],
   providers: [
     UtilsService,

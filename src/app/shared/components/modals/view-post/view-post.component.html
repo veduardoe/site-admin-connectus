@@ -1,0 +1,102 @@
+<h2 mat-dialog-title >DETAIL OF {{ data?.post?.tipoPost}}</h2>
+<mat-dialog-content class="dialog-content">
+
+<h3 class="sep">Author</h3>
+<div class="contentpost">
+    <div class="infouser">
+        <span *ngIf="data?.post?.usuario.foto"><img [src]="routeStorage + pathPerfil +  data?.post?.usuario.foto + '?alt=media'" class="pic-table user"></span> 
+        <span *ngIf="!data?.post?.usuario.foto"><img [src]="routeStorage + pathPerfil + 'add-profile.jpg?alt=media'" class="pic-table user"></span> 
+        <span class="username"> 
+            <b>Full Name:</b> {{ data?.post?.usuario.nombres }} {{ data?.post?.usuario.apellidos }} <br/>
+            <b>Email:</b> {{ data?.post?.usuario.email }} <br/>
+            <b>Username:</b> {{ data?.post?.usuario.usuario }} <br/>
+        </span>
+    </div>
+</div>
+
+<h3 class="sep">Detail</h3>
+
+<div class="contentpost">
+    <div *ngIf="data?.post.tipoPost === 'ARTICLE'" >
+        <h3><b>{{ data?.post.titulo }}</b></h3>
+        <h5><b>{{ data?.post.categoria?.detalleEN }}</b></h5><br />
+
+        <div class="htmm" [innerHTML]="data?.post.detalle"></div>
+    </div>
+    <div *ngIf="data?.post.tipoPost === 'POST'">{{ data?.post.detalle }}</div>
+
+</div>
+
+<h3 class="sep">Pictures Uploaded ({{ listadoImagenes.length }})</h3>
+
+<p *ngIf="listadoImagenes.length === 0">This post doesn't have pictures</p>
+
+<div *ngIf="listadoImagenes.length > 0">
+    <lightgallery [settings]="settings" fxLayout="row wrap" fxLayoutAlign="center" class="cont-gal" >
+        <a  fxFlex="{{ ((100 / (listadoImagenes.length > 3 ? 3 : listadoImagenes.length )) - 1) +'%'  }}" 
+            [attr.href]="img.src"
+             class="picgal" 
+            [style.background-image]="'url(' + img.image  + ')'" 
+            *ngFor="let img of listadoImagenes">
+            <span class="overlay">
+                <i class="fal fa-search icc"></i>
+            </span>
+        </a>
+    </lightgallery> 
+</div>
+
+<h3 class="sep">Files Uploaded ({{ listadoFicheros.length }})</h3>
+
+<p *ngIf="listadoFicheros.length === 0">This post doesn't have files</p>
+
+<div class="cont-pic" *ngIf="listadoFicheros.length > 0">
+    <div fxLayout="row wrap" fxLayoutGap="15px">
+        <div fxFlex="120px" class="prev-pic" *ngFor="let fic of listadoFicheros; let i = index">
+            <a [href]="fic.file" class="icon-fichero" target="_blank">
+                <img [src]="host + '/assets/images/xls_download.png'"
+                    *ngIf="fic.nombre.includes('.xls') || fic.nombre.includes('.xlsx')">
+                <img [src]="host + '/assets/images/word_download.png'"
+                    *ngIf="fic.nombre.includes('.doc') || fic.nombre.includes('.docx')">
+                <img [src]="host + '/assets/images/pdf_download.png'" *ngIf="fic.nombre.includes('.pdf')">
+                <span>{{ fic.nombre }}</span>
+                <div class="overlay">
+                    <i class="fal fa-arrow-alt-to-bottom"></i>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<h3 class="sep">Comments ({{ data?.comentarios.length }})</h3>
+<div>
+    <p *ngIf="data?.comentarios.length === 0">This post doesn't have comments</p>
+    <ng-container *ngFor="let com of data?.comentarios">
+        <div class="message" [ngClass]="{'right' : com.idUsuario ===  data?.post.idUsuario}">
+        <span class="prof-pic">
+            <img *ngIf="com?.usuario.foto" [src]="routeStorage + pathPerfil + com?.usuario?.foto + '?alt=media'" />
+            <img *ngIf="!com?.usuario?.foto" [src]="routeStorage + pathPerfil + 'add-profile.jpg?alt=media'">
+        </span>
+        <span class="info">
+            <div class="det-message">
+                <span class="prof-name">{{ com?.usuario?.nombres  }} {{ com?.usuario?.apellidos  }}</span>
+                <p>{{ com?.detalle }}</p>
+                    <span class="date">Posted on {{ com?.fechaRegistro | date:'short' }}</span>
+            </div>
+        </span>
+        </div>
+        <div class="clear"></div>
+    </ng-container>
+
+    <h3 class="sep">Actions on Posts</h3>
+    <div class="actionsPost">
+        <button mat-stroked-button (click)="changeStatus('ACTIVO')" [ngClass]="{ 'success' : data?.post.estado === 'ACTIVO'}">ACTIVATED</button>
+        <button mat-stroked-button (click)="changeStatus('BLOQUEADO')" [ngClass]="{ 'warning' : data?.post.estado === 'BLOQUEADO'}">LOCKED</button>
+        <button mat-stroked-button (click)="changeStatus('BORRADO')" [ngClass]="{ 'danger' : data?.post.estado === 'BORRADO'}" >DELETED</button>
+    </div>
+
+</div>
+
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button mat-flat-button color="primary" [mat-dialog-close]="true">Close Window</button>
+</mat-dialog-actions>

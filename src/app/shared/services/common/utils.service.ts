@@ -124,11 +124,11 @@ export class UtilsService {
   }
 
   fnSuccessSave() {
-    this.fnMainDialog('Notificación', "Datos guardados correctamente.", "message");
+    this.fnMainDialog('Notification', "Data saved successfully.", "message");
   }
 
   fnErrorNoSave() {
-    this.fnMainDialog('Error', "Los datos no pudieron ser guardados. Intente nuevamente más tarde.", "message");
+    this.fnMainDialog('Error', "Data couldn't be saved. Try again later.", "message");
   }
 
   validateRun(run) {

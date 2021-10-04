@@ -12,16 +12,16 @@ import { ReturnComponent } from './components/return/return.component';
 import { RouterModule } from '@angular/router';
 import { FormAdministradoresComponent } from './components/modals/form-administradores/form-administradores.component';
 import { FormBannersComponent } from './components/modals/form-banners/form-banners.component';
-import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
-import 'froala-editor/js/plugins/align.min.js'
-import 'froala-editor/js/plugins/char_counter.min.js'
-import 'froala-editor/js/plugins/fullscreen.min.js'
-import 'froala-editor/js/plugins/link.min.js'
-import 'froala-editor/js/plugins/lists.min.js'
 import { FormEventosComponent } from './components/modals/form-eventos/form-eventos.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { FormCategoriasDescargablesComponent } from './components/modals/form-categoriasdescargables/form-categoriasdescargables.component';
 import { FormDescargablesComponent } from './components/modals/form-descargables/form-descargables.component';
+import { FormCategoriasComponent } from './components/modals/form-categorias/form-categorias.component';
+import { FormArticulosPublicosComponent } from './components/modals/form-articulospublicos/form-articulospublicos.component';
+import { ExcerptPipe } from './components/pipes/excerpt.pipe';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { ViewPostComponent } from './components/modals/view-post/view-post.component';
+import { LightgalleryModule } from 'lightgallery/angular';
 
 @NgModule({
     imports: [
@@ -33,9 +33,9 @@ import { FormDescargablesComponent } from './components/modals/form-descargables
         ReactiveFormsModule,
         NgxCurrencyModule,
         RouterModule,
-        FroalaEditorModule.forRoot(), 
-        FroalaViewModule.forRoot(),
         NgxMaterialTimepickerModule,
+        AngularEditorModule,
+        LightgalleryModule
     ],
     declarations: [
         MenuInternoComponent,
@@ -46,7 +46,11 @@ import { FormDescargablesComponent } from './components/modals/form-descargables
         RemoveUnderscorePipe,
         ReturnComponent,
         FormCategoriasDescargablesComponent,
-        FormDescargablesComponent
+        FormDescargablesComponent,
+        FormCategoriasComponent,
+        FormArticulosPublicosComponent,
+        ViewPostComponent,
+        ExcerptPipe
     ],
     providers: [],
     exports: [
@@ -62,8 +66,7 @@ import { FormDescargablesComponent } from './components/modals/form-descargables
         NgxMaterialTimepickerModule,
         EmptyPipe,
         RemoveUnderscorePipe,
-        FroalaEditorModule, 
-        FroalaViewModule,
-    ]
+        ExcerptPipe,
+        AngularEditorModule    ]
 })
 export class SharedModule { }
