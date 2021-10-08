@@ -46,6 +46,15 @@
                             </mat-error>
                         </mat-form-field>
                     </div>
+                    <div fxFlex="100%">
+                        <mat-form-field class="full" appearance="outline">
+                            <mat-label>Icono</mat-label>
+                            <input matInput formControlName="icon" required>
+                            <mat-error *ngIf="mf.icon.errors">
+                                <span *ngIf="mf.icon.errors.required">Required</span>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
                 </div>
             </div>
             <div fxFlex="33%">

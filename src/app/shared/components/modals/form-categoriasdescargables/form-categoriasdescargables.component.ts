@@ -23,6 +23,7 @@ export class FormCategoriasDescargablesComponent implements OnInit {
     _id: new FormControl(null),
     titulo: new FormControl(null, [Validators.required]),
     descripcion: new FormControl(null, [Validators.required]),
+    icon: new FormControl(null, [Validators.required]),
     fotoPresentacion: new FormControl(null, [Validators.required]),
     fotoPortada: new FormControl(null, [Validators.required]),
     habilitar: new FormControl(null, [Validators.required]),
