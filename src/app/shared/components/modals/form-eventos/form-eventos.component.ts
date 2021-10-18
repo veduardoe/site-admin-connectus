@@ -15,6 +15,7 @@ import { ENV } from 'src/environments/environment';
 })
 export class FormEventosComponent implements OnInit {
 
+  estados = [{ id: 'ACTIVE', value: true }, { id: 'INACTIVE', value: false }];
   routeFichero = ENV.FICHEROS;
   fotoPerfil;
   nomUsuario;
@@ -53,6 +54,7 @@ export class FormEventosComponent implements OnInit {
     fecha: new FormControl(null, [Validators.required]),
     hora: new FormControl('09:00', [Validators.required]),
     resaltado: new FormControl(false, [Validators.required]),
+    habilitado: new FormControl(true, [Validators.required]),
     idioma: new FormControl('ES'),
     foto: new FormControl(null)
   });

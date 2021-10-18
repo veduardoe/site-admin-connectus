@@ -80,7 +80,7 @@
 
             </div>
    
-            <div fxFlex="49%" >
+            <div fxFlex="32%" >
                 <mat-form-field class="full" appearance="outline">
                     <mat-label>Highlighted</mat-label>
                     <mat-select formControlName="resaltado" required>
@@ -92,7 +92,7 @@
                     </mat-error>
                 </mat-form-field>
             </div>
-            <div fxFlex="49%" >
+            <div fxFlex="32%" >
                 <mat-form-field class="full" appearance="outline">
                     <mat-label>Language</mat-label>
                     <mat-select formControlName="idioma" required>
@@ -101,6 +101,17 @@
                     </mat-select>
                     <mat-error *ngIf="mf.idioma.errors">
                         <span *ngIf="mf.idioma.errors.required">Required</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div fxFlex="32%">
+                <mat-form-field class="full" appearance="outline">
+                    <mat-label>State</mat-label>
+                    <mat-select formControlName="habilitado" required>
+                        <mat-option *ngFor="let ee of estados" [value]="ee.value">{{ ee.id }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="mf.habilitado.errors">
+                        <span *ngIf="mf.habilitado.errors.required">Required</span>
                     </mat-error>
                 </mat-form-field>
             </div>

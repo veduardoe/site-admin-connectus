@@ -21,6 +21,7 @@ export class ListadoEventosComponent implements OnInit {
   routeFotoPerfil = ENV.FOTOS_PERFIL;
   routeFichero = ENV.FICHEROS;
   eventos = [];
+  idioma = 'EN';
 
   constructor(
     public utils: UtilsService,
@@ -43,7 +44,7 @@ export class ListadoEventosComponent implements OnInit {
 
   async getEventos() {
     this.utils.setLoading(true);
-    this.eventosService.find({}).then((res: any) => {
+    this.eventosService.find({ filtered: true, idioma: this.idioma, fromAdmin: true }).then((res: any) => {
       this.eventos = res.data;
       this.setTable(res.data);
       this.utils.setLoading(false);
@@ -55,7 +56,7 @@ export class ListadoEventosComponent implements OnInit {
   }
 
   setTable(data) {
-    this.columns = ['foto', 'titulo', 'lugar', "fechaHora", "resaltado", "acciones"];
+    this.columns = ['foto', 'titulo', 'lugar', "fechaHora", "resaltado","habilitado", "acciones"];
     this.length = data.length;
     this.dataSource = new MatTableDataSource(data);
     this.dataSource.sort = this.sort;
