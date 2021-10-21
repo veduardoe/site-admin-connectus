@@ -9,13 +9,13 @@ const routes: Routes = [
     path: '', 
     component: ListadoCategoriasDescargablesComponent, 
     canActivate: [AutenticacionService], 
-    data: { expected: ['ADMIN'] } 
+    data: { expected: ['FILES'] } 
   },
   { 
     path: 'files/:id', 
     component: ListadoDescargablesComponent, 
     canActivate: [AutenticacionService], 
-    data: { expected: ['ADMIN'] } 
+    data: { expected: ['FILES'] } 
   }
 ];
 

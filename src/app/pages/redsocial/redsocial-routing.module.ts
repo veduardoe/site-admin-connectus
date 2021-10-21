@@ -9,13 +9,13 @@ const routes: Routes = [
     path: 'sn-posts-articles', 
     component: ListadoPostsComponent, 
     canActivate: [AutenticacionService], 
-    data: { expected: ['ADMIN'] } 
+    data: { expected: ['SOCIAL_POSTS', 'SOCIAL_NETWORKS_USERS'] } 
   },
   { 
     path: 'sn-users', 
     component: ListadoUsuariosPostsComponent, 
     canActivate: [AutenticacionService], 
-    data: { expected: ['ADMIN'] } 
+    data: { expected: ['SOCIAL_NETWORKS_USERS'] } 
   }
 ];
 

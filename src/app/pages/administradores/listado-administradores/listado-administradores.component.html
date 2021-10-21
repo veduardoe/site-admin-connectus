@@ -3,12 +3,12 @@
         <div class="search-input">
             <div fxLayout="row wrap" fxLayoutAlign="space-between center">
                 <div fxFlex="50%" fxFlex.xs="100%" class="alignLeft">
-                    <button mat-flat-button color="primary" class="btnCustom boldy" (click)="openForm()">AGREGAR ADMINISTRADOR</button>
+                    <button mat-flat-button color="primary" class="btnCustom boldy" (click)="openForm()">ADD ADMIN</button>
                 </div>
                 <div fxFlex="50%" fxFlex.xs="100%" class="alignRight">
         
                     <mat-form-field appearance="outline" class="no-padding">
-                        <mat-label>Buscar</mat-label>
+                        <mat-label>Find</mat-label>
                         <input matInput placeholder="Escriba..." (keyup)="setFilter($event.target.value)">
                         <mat-icon matSuffix>search</mat-icon>
                     </mat-form-field>
@@ -18,7 +18,7 @@
         <mat-table [dataSource]="dataSource" class="responsiveActive" matSort>
             
             <ng-container matColumnDef="foto">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Foto </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Picture </mat-header-cell>
                 <mat-cell *matCellDef="let e" data-label="Foto"> <span>
                     <img *ngIf="!e.foto" [src]="routeFotoPerfil + 'add-profile.jpg?alt=media'" class="pic-table">
                     <img *ngIf="e.foto" [src]="routeFotoPerfil + e.foto + '?alt=media'" class="pic-table">
@@ -26,34 +26,34 @@
                 </span> </mat-cell>
             </ng-container>
             <ng-container matColumnDef="nombres">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Nombres </mat-header-cell>
-                <mat-cell *matCellDef="let e" data-label="Nombres"> <span>{{e.nombres}}</span> </mat-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Name"> <span>{{e.nombres}}</span> </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="apellido_paterno">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Apellido </mat-header-cell>
-                <mat-cell *matCellDef="let e" data-label="Apellido"> <span>{{e.apellido_paterno}}</span> </mat-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Last name </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Last name"> <span>{{e.apellido_paterno}}</span> </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="email">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Correo </mat-header-cell>
-                <mat-cell *matCellDef="let e" data-label="Correo"> <span>{{e.email | lowercase}}</span> </mat-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Email"> <span>{{e.email | lowercase}}</span> </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="telefono">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Teléfono </mat-header-cell>
-                <mat-cell *matCellDef="let e" data-label="Teléfono"> <span>{{e.telefono}}</span> </mat-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Phone </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Phone"> <span>{{e.telefono}}</span> </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="fechaRegistro">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Registro </mat-header-cell>
-                <mat-cell *matCellDef="let e" data-label="Fecha Registro"> <span>{{e.fechaRegistro | date:'dd-MM-yyyy HH:mm:ss'}}</span> </mat-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Created at </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Created at"> <span>{{e.fechaRegistro | date:'dd-MM-yyyy HH:mm:ss'}}</span> </mat-cell>
             </ng-container>
 
 
             <ng-container matColumnDef="estado">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Estado </mat-header-cell>
-                <mat-cell *matCellDef="let e" data-label="Estado" 
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Status" 
                 [ngClass]="{'success' : e.estado === 'ACTIVO', 'danger' : e.estado === 'INACTIVO' , 'warning' : e.estado !== 'ACTIVO' &&  e.estado !== 'INACTIVO'}">
           
                    <span class="cell-estado"> {{ e.estado | removeUnderscore }}</span>
@@ -61,18 +61,14 @@
             </ng-container>
      
             <ng-container matColumnDef="acciones">
-                <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef> ACtions </mat-header-cell>
                 <mat-cell *matCellDef="let e" data-label="Acciones">
                     <span>                            
 
                         <mat-menu #menu="matMenu">
                             <button mat-menu-item (click)="openForm(e._id)">
                                 <mat-icon>create</mat-icon>
-                                <span>Ver y Editar</span>
-                            </button>
-                            <button mat-menu-item [routerLink]="['/propiedades/referencia/' + e._id]">
-                                <mat-icon>home</mat-icon>
-                                <span>Propiedades Creadas</span>
+                                <span>View and Edit</span>
                             </button>
                         </mat-menu>
                         <button mat-icon-button [matMenuTriggerFor]="menu" matTooltipPosition="right">
@@ -85,7 +81,7 @@
             <mat-header-row *matHeaderRowDef="columns" class="bgheader"></mat-header-row>
             <mat-row *matRowDef="let row; columns: columns;"></mat-row>
         </mat-table>
-        <p class="noresults" *ngIf="length === 0">No se encontraron resultados</p>
+        <p class="noresults" *ngIf="length === 0">Results not found</p>
         <mat-paginator [pageSizeOptions]="[5, 10, 20]" (page)="utils.fnGoTop()"></mat-paginator>
     </div>
 </div>

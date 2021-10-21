@@ -26,5 +26,12 @@ export class EventosService {
         return this.http.put(`${ENV.BACKEND}/eventos/borrar/` + id, null).toPromise();
     }
 
+    findInscritos(idEvento) {
+        return this.http.get(`${ENV.BACKEND}/eventos/inscritos/${idEvento}`).toPromise();
+    }
+
+    deleteInscrito(id){
+        return this.http.delete(`${ENV.BACKEND}/eventos/borrar-inscrito/${id}`).toPromise();
+    }
   
 }

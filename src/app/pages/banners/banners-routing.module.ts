@@ -4,7 +4,7 @@ import { AutenticacionService } from 'src/app/shared/services/autenticacion/aute
 import { ListadoBannersComponent } from './listado-banners/listado-banners.component';
 
 const routes: Routes = [
-  { path: '', component : ListadoBannersComponent, canActivate:[AutenticacionService], data: {expected: ['ADMIN']}  }
+  { path: '', component : ListadoBannersComponent, canActivate:[AutenticacionService], data: {expected: ['BANNERS']}  }
 ];
 
 @NgModule({

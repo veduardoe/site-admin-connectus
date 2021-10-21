@@ -33,8 +33,8 @@ export class ListadoAdministradoresComponent implements OnInit {
   ngOnInit(): void {
 
     this.utils.fnBreadcrumbsState().setBreadcrumbsState({
-      t: 'Listado de Administradores',
-      b: [{ n: 'Listado de Administradores', r: '/administradores' }]
+      t: 'Admins',
+      b: [{ n: 'Admins', r: '/admins' }]
     });
 
     this.getAdministradores();

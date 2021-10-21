@@ -6,7 +6,7 @@ import { EventosService } from "src/app/shared/services/eventos.service";
 import { SharedModule } from "src/app/shared/share.module";
 import { EventosRoutingModule } from "./eventos-routing.module";
 import { ListadoEventosComponent } from "./listado-eventos/listado-eventos.component";
-
+import { ListadoInscritosComponent } from "./listado-inscritos/listado-inscritos.component";
 
 @NgModule({
     imports: [
@@ -15,6 +15,7 @@ import { ListadoEventosComponent } from "./listado-eventos/listado-eventos.compo
     ],
     declarations:[
         ListadoEventosComponent,
+        ListadoInscritosComponent
     ],
     providers:[
        EventosService,

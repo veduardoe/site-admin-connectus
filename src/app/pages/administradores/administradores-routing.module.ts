@@ -4,7 +4,7 @@ import { AutenticacionService } from 'src/app/shared/services/autenticacion/aute
 import { ListadoAdministradoresComponent } from './listado-administradores/listado-administradores.component';
 
 const routes: Routes = [
-  { path: '', component : ListadoAdministradoresComponent, canActivate:[AutenticacionService], data: {expected: ['ADMIN']}  }
+  { path: '', component : ListadoAdministradoresComponent, canActivate:[AutenticacionService], data: {expected: ['ADMINS']}  }
 ];
 
 @NgModule({

@@ -105,7 +105,7 @@
             <mat-header-row *matHeaderRowDef="columns" class="bgheader"></mat-header-row>
             <mat-row *matRowDef="let row; columns: columns;"></mat-row>
         </mat-table>
-        <p class="noresults" *ngIf="length === 0">No se encontraron resultados</p>
+        <p class="noresults" *ngIf="length === 0">Results not found</p>
         <mat-paginator [pageSizeOptions]="[5, 10, 20]" (page)="utils.fnGoTop()"></mat-paginator>
     </div>
 </div>

@@ -8,7 +8,7 @@ const routes: Routes = [
     path: '', 
     component: ListadoArticulosPublicosComponent, 
     canActivate: [AutenticacionService], 
-    data: { expected: ['ADMIN'] } 
+    data: { expected: ['ARTICLES'] } 
   }
 ];
 

@@ -54,7 +54,7 @@ export class AppComponent implements OnInit, OnDestroy {
       try {
         const decodedToken :any = { data: jwt_decode(data), access_token: data };
         sessionStorage.setItem('auth', JSON.stringify(decodedToken));
-        this.router.navigate(['/administradores']);
+        this.router.navigate(['/admins']);
       } catch (err) {
         this.utils.fnError();
       }

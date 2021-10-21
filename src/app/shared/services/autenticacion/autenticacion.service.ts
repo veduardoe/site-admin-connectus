@@ -81,8 +81,7 @@ export class AutenticacionService implements CanActivate {
     }
 
     logout() {
-        const tipoUsuario = this.getAuthInfo() ? this.getAuthInfo()['tipoUsuario'].toLowerCase() : '';
-        this.router.navigate(['/login/' + tipoUsuario]);
+        this.router.navigate(['/login/admin']);
         this.removeAuthInfo();
     }
 
@@ -91,22 +90,23 @@ export class AutenticacionService implements CanActivate {
         try{
 
             const perfilesPermitidos = route.data.expected ? route.data.expected : [];
-            const perfilActual = this.getAuthInfo()['tipoUsuario'];
-            const accesoPorPerfil = perfilesPermitidos.find(pp => pp.toLowerCase() === perfilActual.toLowerCase());
+            const perfilActual = this.getAuthInfo()['modulos'].join(";");
+            const accesoPorPerfil = perfilesPermitidos.find(pp => perfilActual.toLowerCase().includes(pp.toLowerCase()));
     
-            if (this.isAuth && (perfilActual === TIPO_USUARIOS.ADMIN || perfilesPermitidos[0] === '*' || accesoPorPerfil)) {
+            if (this.isAuth && ( perfilesPermitidos[0] === '*' || accesoPorPerfil || this.getAuthInfo()['esSuper'])) {
                 return true;
             } else {
-                this.router.navigate(['/login/' + perfilActual.toLowerCase()]);
+                this.router.navigate(['/login/admin']);
                 this.removeAuthInfo();
-                this.utils.fnMessage("Acceso Denegado. No tiene permisos para ver el contenido del sitio.");
+                this.utils.fnMessage("Access denied. You cannot access to the content");
                 return false;
             }
 
         }catch(err){
-            this.router.navigate(['/login/agente']);
-            this.utils.fnMessage("Acceso Denegado. No tiene permisos para ver el contenido del sitio.");
-
+            console.log(err)
+            this.router.navigate(['/login/admin']);
+            this.removeAuthInfo();
+            this.utils.fnMessage("Access denied. You cannot access to the content.");
         }
 
     }

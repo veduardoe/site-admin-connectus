@@ -8,7 +8,7 @@ const routes: Routes = [
     path: 'categories',
     component: ListadoCategoriasComponent,
     canActivate: [AutenticacionService],
-    data: { expected: ['ADMIN'] }
+    data: { expected: ['CATEGORIES_MANAGEMENT'] }
   },
 ];
 

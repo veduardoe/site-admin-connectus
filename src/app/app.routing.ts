@@ -6,7 +6,7 @@ const routes: Routes = [
         loadChildren: () => import('./pages/autenticacion/autenticacion.module').then(m => m.AutenticacionModule)
     },
     {
-        path: 'administradores',
+        path: 'admins',
         loadChildren: () => import('./pages/administradores/administradores.module').then(m => m.AdministradoresModule)
     },
     {

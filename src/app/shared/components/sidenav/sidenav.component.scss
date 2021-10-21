@@ -78,10 +78,12 @@
     .profile-info{
         background: $sprimary;
         background-size: cover;
-        padding: $item-full-padding;
         overflow: hidden;
         position: relative;
-        
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         .profile-detail{
            // margin:4px 0px
         }
@@ -92,7 +94,7 @@
             margin: 0px auto;
 
             img{
-                width: 100%;
+                width: 100% !important;
             }
         }
 
@@ -118,7 +120,6 @@
 
         .logo{
             display: block;
-            height: 50px;
             margin: 0px auto;
 
             img{
@@ -217,4 +218,10 @@
 
 .center-text{
     margin:11px 0px !important;
+}
+.logo{
+    width: 80%;
+    img{
+        width: 100% !important;
+    }
 }

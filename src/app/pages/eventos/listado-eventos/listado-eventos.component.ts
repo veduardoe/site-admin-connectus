@@ -106,7 +106,7 @@ export class ListadoEventosComponent implements OnInit {
     this.utils.fnMainDialog('Confirm', 'Are you sure to delete this event? This action cannot be reverted.','confirm').subscribe( r => {
       if(r){
         this.eventosService.delete(id).then( r => {
-          this.utils.fnMainDialog('Notificación', 'Event has been deleted succesfully', 'message');
+          this.utils.fnMainDialog('Notification', 'Event has been deleted succesfully', 'message');
           this.getEventos();
         })
       }

@@ -55,6 +55,7 @@ export class FormEventosComponent implements OnInit {
     hora: new FormControl('09:00', [Validators.required]),
     resaltado: new FormControl(false, [Validators.required]),
     habilitado: new FormControl(true, [Validators.required]),
+    aplicaSubscripcion: new FormControl(true, [Validators.required]),
     idioma: new FormControl('ES'),
     foto: new FormControl(null)
   });

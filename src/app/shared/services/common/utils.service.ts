@@ -170,29 +170,6 @@ export class UtilsService {
     return regex.test(correo) ? true : false;
   }
 
-  getIndicadores(){
-    return this.http.get(`${ENV.BACKEND}/publico/propiedades/indicadores`).toPromise();
-  }
-
-  getAgenteAsignado(asignaciones){
-    if(asignaciones.length > 0){
-      const asign = asignaciones[asignaciones.length - 1];
-      return {
-          agente: asign,  
-          detalle : `${asign.agente.nombres} ${asign.agente.apellido_paterno}`, 
-          fechaAsign: asign.fechaAsignacion,
-          estado: asign.estado,
-          idAgente: asign.idAgente
-        };
-    }else{
-      return {  
-        agente: null,  
-        detalle : 'Sin Asignación', 
-        fechaAsign: null
-      };
-    }
-  }
-
   public exportAsExcelFile(json: any[], excelFileName: string): void {
 
     const worksheet: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(json);
@@ -203,10 +180,17 @@ export class UtilsService {
     const workbook: XLSX.WorkBook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
     const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
     this.saveAsExcelFile(excelBuffer, excelFileName);
+
   }
+  
   private saveAsExcelFile(buffer: any, fileName: string): void {
     const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });
     FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
   }
 
+  getModulos(){
+    return ['ADMINS', 'BANNERS', 'EVENTS', 'FILES', 'ARTICLES', 
+          'SOCIAL_POSTS', 'CATEGORIES_MANAGEMENT', 'SOCIAL_NETWORKS_USERS'];
+
+  }
 }

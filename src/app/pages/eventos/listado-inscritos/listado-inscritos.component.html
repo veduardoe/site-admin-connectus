@@ -1,0 +1,52 @@
+<div class="appSection">
+    <div class="white-container mat-elevation-z2">
+
+        <div class="search-input">
+            <mat-form-field appearance="outline" class="no-padding ">
+                <mat-label>Find</mat-label>
+                <input matInput placeholder="Write..." (keyup)="setFilter($event.target.value)">
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+        </div>
+
+        <mat-table [dataSource]="dataSource" class="responsiveActive" matSort>
+
+            <ng-container matColumnDef="nombre">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Título"> <span>{{e.nombre}}</span> </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="correo">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Last Name"> <span>{{e.correo}}</span> </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="fechaHora">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Date Subscription </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Date and Time"> <span>{{e.fechaRegistro | date:'short'}}</span> </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="acciones">
+                <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+                <mat-cell *matCellDef="let e" data-label="Acciones">
+                    <span>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="borrarInscrito(e._id)">
+                                <mat-icon>close</mat-icon>
+                                <span>Remove</span>
+                            </button>
+                        </mat-menu>
+                        <button mat-icon-button [matMenuTriggerFor]="menu" matTooltipPosition="right">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                    </span>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="columns" class="bgheader"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+        </mat-table>
+        <p class="noresults" *ngIf="length === 0">Results not found</p>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" (page)="utils.fnGoTop()"></mat-paginator>
+    </div>
+</div>

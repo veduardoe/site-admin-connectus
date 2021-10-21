@@ -13,6 +13,7 @@ import { ENV } from 'src/environments/environment';
 export class FormAdministradoresComponent implements OnInit {
 
   estados = ['ACTIVO', 'INACTIVO', 'BLOQUEO_TEMPORAL', 'ESPERA_INGRESO'];
+  modulos = [];
   routeFotoPerfil = ENV.FOTOS_PERFIL;
   fotoPerfil;
   nomUsuario;
@@ -28,6 +29,7 @@ export class FormAdministradoresComponent implements OnInit {
     telefono: new FormControl(null, [Validators.required]),
     tipoUsuario: new FormControl('ADMIN', [Validators.required]),
     estado: new FormControl('ESPERA_INGRESO', [Validators.required]),
+    modulos: new FormControl([], [Validators.required]),
     a2FA:new FormControl(null),
     foto: new FormControl(null),
     clave: new FormControl(null),
@@ -41,7 +43,7 @@ export class FormAdministradoresComponent implements OnInit {
     public utils: UtilsService,
     public usuariosService: UsuariosService
   ) {
-
+    this.modulos = this.utils.getModulos();
     if (this.input.data) {
       let data = this.input.data;
       this.nomUsuario = data.usuario;
@@ -82,9 +84,13 @@ export class FormAdministradoresComponent implements OnInit {
         return;
       }
     }
-    
-    this.utils.setLoading(true);
+  
+    if(data.modulos.length === 0){
+      this.utils.fnMainDialog('Error', 'Please, assign a module to the user.', 'message');
+      return;
+    }
 
+    this.utils.setLoading(true);
     const prom = (data._id) ? this.usuariosService.put(data._id, data) : this.usuariosService.post(data);
     prom.then(res => {
       if (res['response']) {
