@@ -46,3 +46,22 @@
         text-decoration: underline;
     }
 }
+
+.txtreport{
+    font-size: 12px;
+    margin-top: 11px;
+    display: block;
+    width: 80px;
+    background: #c47800;
+    padding: 5px 14px;
+    color: #fff;
+    border-radius: 10px;
+    i{
+        margin-right: 5px;
+        font-size: 10px;
+    }
+}
+
+.reported{
+    background:#fff8ad !important;
+}

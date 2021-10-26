@@ -28,6 +28,8 @@
                             <mat-option [value]="'ACTIVO'">ACTIVE</mat-option>
                             <mat-option [value]="'BLOQUEADO'">LOCKED</mat-option>
                             <mat-option [value]="'BORRADO'">DELETED</mat-option>
+                            <mat-option [value]="'REPORTED'">REPORTED</mat-option>
+
                         </mat-select>
                     </mat-form-field>
 
@@ -68,7 +70,12 @@
             <ng-container matColumnDef="detalle">
                 <mat-header-cell *matHeaderCellDef> Post / Article Detail </mat-header-cell>
                 <mat-cell *matCellDef="let e" data-label="Title"> 
-                    <span class="smtx">{{ e.detalle | excerpt:40 }}</span> 
+                    <span class="smtx">
+                        {{ e.detalle | excerpt:40 }}
+                        <span class="txtreport" *ngIf="e.denuncias && e.denuncias.length > 0">
+                            <i class="fal fa-exclamation-triangle"></i>REPORTED</span>
+                    </span> 
+                    
                 </mat-cell>
             </ng-container>
 
@@ -99,6 +106,7 @@
                     <span class="cell-estado" *ngIf="e.estado === 'ACTIVO'"> ACTIVE</span>
                     <span class="cell-estado" *ngIf="e.estado === 'BLOQUEADO'"> TEMPORALY LOCKED</span>
                     <span class="cell-estado" *ngIf="e.estado === 'BORRADO'"> DELETED</span>
+
                 </mat-cell>
             </ng-container>
      
@@ -120,7 +128,7 @@
             </ng-container>
 
             <mat-header-row *matHeaderRowDef="columns" class="bgheader"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+            <mat-row *matRowDef="let row; columns: columns;" [ngClass]="{ 'reported' : row.denuncias && row.denuncias.length > 0}"></mat-row>
             
         </mat-table>
         <p class="noresults" *ngIf="length === 0">Results not found.</p>

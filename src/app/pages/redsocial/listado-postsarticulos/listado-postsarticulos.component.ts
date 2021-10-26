@@ -73,7 +73,6 @@ export class ListadoPostsComponent implements OnInit {
 
     this.utils.setLoading(true);
     let filter:any = {};
-    console.log(this.idUsuario)
     if(this.idUsuario ){
       filter.idUsuario = this.idUsuario;
     }
@@ -102,7 +101,7 @@ export class ListadoPostsComponent implements OnInit {
   }
 
   setTable(data) {
-    this.columns = ['detalle', 'usuario', "nlikes","picfiles","tipoPost", "fechaRegistro", "acciones","estado"];
+    this.columns = ['detalle', 'usuario', "nlikes", "picfiles","tipoPost", "fechaRegistro", "acciones","estado"];
     this.length = data.length;
     this.dataSource = new MatTableDataSource(data);
     this.dataSource.sort = this.sort;
@@ -176,6 +175,7 @@ export class ListadoPostsComponent implements OnInit {
         fechaRegistro: item.fechaRegistro,
         tipoPost: item.tipoPost,
         estado: item.estado,
+        denuncias: item.denuncias,
         counterPics,
         counterFiles,
         fullData: item

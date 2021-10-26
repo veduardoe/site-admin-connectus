@@ -1,0 +1,29 @@
+<div class="appSection">
+    <div class="white-container mat-elevation-z2">
+        <div fxLayout="row wrap" fxLayoutGap="space-between">
+            <div fxFlex="70%" >
+                <mat-form-field appearance="outline" class="no-padding full" style="margin-bottom: 20px;">
+                    <mat-label>Forbidden Words</mat-label>
+                    <input matInput [(ngModel)]="configuraciones.palabrasProhibidas" placeholder="Write the forbidden words!">
+                    <mat-icon matSuffix>error_outline</mat-icon>
+                </mat-form-field>
+            </div>
+            <div fxFlex="29%">
+                <p class="nott">Write the forbidden words separated by commas. E.g.: word1,word2,word3</p>
+            </div>
+            <div fxFlex="70%">
+                <mat-form-field appearance="outline" class="no-padding full" style="margin-bottom: 20px;">
+                    <mat-label>Admin Email to Received Reports from Posts</mat-label>
+                    <input matInput [(ngModel)]="configuraciones.correosDenuncias" placeholder="Write the forbidden words!">
+                    <mat-icon matSuffix>error_outline</mat-icon>
+                </mat-form-field>
+            </div>
+            <div fxFlex="29%">
+                <p class="nott">Write the emails separated by semicolon. <br/>
+                    E.g.: email@domain.com;email2@domain.com</p>
+            </div>
+        </div>
+        <button mat-flat-button color="primary" class="btnCustom boldy btnadd" (click)="updateChanges()">APPLY UPDATES</button>
+
+    </div>
+</div>

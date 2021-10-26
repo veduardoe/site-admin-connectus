@@ -92,8 +92,8 @@ export class AutenticacionService implements CanActivate {
             const perfilesPermitidos = route.data.expected ? route.data.expected : [];
             const perfilActual = this.getAuthInfo()['modulos'].join(";");
             const accesoPorPerfil = perfilesPermitidos.find(pp => perfilActual.toLowerCase().includes(pp.toLowerCase()));
-    
-            if (this.isAuth && ( perfilesPermitidos[0] === '*' || accesoPorPerfil || this.getAuthInfo()['esSuper'])) {
+            console.log(this.getAuthInfo())
+            if (this.isAuth && ( perfilesPermitidos[0] === '*' || accesoPorPerfil || this.getAuthInfo()['isSuper'])) {
                 return true;
             } else {
                 this.router.navigate(['/login/admin']);

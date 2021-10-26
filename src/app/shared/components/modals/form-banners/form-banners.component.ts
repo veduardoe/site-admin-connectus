@@ -126,10 +126,8 @@ export class FormBannersComponent implements OnInit {
         const mimeTypeImagenes = mimetype == "image/jpg" || mimetype == "image/jpeg" || mimetype == "image/gif" || mimetype == "image/png";
 
         if (mimeTypeImagenes) {
-
           this.fotoPerfil = fichero;
           this.mainForm.patchValue({ imagen: fichero });
-          console.log(fichero)
         } else {
 
           this.utils.fnMessage("File type not allowed");

@@ -17,6 +17,7 @@ export class SidenavComponent implements OnInit {
   tipoUsuario;
   userViews = [];
   loginState;
+  isSuper = false;
 
   constructor(
     public utils: UtilsService,
@@ -41,6 +42,7 @@ export class SidenavComponent implements OnInit {
   prepareMenu(){
     const authInfo = this.authService.getAuthInfo();
     this.userViews = authInfo ? authInfo['modulos'] : [];
+    this.isSuper = authInfo ? Boolean(authInfo['isSuper']) : false
     this.setMenu();
   }
 
@@ -58,8 +60,10 @@ export class SidenavComponent implements OnInit {
         { name: 'Articles', path: '/public-articles', activateTo: ['ADMIN'], icon: 'fal fa-calendar', show: this.chkAv('ARTICLES'), class: 'center-text' },
         { name: 'RS Posts & Articles', path: '/social-network/sn-posts-articles', activateTo: ['ADMIN'], show: this.chkAv('SOCIAL_POSTS'), icon: 'fal fa-cog', class: 'center-text' },
         { name: 'SN Users', path: '/social-network/sn-users', activateTo: ['ADMIN'], icon: 'fal fa-cog', show: this.chkAv('SOCIAL_NETWORKS_USERS'), class: 'center-text' },
+        { name: 'Configurations', path: '/common/configurations', activateTo: ['ADMIN'], icon: 'fal fa-cog', show: this.chkAv('CONFIGURATIONS'), class: 'center-text' },
+
       ]
-    }];
+    }]
 
     this.menuItems = [
       { name: 'Admins', path: '/admins', activateTo: ['ADMIN'], icon: 'fal fa-cog', show: this.chkAv('ADMINS'), class: 'center-text' },
@@ -72,12 +76,12 @@ export class SidenavComponent implements OnInit {
         icon: 'fal fa-cog',
         class: 'center-text',
         activateTo: ['ADMIN'],
-        show: this.chkAv('CATEGORIES_MANAGEMENT') || this.chkAv('SOCIAL_POSTS') || this.chkAv('SOCIAL_NETWORKS_USERS'),
+        show: this.chkAv('CATEGORIES_MANAGEMENT') || this.chkAv('SOCIAL_POSTS') || this.chkAv('SOCIAL_NETWORKS_USERS') || this.chkAv('CONFIGURATIONS'),
         items: [
           { name: 'Categories', path: '/common/categories', show: this.chkAv('CATEGORIES_MANAGEMENT'), activateTo: ['ADMIN'], icon: 'fal fa-cog', class: 'center-text' },
           { name: 'SN Posts & Articles', path: '/social-network/sn-posts-articles', show: this.chkAv('SOCIAL_POSTS'), activateTo: ['ADMIN'], icon: 'fal fa-cog', class: 'center-text' },
           { name: 'SN Users', path: '/social-network/sn-users', show: this.chkAv('SOCIAL_NETWORKS_USERS'), activateTo: ['ADMIN'], icon: 'fal fa-cog', class: 'center-text' },
-
+          { name: 'Configurations', path: '/common/configurations', show: this.chkAv('CONFIGURATIONS'), activateTo: ['ADMIN'], icon: 'fal fa-cog', class: 'center-text' },
         ]
       }
 
@@ -85,7 +89,7 @@ export class SidenavComponent implements OnInit {
   }
 
   chkAv(view) {
-    return this.userViews.find(item => item === view);
+    return this.isSuper || this.userViews.find(item => item === view);
   }
 
   @HostListener('window:resize', [])

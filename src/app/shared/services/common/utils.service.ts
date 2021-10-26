@@ -190,7 +190,8 @@ export class UtilsService {
 
   getModulos(){
     return ['ADMINS', 'BANNERS', 'EVENTS', 'FILES', 'ARTICLES', 
-          'SOCIAL_POSTS', 'CATEGORIES_MANAGEMENT', 'SOCIAL_NETWORKS_USERS'];
+          'SOCIAL_POSTS', 'CATEGORIES_MANAGEMENT', 'SOCIAL_NETWORKS_USERS',
+          'CONFIGURATIONS'];
 
   }
 }
