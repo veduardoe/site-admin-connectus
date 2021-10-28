@@ -87,12 +87,22 @@
         <div class="clear"></div>
     </ng-container>
 
-    <h3 class="sep">Actions on Posts</h3>
-    <div class="actionsPost">
-        <button mat-stroked-button (click)="changeStatus('ACTIVO')" [ngClass]="{ 'success' : data?.post.estado === 'ACTIVO'}">ACTIVATED</button>
-        <button mat-stroked-button (click)="changeStatus('BLOQUEADO')" [ngClass]="{ 'warning' : data?.post.estado === 'BLOQUEADO'}">LOCKED</button>
-        <button mat-stroked-button (click)="changeStatus('BORRADO')" [ngClass]="{ 'danger' : data?.post.estado === 'BORRADO'}" >DELETED</button>
-    </div>
+    <ng-container *ngIf="data?.post.denuncias.length === 0">
+        <h3 class="sep">Actions on Posts</h3>
+        <div class="actionsPost">
+            <button mat-stroked-button (click)="changeStatus('ACTIVO')" [ngClass]="{ 'success' : data?.post.estado === 'ACTIVO'}">ACTIVATED</button>
+            <button mat-stroked-button (click)="changeStatus('BLOQUEADO')" [ngClass]="{ 'warning' : data?.post.estado === 'BLOQUEADO'}">LOCKED</button>
+            <button mat-stroked-button (click)="changeStatus('BORRADO')" [ngClass]="{ 'danger' : data?.post.estado === 'BORRADO'}" >DELETED</button>
+        </div>
+    </ng-container>
+    
+    <ng-container *ngIf="data?.post.denuncias.length > 0">
+        <h3 class="sep">This post has been reported. Take an action:</h3>
+        <div class="actionsPost rep" >
+            <button mat-stroked-button (click)="changeStatusReport('REP-CONFIRMADO')" class="danger">CLOSE REPORT AND DELETE POST</button>
+            <button mat-stroked-button (click)="changeStatusReport('REP-RECHAZADO')" class="success" >CLOSE REPORT AND KEEP POST ACTIVATED</button>
+        </div>    
+    </ng-container>
 
 </div>
 

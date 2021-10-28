@@ -29,7 +29,6 @@ export class ViewPostComponent implements OnInit {
     ) {
 
     this.data = this.input.data;
-    
     if (this.data?.post.ficheros.length > 0) {
 
       this.data?.post.ficheros.forEach((val, key) => {
@@ -58,7 +57,14 @@ export class ViewPostComponent implements OnInit {
   changeStatus(status){
     this.postsService.setStatusPost(this.data.post._id, status).then( (res:any) => {
       if(res.response){
-        this.data.post.estado = status;
+
+        if(status === 'REP-CONFIRMADO' || status === 'REP-RECHAZADO'){
+          this.data.post.estado = status === 'REP-CONFIRMADO' ? 'BORRADO' :  'ACTIVO';
+          this.data.post.denuncias = [];
+          this.utils.fnMainDialog('Notification','Report updated successfully','message');
+        }else{
+          this.data.post.estado = status;
+        }
       }else{
         this.utils.fnError()
       }
@@ -67,4 +73,11 @@ export class ViewPostComponent implements OnInit {
     });
   }
 
+  changeStatusReport(status){
+    this.utils.fnMainDialog('Confirm', 'Are you sure to take this actions?','confirm').subscribe( r => {
+      if(r){
+        this.changeStatus(status);
+      }
+    });
+  }
 }
