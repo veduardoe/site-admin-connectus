@@ -13,9 +13,9 @@ import { ENV } from 'src/environments/environment';
 })
 export class FormBannersComponent implements OnInit {
 
-  estados = [{ id: 'ACTIVO', value: true}, { id: 'INACTIVO', value: false}];
-  idiomas = [{ id: 'ESPAÑOL', value: 'ES'}, { id: 'INGLÉS', value: 'EN'}];
-  tiposBanners = ['BANNER_SUPERIOR', 'BANNER_LATERAL'];
+  estados = [{ id: 'ACTIVE', value: true}, { id: 'INACTIVE', value: false}];
+  idiomas = [{ id: 'SPANISH', value: 'ES'}, { id: 'ENGLISH', value: 'EN'}];
+  tiposBanners = ['UPPER_BANNER', 'SIDE_BANNER', 'TEXTUAL_BANNER'];
   routeImagen = ENV.FICHEROS;
   fotoPerfil;
   nomUsuario;
@@ -26,11 +26,11 @@ export class FormBannersComponent implements OnInit {
     _id: new FormControl(null),
     tipo: new FormControl(null, [Validators.required]),
     titulo: new FormControl(null, [Validators.required]),
-    tituloResaltado: new FormControl(null),
-    url: new FormControl(null, [Validators.required]),
+    tituloResaltado: new FormControl(null, [Validators.required]),
+    url: new FormControl(null),
     habilitado: new FormControl(null, [Validators.required]),
     idioma: new FormControl(null, [Validators.required]),
-    imagen: new FormControl(null, [Validators.required]),
+    imagen: new FormControl(null),
     posicion: new FormControl(1,  [Validators.required]),
   });
 
@@ -56,7 +56,6 @@ export class FormBannersComponent implements OnInit {
     const data = this.mainForm.getRawValue();
 
     this.triggedValidation(true);
-
     if (!this.mainForm.valid) {
       return;
     }

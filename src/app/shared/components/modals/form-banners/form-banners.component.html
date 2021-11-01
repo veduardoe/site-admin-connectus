@@ -5,6 +5,18 @@
 
         <div fxLayout="row wrap" fxLayoutAlign="space-between center">
             <div fxFlex="100%">
+                <mat-form-field class="full" appearance="outline">
+                    <mat-label>Banner Position</mat-label>
+                    <mat-select formControlName="tipo" required>
+                        <mat-option *ngFor="let tb of tiposBanners" [value]="tb">{{ tb | removeUnderscore }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="mf.tipo.errors">
+                        <span *ngIf="mf.tipo.errors.required">Required</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div fxFlex="100%" *ngIf="mainForm.value.tipo !== 'TEXTUAL_BANNER'">
                 <div class="pic-agente"  >
                     <input type="file" id="fotoperfil" (change)="fileChange($event.target.files)"
                         accept=".jpg, .png, .jpeg, .gif" hidden multiple>
@@ -36,27 +48,16 @@
                             </mat-error>
                         </mat-form-field>
                     </div>
-                    <div fxFlex="49%">
+                    <div fxFlex="100%">
                         <mat-form-field class="full" appearance="outline">
-                            <mat-label>URL</mat-label>
-                            <input matInput formControlName="url" required>
+                            <mat-label>{{ mainForm.value.tipo !== 'TEXTUAL_BANNER' ? 'URL' : 'ICON' }}</mat-label>
+                            <input matInput formControlName="url">
                             <mat-error *ngIf="mf.url.errors">
                                 <span *ngIf="mf.url.errors.required">Required</span>
                             </mat-error>
                         </mat-form-field>
                     </div>
-                    <div fxFlex="49%">
-                        <mat-form-field class="full" appearance="outline">
-                            <mat-label>Banner Position</mat-label>
-                            <mat-select formControlName="tipo" required>
-                                <mat-option *ngFor="let tb of tiposBanners" [value]="tb">{{ tb | removeUnderscore }}
-                                </mat-option>
-                            </mat-select>
-                            <mat-error *ngIf="mf.tipo.errors">
-                                <span *ngIf="mf.tipo.errors.required">Required</span>
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
+    
                 </div>
             </div>
             <div fxFlex="33%">

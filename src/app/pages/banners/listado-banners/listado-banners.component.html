@@ -2,12 +2,13 @@
     <div class="white-container mat-elevation-z2">
         <div class="search-input">
             <div fxLayout="row" fxLayoutAlign="space-between center">
-                <div fxFlex="700px" fxFlex.xs="100%" class="alignLeft">
+                <div fxFlex="50%" fxFlex.xs="100%" class="alignLeft">
                     <mat-form-field appearance="outline" style="margin-right: 20px;">
                         <mat-label>Banner Position</mat-label>
                         <mat-select [(ngModel)]="banner" (selectionChange)="getBanners()">
-                            <mat-option [value]="'BANNER_SUPERIOR'">UPPER BANNER</mat-option>
-                            <mat-option [value]="'BANNER_LATERAL'">SIDE BANNER</mat-option>
+                            <mat-option [value]="'UPPER_BANNER'">UPPER BANNER</mat-option>
+                            <mat-option [value]="'SIDE_BANNER'">SIDE BANNER</mat-option>
+                            <mat-option [value]="'TEXTUAL_BANNER'">TEXTUAL BANNER</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field appearance="outline"  >
@@ -19,7 +20,7 @@
                     </mat-form-field>
                 </div>
 
-                <div fxFlex="450px" fxFlex.xs="100%" class="alignRight">
+                <div fxFlex="50%" fxFlex.xs="100%" class="alignRight">
                     <mat-form-field appearance="outline" class="no-padding ">
                         <mat-label>Find</mat-label>
                         <input matInput placeholder="Write..." (keyup)="setFilter($event.target.value)">
@@ -36,7 +37,7 @@
             <ng-container matColumnDef="imagen">
                 <mat-header-cell *matHeaderCellDef mat-sort-header> Picture </mat-header-cell>
                 <mat-cell *matCellDef="let e" data-label="Foto"> <span>
-                    <img *ngIf="!e.imagen" [src]="routeImagen + 'add-profile.jpg?alt=media'" class="pic-table">
+                    <img *ngIf="!e.imagen" [src]="routeImagen + 'empty.png?alt=media'" class="pic-table">
                     <img *ngIf="e.imagen" [src]="routeImagen + e.imagen + '?alt=media'" class="pic-table">
 
                 </span> </mat-cell>
@@ -53,7 +54,9 @@
 
             <ng-container matColumnDef="url">
                 <mat-header-cell *matHeaderCellDef mat-sort-header> URL </mat-header-cell>
-                <mat-cell *matCellDef="let e" data-label="Correo"> <span>{{e.url | lowercase}}</span> </mat-cell>
+                <mat-cell *matCellDef="let e" data-label="Correo"> 
+                    <span *ngIf="e.tipo !== 'TEXTUAL_BANNER'">{{ e.url | lowercase}}</span> 
+                </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="tipo">
