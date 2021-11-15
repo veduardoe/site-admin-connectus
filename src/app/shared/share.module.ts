@@ -22,6 +22,7 @@ import { ExcerptPipe } from './components/pipes/excerpt.pipe';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { ViewPostComponent } from './components/modals/view-post/view-post.component';
 import { LightgalleryModule } from 'lightgallery/angular';
+import { FormImagenesPerfilesComponent } from './components/modals/form-imagenesperfiles/form-imagenesperfiles.component';
 
 @NgModule({
     imports: [
@@ -44,6 +45,7 @@ import { LightgalleryModule } from 'lightgallery/angular';
         FormBannersComponent,
         FormEventosComponent,
         RemoveUnderscorePipe,
+        FormImagenesPerfilesComponent,
         ReturnComponent,
         FormCategoriasDescargablesComponent,
         FormDescargablesComponent,

@@ -1,0 +1,59 @@
+<h2 mat-dialog-title>Profile Images</h2>
+<mat-dialog-content class="dialog-content">
+
+    <form [formGroup]="mainForm">
+
+        <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+            <div fxFlex="49%">
+                <div class="pic-agente"  >
+                    <input type="file" id="imagen" (change)="fileChange($event.target.files, 'imagen')" 
+                    accept=".jpg, .png, .jpeg, .gif" hidden>
+                    <span *ngIf="!mainForm.value.imagen" class="btnsub" (click)="openInputFile('imagen')">PICTURE</span>
+                    <img *ngIf="mainForm.value.imagen && !mainForm.value.imagen.includes('data')"
+                        [src]="routeStorage + pathFicheros + mainForm.value.imagen + '?alt=media'" (click)="removerImagen('imagen')">
+                    <img *ngIf="mainForm.value.imagen  && mainForm.value.imagen.includes('data')"
+                        [src]="mainForm.value.imagen" (click)="removerImagen('imagen')">
+                </div>
+            </div>
+            <div fxFlex="49%">
+                <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                    <div fxFlex="100%">
+                        <mat-form-field class="full" appearance="outline">
+                            <mat-label>Description (English)</mat-label>
+                            <input matInput formControlName="detalleEN" required>
+                            <mat-error *ngIf="mf.detalleEN.errors">
+                                <span *ngIf="mf.detalleEN.errors.required">Required</span>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="100%">
+                        <mat-form-field class="full" appearance="outline">
+                            <mat-label>Description (Español)</mat-label>
+                            <input matInput formControlName="detalle" required>
+                            <mat-error *ngIf="mf.detalle.errors">
+                                <span *ngIf="mf.detalle.errors.required">Required</span>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="100%">
+                        <mat-form-field class="full" appearance="outline">
+                            <mat-label>State</mat-label>
+                            <mat-select formControlName="habilitado" required>
+                                <mat-option *ngFor="let ee of estados" [value]="ee.value">{{ ee.id }}</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="mf.habilitado.errors">
+                                <span *ngIf="mf.habilitado.errors.required">Required</span>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-flat-button class="primary-gray" [mat-dialog-close]="true">Cancel
+    </button>
+    <button mat-flat-button color="primary" (click)="save()">Save</button>
+</mat-dialog-actions>

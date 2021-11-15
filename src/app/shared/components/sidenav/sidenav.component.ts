@@ -61,6 +61,7 @@ export class SidenavComponent implements OnInit {
         { name: 'RS Posts & Articles', path: '/social-network/sn-posts-articles', activateTo: ['ADMIN'], show: this.chkAv('SOCIAL_POSTS'), icon: 'fal fa-cog', class: 'center-text' },
         { name: 'SN Users', path: '/social-network/sn-users', activateTo: ['ADMIN'], icon: 'fal fa-cog', show: this.chkAv('SOCIAL_NETWORKS_USERS'), class: 'center-text' },
         { name: 'Configurations', path: '/common/configurations', activateTo: ['ADMIN'], icon: 'fal fa-cog', show: this.chkAv('CONFIGURATIONS'), class: 'center-text' },
+        { name: 'Profile Images', path: '/common/profile-images', activateTo: ['ADMIN'], icon: 'fal fa-cog', show: this.chkAv('PROFILE_IMAGES'), class: 'center-text' },
 
       ]
     }]
@@ -76,12 +77,13 @@ export class SidenavComponent implements OnInit {
         icon: 'fal fa-cog',
         class: 'center-text',
         activateTo: ['ADMIN'],
-        show: this.chkAv('CATEGORIES_MANAGEMENT') || this.chkAv('SOCIAL_POSTS') || this.chkAv('SOCIAL_NETWORKS_USERS') || this.chkAv('CONFIGURATIONS'),
+        show: this.chkAv('CATEGORIES_MANAGEMENT') || this.chkAv('SOCIAL_POSTS') || this.chkAv('SOCIAL_NETWORKS_USERS') || this.chkAv('PROFILE_IMAGES') || this.chkAv('CONFIGURATIONS'),
         items: [
           { name: 'Categories', path: '/common/categories', show: this.chkAv('CATEGORIES_MANAGEMENT'), activateTo: ['ADMIN'], icon: 'fal fa-cog', class: 'center-text' },
           { name: 'SN Posts & Articles', path: '/social-network/sn-posts-articles', show: this.chkAv('SOCIAL_POSTS'), activateTo: ['ADMIN'], icon: 'fal fa-cog', class: 'center-text' },
           { name: 'SN Users', path: '/social-network/sn-users', show: this.chkAv('SOCIAL_NETWORKS_USERS'), activateTo: ['ADMIN'], icon: 'fal fa-cog', class: 'center-text' },
           { name: 'Configurations', path: '/common/configurations', show: this.chkAv('CONFIGURATIONS'), activateTo: ['ADMIN'], icon: 'fal fa-cog', class: 'center-text' },
+          { name: 'Profile Images', path: '/common/profile-images', show: this.chkAv('PROFILE_IMAGES'), activateTo: ['ADMIN'], icon: 'fal fa-cog', class: 'center-text' },
         ]
       }
 
